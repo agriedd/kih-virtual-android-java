@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "563714342975",
+    "project_id": "kih-virtual",
+    "storage_bucket": "kih-virtual.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:563714342975:android:dcd4b13e063bd0d481388a",
+        "android_client_info": {
+          "package_name": "com.komodoindotech.kihvirtual"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "563714342975-chrilham3b9tsss2p1a9pvm73i68liqd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.komodoindotech.kihvirtual",
+            "certificate_hash": "445a61de0038dd2de5833c6303b989c8f4719683"
+          }
+        },
+        {
+          "client_id": "563714342975-iqr66c67de4e9kde730a74uhcca9b57d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCO1xP0OSZS7Ai9NdV1Hgt6fM0BTJwIiRE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "563714342975-iqr66c67de4e9kde730a74uhcca9b57d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
