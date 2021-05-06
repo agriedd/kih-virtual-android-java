@@ -22,6 +22,23 @@ public class ListArticleFragment extends Fragment {
         return new ListArticleFragment();
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return View
+     *
+     * @// TODO: 5/6/2021 membuat recycler list article terbatas (terbaru)
+     * @// TODO: 5/6/2021 membuat aksi yang meredirect ke tab article
+     * @// TODO: 5/6/2021 membuat activity baru untuk menampilkan berita
+     * @// TODO: 5/6/2021 mengisi konten tab article
+     * @// TODO: 5/6/2021 membuat recycler awal diimplementasikan ke tab ini
+     * @// TODO: 5/6/2021 membuat infinite loading di recycler view tab article
+     * @// TODO: 5/6/2021 menambah tampilan pencarian
+     * @// TODO: 5/6/2021 membuat activity pencarian untuk menampikan hasil article
+     *
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
