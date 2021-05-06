@@ -1,5 +1,6 @@
 package com.komodoindotech.kihvirtual.ui.home;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,8 +66,9 @@ public class ListArticleFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ListArticleViewModel.class);
-        // TODO: Use the ViewModel
+        mViewModel = new ViewModelProvider(getParentFragment().getActivity()).get(ListArticleViewModel.class);
+        mViewModel.getArticlesMutableLiveData().observe(getViewLifecycleOwner(), articleListUpdateObserver);
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         view_list_article.setLayoutManager(layoutManager);
 
@@ -74,15 +77,18 @@ public class ListArticleFragment extends Fragment {
 
         articleObjects = new ArrayList<>();
 
-        for(int i = 0; i < 5; i++){
-            ArticleObject article = new ArticleObject();
-            article.setTitle("Hello There!");
-            article.setDescription("lorem ipsum");
-            articleObjects.add(article);
-        }
+
 
         adapterRecyclerviewArticle = new AdapterRecyclerviewArticle(getContext(), articleObjects);
         view_list_article.setAdapter(adapterRecyclerviewArticle);
     }
+
+    Observer<List<ArticleObject>> articleListUpdateObserver = new Observer<List<ArticleObject>>() {
+        @Override
+        public void onChanged(List<ArticleObject> articleObjects) {
+            Log.d("articleListUpdate", "onChanged: " + String.valueOf(articleObjects.size()));
+            adapterRecyclerviewArticle.updateList(articleObjects);
+        }
+    };
 
 }

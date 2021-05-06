@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -41,15 +42,35 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "homefragment";
     private static final int RC_SIGN_IN = 301;
     private HomeViewModel homeViewModel;
+    private ListArticleViewModel listArticleViewModel;
     private SignInButton btnLoginGoogle;
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
     private View root;
     private ImageView sesi_img;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        listArticleViewModel = new ViewModelProvider(getActivity()).get(ListArticleViewModel.class);
+
         root = inflater.inflate(R.layout.fragment_home, container, false);
+        swipeRefreshLayout = root.findViewById(R.id.refresh_home);
+
+        listArticleViewModel.getLoadingMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean){
+//                    root.findViewById(R.id.loading_article_list_home).setVisibility(View.VISIBLE);
+                    swipeRefreshLayout.setRefreshing(true);
+                } else {
+//                    root.findViewById(R.id.loading_article_list_home).setVisibility(View.GONE);
+                    if(swipeRefreshLayout.isRefreshing()){
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+            }
+        });
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
@@ -66,6 +87,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         sesi_img.setOnClickListener(this);
 
         loadFragmentArticle();
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                listArticleViewModel.refresh();
+            }
+        });
 
         return root;
     }

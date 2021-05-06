@@ -6,52 +6,73 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment"
     android:id="@+id/container">
-    <androidx.core.widget.NestedScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <LinearLayout
+        android:id="@+id/refresh_home">
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
             <LinearLayout
-                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
                 <LinearLayout
-                    android:id="@+id/container_belum_login"
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:id="@+id/container_belum_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <com.google.android.gms.common.SignInButton
+                            android:id="@+id/sign_in_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:elevation="0dp" />
+                    </LinearLayout>
+
+                    <include
+                        layout="@layout/component_user_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="#1000"
+                        android:layout_gravity="end"/>
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="10dp">
-
-                    <com.google.android.gms.common.SignInButton
-                        android:id="@+id/sign_in_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:elevation="0dp" />
+                    android:gravity="center"
+                    android:padding="20dp"
+                    android:id="@+id/loading_article_list_home"
+                    android:visibility="gone">
+                    <ProgressBar
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:indeterminate="true"
+                        android:theme="@style/Style.KIHVirtual.Component"/>
                 </LinearLayout>
-
-                <include
-                    layout="@layout/component_user_login"
+                <FrameLayout
+                    android:id="@+id/frame_artikel"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="#1000" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
             </LinearLayout>
-            <FrameLayout
-                android:id="@+id/frame_artikel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

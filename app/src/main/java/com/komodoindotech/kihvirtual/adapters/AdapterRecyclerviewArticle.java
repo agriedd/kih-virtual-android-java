@@ -52,6 +52,11 @@ public class AdapterRecyclerviewArticle extends RecyclerView.Adapter<AdapterRecy
         return articles.size();
     }
 
+    public void updateList(List<ArticleObject> articleObjects) {
+        this.articles = articleObjects;
+        this.notifyDataSetChanged();
+    }
+
 
     public static class viewHolder extends RecyclerView.ViewHolder{
 
@@ -72,10 +77,13 @@ public class AdapterRecyclerviewArticle extends RecyclerView.Adapter<AdapterRecy
             description.setText(articleObject.getDescription());
 
             try {
-                if(articleObject.getCover() != null && articleObject.getCover().length() > 0)
+                if(articleObject.getCover() != null && articleObject.getCover().length() > 0){
+                    cover.clearColorFilter();
                     Glide.with(mContext)
                             .load(articleObject.getCover())
+                            .centerCrop()
                             .into(cover);
+                }
             } catch (Exception e){
                 Log.d(TAG, "bind: " + e.getMessage());
             }
