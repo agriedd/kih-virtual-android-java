@@ -2,16 +2,21 @@
     <!-- Base application theme. -->
     <style name="Theme.KIHVirtual" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/teal_200</item>
+        <item name="colorPrimaryVariant">@color/teal_700</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_700</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorSecondaryVariant">@color/teal_500</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/backgroundColor</item>
         <!-- Customize your theme here. -->
+        <item name="cardViewStyle">@style/Style.KIHVirtual.Component.Cardview</item>
+    </style>
+
+    <style name="Style.KIHVirtual.Component.Cardview">
+        <item name="cardBackgroundColor">@color/black_900</item>
     </style>
 
     <style name="ThemeOverlay.KIHVirtual.FullscreenContainer" parent="">
