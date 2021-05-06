@@ -7,16 +7,40 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.komodoindotech.kihvirtual.R;
+import com.komodoindotech.kihvirtual.adapters.AdapterRecyclerviewArticle;
+import com.komodoindotech.kihvirtual.json.ArticleObject;
+import com.komodoindotech.kihvirtual.models.Article;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ListArticleFragment extends Fragment {
+    /**
+     * @// TODO: 5/6/2021 membuat recycler list article terbatas (terbaru)
+     * @// TODO: 5/6/2021 membuat aksi yang meredirect ke tab article
+     * @// TODO: 5/6/2021 membuat activity baru untuk menampilkan berita
+     * @// TODO: 5/6/2021 mengisi konten tab article
+     * @// TODO: 5/6/2021 membuat recycler awal diimplementasikan ke tab ini
+     * @// TODO: 5/6/2021 membuat infinite loading di recycler view tab article
+     * @// TODO: 5/6/2021 menambah tampilan pencarian
+     * @// TODO: 5/6/2021 membuat activity pencarian untuk menampikan hasil article
+     *
+     */
 
     private ListArticleViewModel mViewModel;
+    private View root;
+    private RecyclerView view_list_article;
+    private AdapterRecyclerviewArticle adapterRecyclerviewArticle;
+    private List<ArticleObject> articleObjects;
 
     public static ListArticleFragment newInstance() {
         return new ListArticleFragment();
@@ -29,20 +53,12 @@ public class ListArticleFragment extends Fragment {
      * @param savedInstanceState
      * @return View
      *
-     * @// TODO: 5/6/2021 membuat recycler list article terbatas (terbaru)
-     * @// TODO: 5/6/2021 membuat aksi yang meredirect ke tab article
-     * @// TODO: 5/6/2021 membuat activity baru untuk menampilkan berita
-     * @// TODO: 5/6/2021 mengisi konten tab article
-     * @// TODO: 5/6/2021 membuat recycler awal diimplementasikan ke tab ini
-     * @// TODO: 5/6/2021 membuat infinite loading di recycler view tab article
-     * @// TODO: 5/6/2021 menambah tampilan pencarian
-     * @// TODO: 5/6/2021 membuat activity pencarian untuk menampikan hasil article
-     *
      */
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.list_article_fragment, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        root = inflater.inflate(R.layout.list_article_fragment, container, false);
+        view_list_article = root.findViewById(R.id.list_article_home);
+        return root;
     }
 
     @Override
@@ -50,6 +66,23 @@ public class ListArticleFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(ListArticleViewModel.class);
         // TODO: Use the ViewModel
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+        view_list_article.setLayoutManager(layoutManager);
+
+        view_list_article.setHasFixedSize(true);
+        view_list_article.setNestedScrollingEnabled(false);
+
+        articleObjects = new ArrayList<>();
+
+        for(int i = 0; i < 5; i++){
+            ArticleObject article = new ArticleObject();
+            article.setTitle("Hello There!");
+            article.setDescription("lorem ipsum");
+            articleObjects.add(article);
+        }
+
+        adapterRecyclerviewArticle = new AdapterRecyclerviewArticle(getContext(), articleObjects);
+        view_list_article.setAdapter(adapterRecyclerviewArticle);
     }
 
 }
