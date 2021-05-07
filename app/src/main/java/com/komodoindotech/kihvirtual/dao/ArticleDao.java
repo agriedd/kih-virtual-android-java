@@ -16,7 +16,7 @@ public interface  ArticleDao {
     @Query("SELECT * FROM article")
     LiveData<List<Article>> getAll();
 
-    @Query("SELECT * FROM article WHERE expired_at > :time ORDER BY created_at LIMIT 1")
+    @Query("SELECT * FROM article WHERE expired_at > :time ORDER BY created_at DESC LIMIT 1")
     Article getLatest(long time);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -25,6 +25,7 @@ public interface  ArticleDao {
     @Delete
     void delete(Article article);
 
-    @Delete
-    void deleteAll(Article... article);
+    @Query("DELETE FROM article")
+    void deleteAll();
+
 }

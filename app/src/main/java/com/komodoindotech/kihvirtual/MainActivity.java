@@ -31,6 +31,12 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
 
+    /**
+     *
+     * @param savedInstanceState
+     * @// TODO: 5/7/2021 tekan home 2x maka refresh listArticleViewModel
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

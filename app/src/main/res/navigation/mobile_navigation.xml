@@ -12,6 +12,12 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
+        android:id="@+id/navigation_articles"
+        android:name="com.komodoindotech.kihvirtual.ui.articles.ArticlesFragment"
+        android:label="@string/title_articles"
+        tools:layout="@layout/fragment_articles" />
+
+    <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.komodoindotech.kihvirtual.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"

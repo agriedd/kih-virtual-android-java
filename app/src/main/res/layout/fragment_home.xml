@@ -56,14 +56,16 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:gravity="center"
-                    android:padding="20dp"
-                    android:id="@+id/loading_article_list_home"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="20dp"
+                    android:id="@+id/container_info_last_update_home"
                     android:visibility="gone">
-                    <ProgressBar
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:indeterminate="true"
-                        android:theme="@style/Style.KIHVirtual.Component"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/info_last_update_home"
+                        android:text="Terakhir diupdate:"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Disabled"/>
                 </LinearLayout>
                 <FrameLayout
                     android:id="@+id/frame_artikel"

@@ -16,11 +16,11 @@ import java.util.List;
 public class ArticleRepository {
     private ArticleDao articleDao;
     private LiveData<List<Article>> listLiveData;
+    private static final String TAG = "articlerepo";
 
     public ArticleRepository(Application application){
         AppDatabase db = AppDatabase.getDatabase(application);
         this.articleDao = db.articleDao();
-//        this.listLiveData = articleDao.getAll();
     }
     public LiveData<List<Article>> getAllArticles() {
         return articleDao.getAll();
@@ -38,13 +38,16 @@ public class ArticleRepository {
         articleDao.insert(article);
     }
 
+    public void deleteAll(){
+        articleDao.deleteAll();
+    }
+
     public Article getArticleCached(long time) {
         return articleDao.getLatest(time);
     }
 
     private static class insertAsyncTask extends AsyncTask<Article, Void, Void> {
 
-        private static final String TAG = "articlerepo";
         ArticleDao articleDao;
         Article article;
 
@@ -56,7 +59,6 @@ public class ArticleRepository {
         @Override
         protected Void doInBackground(Article... articles) {
             this.articleDao.insert(article);
-            Log.d(TAG, "doInBackground: " + JSON.toJSONString(article));
             return null;
         }
     }

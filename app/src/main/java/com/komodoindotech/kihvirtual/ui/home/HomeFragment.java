@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.komodoindotech.kihvirtual.R;
 
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
+
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = "homefragment";
@@ -49,6 +55,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private View root;
     private ImageView sesi_img;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView last_cached;
+    private LinearLayout last_cached_container;
+    private Long last_update; //last cached
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
@@ -56,15 +66,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         root = inflater.inflate(R.layout.fragment_home, container, false);
         swipeRefreshLayout = root.findViewById(R.id.refresh_home);
+        last_cached = root.findViewById(R.id.info_last_update_home);
+        last_cached_container = root.findViewById(R.id.container_info_last_update_home);
 
         listArticleViewModel.getLoadingMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
                 if(aBoolean){
-//                    root.findViewById(R.id.loading_article_list_home).setVisibility(View.VISIBLE);
                     swipeRefreshLayout.setRefreshing(true);
                 } else {
-//                    root.findViewById(R.id.loading_article_list_home).setVisibility(View.GONE);
                     if(swipeRefreshLayout.isRefreshing()){
                         swipeRefreshLayout.setRefreshing(false);
                     }
@@ -75,6 +85,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onChanged(@Nullable String s) {
 
+            }
+        });
+        listArticleViewModel.getLastCachedMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Long>() {
+            @Override
+            public void onChanged(Long aLong) {
+                Log.d(TAG, "onChanged: "+aLong.toString());
+                if(aLong == null || aLong.equals(0L)){
+                    last_cached_container.setVisibility(View.GONE);
+                } else {
+                    last_cached_container.setVisibility(View.VISIBLE);
+                    last_cached.setText("Terakhir diupdate: " + new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date( aLong )));
+                }
             }
         });
 
@@ -144,6 +166,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
     }
+
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -178,6 +201,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             updateUI(null);
         }
     }
+
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         mAuth.signInWithCredential(credential)
