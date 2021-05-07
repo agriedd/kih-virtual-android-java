@@ -62,7 +62,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-        listArticleViewModel = new ViewModelProvider(getActivity()).get(ListArticleViewModel.class);
+        listArticleViewModel = new ViewModelProvider(this).get(ListArticleViewModel.class);
 
         root = inflater.inflate(R.layout.fragment_home, container, false);
         swipeRefreshLayout = root.findViewById(R.id.refresh_home);

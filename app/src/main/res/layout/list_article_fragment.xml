@@ -5,6 +5,5 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".ui.home.ListArticleFragment"
-    android:id="@+id/list_article_home"
-    android:paddingHorizontal="20dp">
+    android:id="@+id/list_article_home">
 </androidx.recyclerview.widget.RecyclerView>

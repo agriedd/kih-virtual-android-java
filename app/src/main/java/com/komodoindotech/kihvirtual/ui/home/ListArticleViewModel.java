@@ -4,13 +4,16 @@ import android.app.Application;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.alibaba.fastjson.JSON;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.komodoindotech.kihvirtual.json.ArticleObject;
@@ -35,12 +38,14 @@ public class ListArticleViewModel extends AndroidViewModel {
     private Boolean loading;
     private Long last_cached;
     private MutableLiveData<Long> liveDataLastCached;
+    FirebaseFirestore db;
 
     public ListArticleViewModel(Application application) {
         super(application);
         arrayListMutableLiveData = new MutableLiveData<>();
         liveDataLoading = new MutableLiveData<>();
         liveDataLastCached = new MutableLiveData<>();
+        db = FirebaseFirestore.getInstance();
         init(application);
     }
 
@@ -58,20 +63,17 @@ public class ListArticleViewModel extends AndroidViewModel {
         articleObjects = new ArrayList<>();
         liveDataLoading.setValue(loading = false);
         arrayListMutableLiveData.setValue(articleObjects);
+        articleRepository = new ArticleRepository(application);
         getArticles(application);
     }
 
     private void getArticles(Application application) {
         liveDataLoading.setValue(loading = true);
-
-        articleRepository = new ArticleRepository(application);
         Article latestCachedArticle = articleRepository.getArticleCached((new Date()).getTime());
 
-        // cek jika artikel sudah di cache
-
-        if(latestCachedArticle == null){
+        if(latestCachedArticle == null)
             loadArticles();
-        } else {
+        else {
             List<ArticleObject> articlesObject = JSON.parseArray(latestCachedArticle.json, ArticleObject.class);
             liveDataLastCached.setValue(last_cached = latestCachedArticle.created_at);
             if(articlesObject != null && articlesObject.size() > 0){
@@ -80,18 +82,65 @@ public class ListArticleViewModel extends AndroidViewModel {
             liveDataLoading.setValue(loading = false);
         }
     }
+    public void getPaginateArticles() {
+        liveDataLoading.setValue(loading = true);
+        db.collection("articles")
+                .limit(10)
+                .whereEqualTo("published", true)
+                .orderBy("created_at", Query.Direction.DESCENDING)
+                .get()
+                .addOnCompleteListener(task -> {
+                    articleObjects = new ArrayList<>();
+                    if(task.isSuccessful()) bindArticles(task);
+                    else Log.d(TAG, "ListArticleViewModel: failed: "+ task.getException());
+                    liveDataLoading.setValue(loading = false);
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });;
+    }
+    public void getPaginateSearchArticles(String search) {
+        liveDataLoading.setValue(loading = true);
+        db.collection("articles")
+                .limit(10)
+                .whereEqualTo("published", true)
+                .orderBy("title").startAt(search.trim()).endAt(search.trim() + "\uf8ff")
+                .get()
+                .addOnCompleteListener(task -> {
+                    articleObjects = new ArrayList<>();
+                    if(task.isSuccessful()) bindArticles(task);
+                    else Log.d(TAG, "ListArticleViewModel: failed: "+ task.getException());
+                    liveDataLoading.setValue(loading = false);
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });;
+    }
 
     private void loadArticles() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("articles")
-            .limit(5)
-            .get()
-            .addOnCompleteListener(task -> {
-                articleObjects = new ArrayList<>();
-                if(task.isSuccessful()) bindArticles(task);
-                else Log.d(TAG, "ListArticleViewModel: failed: "+ task.getException());
-                liveDataLoading.setValue(loading = false);
-            });
+                .limit(5)
+                .whereEqualTo("published", true)
+                .orderBy("created_at", Query.Direction.DESCENDING)
+                .get()
+                .addOnCompleteListener(task -> {
+                    articleObjects = new ArrayList<>();
+                    if(task.isSuccessful()) bindArticles(task);
+                    else Log.d(TAG, "ListArticleViewModel: failed: "+ task.getException());
+                    liveDataLoading.setValue(loading = false);
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
     }
 
     public void populateList(List<ArticleObject> articles) {
