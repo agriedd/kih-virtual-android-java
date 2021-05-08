@@ -60,7 +60,7 @@ public class ArticlesFragment extends Fragment {
 
     private void loadFragmentArticle() {
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_artikel, ListArticleFragment.newInstance());
+        transaction.replace(R.id.frame_artikels, ListArticleFragment.newInstance());
         transaction.commit();
     }
 }

@@ -107,7 +107,7 @@ public class ListArticleViewModel extends AndroidViewModel {
         db.collection("articles")
                 .limit(10)
                 .whereEqualTo("published", true)
-                .orderBy("title").startAt(search.trim()).endAt(search.trim() + "\uf8ff")
+//                .orderBy("title").startAt(search.trim()).endAt(search.trim() + "\uf8ff")
                 .get()
                 .addOnCompleteListener(task -> {
                     articleObjects = new ArrayList<>();
@@ -130,15 +130,17 @@ public class ListArticleViewModel extends AndroidViewModel {
                 .orderBy("created_at", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(task -> {
-                    articleObjects = new ArrayList<>();
                     if(task.isSuccessful()) bindArticles(task);
-                    else Log.d(TAG, "ListArticleViewModel: failed: "+ task.getException());
+                    else{
+                        liveDataLastCached.setValue(last_cached = 0L);
+                        Log.d(TAG, "loadArticles: "+task.getException().getMessage());
+                    }
                     liveDataLoading.setValue(loading = false);
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-
+                        Log.d(TAG, "onFailure: "+e.getMessage());
                     }
                 });
     }
@@ -150,13 +152,14 @@ public class ListArticleViewModel extends AndroidViewModel {
     }
 
     private void bindArticles(Task<QuerySnapshot> task) {
-        List<ArticleObject> articleObjects = new ArrayList<ArticleObject>();
-        for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())){
-            addList(document);
+        articleObjects = new ArrayList<>();
+        for(QueryDocumentSnapshot document : task.getResult()){
             ArticleObject article = document.toObject(ArticleObject.class);
+            Log.d(TAG, "bindArticles: "+JSON.toJSONString(article));
             article.setId(document.getId());
             articleObjects.add(article);
         }
+        arrayListMutableLiveData.setValue(articleObjects);
         cachedArticlesObject(articleObjects);
         liveDataLastCached.setValue(last_cached = new Date().getTime());
     }
@@ -166,10 +169,6 @@ public class ListArticleViewModel extends AndroidViewModel {
         StoreArticleCached.handler(articleRepository, articleObjects);
     }
 
-    public void addList(QueryDocumentSnapshot document){
-        articleObjects.add(document.toObject(ArticleObject.class));
-        arrayListMutableLiveData.setValue(articleObjects);
-    }
 
     public void refresh() {
         if(loading) {

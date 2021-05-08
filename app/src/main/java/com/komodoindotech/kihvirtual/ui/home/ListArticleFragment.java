@@ -28,14 +28,11 @@ import java.util.List;
 
 public class ListArticleFragment extends Fragment {
     /**
-     * @// TODO: 5/6/2021 membuat recycler list article terbatas (terbaru)
      * @// TODO: 5/6/2021 membuat aksi yang meredirect ke tab article
      * @// TODO: 5/6/2021 membuat activity baru untuk menampilkan berita
      * @// TODO: 5/6/2021 mengisi konten tab article
      * @// TODO: 5/6/2021 membuat recycler awal diimplementasikan ke tab ini
      * @// TODO: 5/6/2021 membuat infinite loading di recycler view tab article
-     * @// TODO: 5/6/2021 menambah tampilan pencarian
-     * @// TODO: 5/6/2021 membuat activity pencarian untuk menampikan hasil article
      *
      */
 
@@ -67,18 +64,13 @@ public class ListArticleFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(getParentFragment().getActivity()).get(ListArticleViewModel.class);
+        mViewModel = new ViewModelProvider(getParentFragment()).get(ListArticleViewModel.class);
         mViewModel.getArticlesMutableLiveData().observe(getViewLifecycleOwner(), articleListUpdateObserver);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         view_list_article.setLayoutManager(layoutManager);
 
-        view_list_article.setHasFixedSize(true);
-        view_list_article.setNestedScrollingEnabled(false);
-
         articleObjects = new ArrayList<>();
-
-
 
         adapterRecyclerviewArticle = new AdapterRecyclerviewArticle(getContext(), articleObjects);
         view_list_article.setAdapter(adapterRecyclerviewArticle);
@@ -89,6 +81,7 @@ public class ListArticleFragment extends Fragment {
         public void onChanged(List<ArticleObject> articleObjects) {
             Log.d("articleListUpdate", "onChanged: " + String.valueOf(articleObjects.size()));
             adapterRecyclerviewArticle.updateList(articleObjects);
+            adapterRecyclerviewArticle.notifyDataSetChanged();
         }
     };
 

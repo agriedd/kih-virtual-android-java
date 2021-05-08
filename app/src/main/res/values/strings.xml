@@ -1,11 +1,18 @@
 <resources>
     <string name="app_name">KIH Virtual</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_dashboard">Profil</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_splash">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="judul_splash_screen">KIH Virtual</string>
     <string name="title_articles">Artikel</string>
+    <string name="deskripsi_cover_article">cover article</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="error_404">404</string>
+    <string name="terjadi_sebuah_kesalahan">Terjadi sebuah kesalahan</string>
+    <string name="pesan_error_404">Mohon Maaf! Artikel yang Anda minta tidak ditemukan</string>
+    <string name="kembali">Kembali</string>
 </resources>

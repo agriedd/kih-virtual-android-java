@@ -100,14 +100,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        mAuth = FirebaseAuth.getInstance();
+//        mAuth = FirebaseAuth.getInstance();
 
-        requestLoginGoogle();
         btnLoginGoogle = root.findViewById(R.id.sign_in_button);
         btnLoginGoogle.setOnClickListener(this);
         sesi_img = root.findViewById(R.id.sesi_img);
         sesi_img.setOnClickListener(this);
 
+//        requestLoginGoogle();
+//
         loadFragmentArticle();
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -130,8 +131,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        updateUI(currentUser);
     }
 
     private void updateUI(FirebaseUser currentUser) {
