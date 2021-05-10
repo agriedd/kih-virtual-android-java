@@ -15,12 +15,18 @@ public class PendaftaranViewModel extends AndroidViewModel {
 
     private Boolean riwayatKehamilan;
     private MutableLiveData<Boolean> riwayatKehamilanLiveData;
+    private Boolean nextPage = false;
+    private Boolean previousPage = false;
+    private MutableLiveData<Boolean> nextPageLiveData;
+    private MutableLiveData<Boolean> previousPageLiveData;
 
     public PendaftaranViewModel(@NonNull Application application) {
         super(application);
         formPagerPositionLiveData = new MutableLiveData<>();
         countFormPagerLiveData = new MutableLiveData<>();
         riwayatKehamilanLiveData = new MutableLiveData<>();
+        nextPageLiveData = new MutableLiveData<>();
+        previousPageLiveData = new MutableLiveData<>();
     }
 
     public LiveData<Integer> getFormPagerPositionLiveData() {
@@ -29,6 +35,8 @@ public class PendaftaranViewModel extends AndroidViewModel {
 
     public void setFormPagerPositionLiveData(int formPagerPositionLiveData) {
         formPagerPosition = formPagerPositionLiveData;
+        this.nextPageLiveData.setValue(nextPage = false);
+        this.previousPageLiveData.setValue(previousPage = false);
         this.formPagerPositionLiveData.setValue(formPagerPosition);
     }
 
@@ -47,5 +55,20 @@ public class PendaftaranViewModel extends AndroidViewModel {
 
     public void setRiwayatKehamilanLiveData(Boolean riwayatKehamilanLiveData) {
         this.riwayatKehamilanLiveData.setValue(riwayatKehamilan = riwayatKehamilanLiveData);
+    }
+
+    public LiveData<Boolean> getNextPageLiveData() {
+        return nextPageLiveData;
+    }
+
+    public void nextPageForm() {
+        nextPageLiveData.setValue(nextPage = true);
+    }
+    public LiveData<Boolean> getPreviousPageLiveData() {
+        return previousPageLiveData;
+    }
+
+    public void previousPageForm() {
+        previousPageLiveData.setValue(previousPage = true);
     }
 }

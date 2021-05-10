@@ -61,6 +61,15 @@ public class FormRiwayatKehamilanFragment extends Fragment {
             }
         });
 
+        replaceFragment(InformasiFormRiwayatKehamilanFragment.newInstance());
+
+        return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
         Balloon balloon = new Balloon.Builder(getContext())
                 .setArrowSize(10)
                 .setArrowOrientation(ArrowOrientation.TOP)
@@ -76,14 +85,6 @@ public class FormRiwayatKehamilanFragment extends Fragment {
                 .setLifecycleOwner(getActivity())
                 .build();
         balloon.showAlignBottom(statusRiwayatKehamilanView);
-        replaceFragment(InformasiFormRiwayatKehamilanFragment.newInstance());
-
-        return root;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
     }
 
     public void replaceFragment(Fragment fragment){

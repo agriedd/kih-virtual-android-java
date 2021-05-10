@@ -18,6 +18,7 @@ import com.komodoindotech.kihvirtual.R;
 import com.komodoindotech.kihvirtual.adapters.AdapterPagerFormKCS;
 import com.komodoindotech.kihvirtual.ui.form.FormInfoDataDiriFragment;
 import com.komodoindotech.kihvirtual.ui.form.FormRiwayatKehamilanFragment;
+import com.komodoindotech.kihvirtual.ui.form.FormRiwayatPersalinanFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +62,7 @@ public class FormKartuCommunityScreeningFragment extends Fragment {
         fragmentsForm = new ArrayList<>();
         fragmentsForm.add(FormInfoDataDiriFragment.newInstance());
         fragmentsForm.add(FormRiwayatKehamilanFragment.newInstance());
+        fragmentsForm.add(FormRiwayatPersalinanFragment.newInstance());
 
         adapterPagerFormKCS = new AdapterPagerFormKCS(getActivity(), fragmentsForm,  getContext());
 
@@ -100,6 +102,17 @@ public class FormKartuCommunityScreeningFragment extends Fragment {
 
         pendaftaranViewModel.getFormPagerPositionLiveData().observe(getActivity(), position -> {
 
+        });
+
+        pendaftaranViewModel.getNextPageLiveData().observe(getActivity(), isNext -> {
+            if(isNext){
+                formViewPager.setCurrentItem(formViewPager.getCurrentItem()+1, true);
+            }
+        });
+        pendaftaranViewModel.getPreviousPageLiveData().observe(getActivity(), isPrev -> {
+            if(isPrev){
+                formViewPager.setCurrentItem(formViewPager.getCurrentItem()-1, true);
+            }
         });
 
         return root;

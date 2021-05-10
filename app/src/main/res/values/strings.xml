@@ -23,4 +23,6 @@
     <string name="pekerjaan_ibu">Pekerjaan Ibu</string>
     <string name="selanjutnya">Selanjutnya</string>
     <string name="lewati">Lewati</string>
+    <string name="ibu_memiliki_riwayat_kehamilan_sebelumnya">Ibu memiliki riwayat kehamilan sebelumnya</string>
+    <string name="riwayat_kehamilan_yang_lalu">Riwayat kehamilan yang lalu</string>
 </resources>

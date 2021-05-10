@@ -49,7 +49,7 @@ public class FormRiwayatKehamilanRecyclerFragment extends Fragment {
         pilihanObjects.add(new PilihanObject("Ibu mengalami pendarahan"));
         pilihanObjects.add(new PilihanObject("Ibu mengalami mual muntah berlebihan hingga perlu dirawat di RS"));
         pilihanObjects.add(new PilihanObject("Ibu mengalami bed rest selama masa kehamilan"));
-        pilihanObjects.add(new PilihanObject("Ibu mengalami mengalami sesak napas"));
+        pilihanObjects.add(new PilihanObject("Ibu mengalami sesak napas"));
         pilihanObjects.add(new PilihanObject("Ibu mengalami bengkak pada alat gerak dan mata berkunang kunang"));
         pilihanObjects.add(new PilihanObject("Ibu mengalami gangguan perkemihan (Infeksi Saluran Kencing, Tidak dapat Miksi)"));
         pilihanObjects.add(new PilihanObject("Ibu mengalami penyakit infeksi (malaria, campak, cacar)"));

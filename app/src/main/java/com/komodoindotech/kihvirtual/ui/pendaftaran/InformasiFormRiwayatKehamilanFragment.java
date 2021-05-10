@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,10 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.komodoindotech.kihvirtual.R;
 
 public class InformasiFormRiwayatKehamilanFragment extends Fragment {
+
+    private static final String TAG = "InformasiFormRiwayatKehamilanFragment";
+    private PendaftaranViewModel pendaftaranViewModel;
+    private int page_position = 0;
 
     public InformasiFormRiwayatKehamilanFragment() {
 
@@ -30,10 +36,14 @@ public class InformasiFormRiwayatKehamilanFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_informasi_form_riwayat_kehamilan, container, false);
+
+        pendaftaranViewModel = new ViewModelProvider(getActivity()).get(PendaftaranViewModel.class);
+
         ExtendedFloatingActionButton extendedFloatingActionButton = root.findViewById(R.id.btn_lewati);
         extendedFloatingActionButton.setOnClickListener(v -> {
-//            startActivity(new Intent());
+            pendaftaranViewModel.nextPageForm();
         });
+
         return root;
     }
 }

@@ -19,6 +19,7 @@ public class PendaftaranActivity extends AppCompatActivity {
     PendaftaranViewModel pendaftaranViewModel;
     Boolean agreement_status = false;
     int pager_position = 0;
+    boolean is_previous = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,10 @@ public class PendaftaranActivity extends AppCompatActivity {
             pager_position = position;
         });
 
+        pendaftaranViewModel.getPreviousPageLiveData().observe(this, isPrevious -> {
+            is_previous = isPrevious;
+        });
+
     }
 
     public void replaceFragment(Fragment fragment){
@@ -53,15 +58,7 @@ public class PendaftaranActivity extends AppCompatActivity {
         if (pager_position == 0) {
             super.onBackPressed();
         } else {
-            try {
-                FormKartuCommunityScreeningFragment fragment = (FormKartuCommunityScreeningFragment)
-                        getSupportFragmentManager()
-                                .findFragmentById(R.id.container);
-                fragment.setCurrentPage(0);
-            } catch (Exception e){
-
-            }
+            pendaftaranViewModel.previousPageForm();
         }
-
     }
 }

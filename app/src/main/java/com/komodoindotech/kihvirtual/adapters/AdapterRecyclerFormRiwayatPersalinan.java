@@ -1,19 +1,15 @@
 package com.komodoindotech.kihvirtual.adapters;
 
 import android.content.Context;
-import android.content.res.Configuration;
-import android.os.Build;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.komodoindotech.kihvirtual.R;
@@ -21,12 +17,12 @@ import com.komodoindotech.kihvirtual.json.PilihanObject;
 
 import java.util.List;
 
-public class AdapterRecyclerFormRiwayatKehamilan extends RecyclerView.Adapter<AdapterRecyclerFormRiwayatKehamilan.viewHolder> {
+public class AdapterRecyclerFormRiwayatPersalinan extends RecyclerView.Adapter<AdapterRecyclerFormRiwayatPersalinan.viewHolder> {
 
     Context mContext;
     List<PilihanObject> pilihanObjects;
 
-    public AdapterRecyclerFormRiwayatKehamilan(Context mContext, List<PilihanObject> pilihanObjects) {
+    public AdapterRecyclerFormRiwayatPersalinan(Context mContext, List<PilihanObject> pilihanObjects) {
         this.mContext = mContext;
         this.pilihanObjects = pilihanObjects;
     }
