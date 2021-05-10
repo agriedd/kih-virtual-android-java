@@ -3,14 +3,46 @@ package com.komodoindotech.kihvirtual.json;
 import java.util.List;
 
 public class PilihanObject {
+
+    public final static int WARNA_HIJAU =   0;
+    public final static int WARNA_KUNING =  1;
+    public final static int WARNA_MERAH =   2;
+
     private String id;
     private String label;
     private Boolean value = false;
     private Boolean disabled = false;
+    private String[] tindakan;
+    private Integer warna;
+
+    public Integer getWarna() {
+        return warna;
+    }
+
+    public void setWarna(Integer warna) {
+        this.warna = warna;
+    }
+
+    public String[] getTindakan() {
+        return tindakan;
+    }
+
+    public void setTindakan(String[] tindakan) {
+        this.tindakan = tindakan;
+    }
+
     private List<PilihanObject> childrens;
 
     public PilihanObject(String label) {
         this.label = label;
+    }
+
+    public PilihanObject(String id, String label, Boolean value, String[] tindakan, Integer warna) {
+        this.id = id;
+        this.label = label;
+        this.value = value;
+        this.tindakan = tindakan;
+        this.warna = warna;
     }
 
     public PilihanObject(String label, Boolean value) {

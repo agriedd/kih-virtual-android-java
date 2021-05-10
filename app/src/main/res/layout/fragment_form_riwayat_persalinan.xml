@@ -38,7 +38,7 @@
                         style="@style/TextAppearance.AppCompat.Title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Riwayat Persalinan yang lalu" />
+                        android:text="Riwayat persalinan yang lalu" />
 
                     <TextView
                         style="@style/TextAppearance.AppCompat.Subhead"

@@ -17,6 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.komodoindotech.kihvirtual.R;
 import com.komodoindotech.kihvirtual.adapters.AdapterPagerFormKCS;
 import com.komodoindotech.kihvirtual.ui.form.FormInfoDataDiriFragment;
+import com.komodoindotech.kihvirtual.ui.form.FormKeluhanFragment;
 import com.komodoindotech.kihvirtual.ui.form.FormRiwayatImunisasiTTFragment;
 import com.komodoindotech.kihvirtual.ui.form.FormRiwayatKehamilanFragment;
 import com.komodoindotech.kihvirtual.ui.form.FormRiwayatPersalinanFragment;
@@ -65,6 +66,7 @@ public class FormKartuCommunityScreeningFragment extends Fragment {
         fragmentsForm.add(FormRiwayatKehamilanFragment.newInstance());
         fragmentsForm.add(FormRiwayatPersalinanFragment.newInstance());
         fragmentsForm.add(FormRiwayatImunisasiTTFragment.newInstance());
+        fragmentsForm.add(FormKeluhanFragment.newInstance());
 
         adapterPagerFormKCS = new AdapterPagerFormKCS(getActivity(), fragmentsForm,  getContext());
 
