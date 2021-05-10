@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -12,6 +13,7 @@ import com.komodoindotech.kihvirtual.ui.pendaftaran.KonfirmasiPendaftaranFragmen
 import com.komodoindotech.kihvirtual.ui.pendaftaran.KonfirmasiPendaftaranViewModel;
 import com.komodoindotech.kihvirtual.ui.pendaftaran.PendaftaranFragment;
 import com.komodoindotech.kihvirtual.ui.pendaftaran.PendaftaranViewModel;
+import com.komodoindotech.kihvirtual.ui.review.pendaftaran.ReviewPendaftaranFragment;
 
 public class PendaftaranActivity extends AppCompatActivity {
 
@@ -39,6 +41,11 @@ public class PendaftaranActivity extends AppCompatActivity {
         });
         pendaftaranViewModel.getFormPagerPositionLiveData().observe(this, position -> {
             pager_position = position;
+        });
+        pendaftaranViewModel.getOpenReviewLiveData().observe(this, openReview -> {
+            if(openReview){
+                startActivity(new Intent(getApplicationContext(), ReviewPendaftaran.class));
+            }
         });
 
         pendaftaranViewModel.getPreviousPageLiveData().observe(this, isPrevious -> {

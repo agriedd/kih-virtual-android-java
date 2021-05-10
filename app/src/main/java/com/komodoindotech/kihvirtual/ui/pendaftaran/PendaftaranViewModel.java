@@ -20,6 +20,8 @@ public class PendaftaranViewModel extends AndroidViewModel {
     private MutableLiveData<Boolean> nextPageLiveData;
     private MutableLiveData<Boolean> previousPageLiveData;
 
+    private MutableLiveData<Boolean> openReviewLiveData;
+
     public PendaftaranViewModel(@NonNull Application application) {
         super(application);
         formPagerPositionLiveData = new MutableLiveData<>();
@@ -27,6 +29,7 @@ public class PendaftaranViewModel extends AndroidViewModel {
         riwayatKehamilanLiveData = new MutableLiveData<>();
         nextPageLiveData = new MutableLiveData<>();
         previousPageLiveData = new MutableLiveData<>();
+        openReviewLiveData = new MutableLiveData<>();
     }
 
     public LiveData<Integer> getFormPagerPositionLiveData() {
@@ -70,5 +73,14 @@ public class PendaftaranViewModel extends AndroidViewModel {
 
     public void previousPageForm() {
         previousPageLiveData.setValue(previousPage = true);
+    }
+
+    public void openReview() {
+        openReviewLiveData.setValue(true);
+        openReviewLiveData.setValue(false);
+    }
+
+    public LiveData<Boolean> getOpenReviewLiveData() {
+        return openReviewLiveData;
     }
 }

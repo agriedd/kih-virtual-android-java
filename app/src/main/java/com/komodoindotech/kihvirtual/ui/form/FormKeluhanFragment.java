@@ -1,20 +1,25 @@
 package com.komodoindotech.kihvirtual.ui.form;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.komodoindotech.kihvirtual.R;
+import com.komodoindotech.kihvirtual.ReviewPendaftaran;
 import com.komodoindotech.kihvirtual.adapters.AdapterRecyclerFormKeluhan;
 import com.komodoindotech.kihvirtual.json.PilihanObject;
+import com.komodoindotech.kihvirtual.ui.pendaftaran.PendaftaranViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +30,7 @@ public class FormKeluhanFragment extends Fragment {
     private RecyclerView listKeluhanView;
     private AdapterRecyclerFormKeluhan adapterRecyclerFormKeluhan;
     private List<PilihanObject> pilihanObjects;
+    private PendaftaranViewModel pendaftaranViewModel;
 
     public FormKeluhanFragment() {}
 
@@ -42,11 +48,24 @@ public class FormKeluhanFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_form_keluhan, container, false);
 
+        pendaftaranViewModel = new ViewModelProvider(getActivity()).get(PendaftaranViewModel.class);
+
         toolbar = root.findViewById(R.id.toolbar_keluhan);
         listKeluhanView = root.findViewById(R.id.list_form_keluhan);
+        Button buttonReview = root.findViewById(R.id.button_review);
+        buttonReview.setOnClickListener(v -> {
+            openReview();
+        });
 
-        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
-        appCompatActivity.setSupportActionBar(toolbar);
+        setToolbar();
+
+        initRecyclerView();
+
+
+        return root;
+    }
+
+    private void initRecyclerView() {
 
         pilihanObjects = new ArrayList<>();
         PilihanObject pilihanObject = new PilihanObject("Silahkan centang pilihan-pilihan dibawah yang pernah dialami Ibu");
@@ -55,7 +74,7 @@ public class FormKeluhanFragment extends Fragment {
 
         pilihanObjects.add(new PilihanObject(
                 "klh01",
-                "Kehamilan ini diingikan oleh keluarga",
+                "Kehamilan ini tidak diingikan oleh keluarga",
                 false, new String[] { "koseling" }, PilihanObject.WARNA_KUNING));
         pilihanObjects.add(new PilihanObject(
                 "klh02",
@@ -147,7 +166,14 @@ public class FormKeluhanFragment extends Fragment {
 
         listKeluhanView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         listKeluhanView.setAdapter(adapterRecyclerFormKeluhan);
+    }
 
-        return root;
+    private void setToolbar() {
+        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
+        appCompatActivity.setSupportActionBar(toolbar);
+    }
+
+    private void openReview() {
+        pendaftaranViewModel.openReview();
     }
 }

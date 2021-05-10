@@ -21,7 +21,31 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        app:layout_constraintBottom_toTopOf="@id/linearLayout4"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_keluhan"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_keluhan"
-        android:layout_marginBottom="?actionBarSize"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="?actionBarSize">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#3000"></View>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="12dp"
+            android:id="@+id/button_review"
+            android:text="Review data yang sudah Ibu masukan"
+            android:theme="@style/Style.KIHVirtual.Component"
+            android:padding="20dp"/>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

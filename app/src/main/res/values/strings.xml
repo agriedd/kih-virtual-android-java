@@ -26,4 +26,14 @@
     <string name="ibu_memiliki_riwayat_kehamilan_sebelumnya">Ibu memiliki riwayat kehamilan sebelumnya</string>
     <string name="riwayat_kehamilan_yang_lalu">Riwayat kehamilan yang lalu</string>
     <string name="tanggal">Tanggal</string>
+    <string name="umur">Umur</string>
+    <string name="alamat">Alamat</string>
+    <string name="hamil_ke">Hamil Ke-</string>
+    <string name="pendidikan">Pendidikan</string>
+    <string name="pendidikan_ibu">Pendidikan Ibu</string>
+    <string name="pendidikan_suami">Pendidikan Suami</string>
+    <string name="pekerjaan">Pekerjaan</string>
+    <string name="haid_terakhir">Haid Terakhir</string>
+    <string name="usia_anak_terakhir">Usia Anak Terakhir</string>
+    <string name="lama_menikah">Lama Menikah</string>
 </resources>
