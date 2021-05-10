@@ -97,6 +97,7 @@
                     android:hint="@string/hamil_ke"
                     android:id="@+id/hamil_ke_layout"
                     app:placeholderText="Hamil Kali ke-"
+                    app:helperText="Bila baru pertama kali, kolom dapat dikosongkan atau diisi dengan nilai 1"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
                     <androidx.appcompat.widget.AppCompatEditText
                         android:layout_width="match_parent"

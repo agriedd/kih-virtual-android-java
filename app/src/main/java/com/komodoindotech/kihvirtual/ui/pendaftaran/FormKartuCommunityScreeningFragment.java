@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.komodoindotech.kihvirtual.ui.form.FormRiwayatPersalinanFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class FormKartuCommunityScreeningFragment extends Fragment {
 
@@ -34,10 +36,11 @@ public class FormKartuCommunityScreeningFragment extends Fragment {
     TextView pageControlInfo;
     FloatingActionButton fabNextControl;
     PendaftaranViewModel pendaftaranViewModel;
+    private int page_position = 0;
+    private Boolean validInputs = false;
 
 
-    public FormKartuCommunityScreeningFragment() {
-    }
+    public FormKartuCommunityScreeningFragment() { }
 
     public static FormKartuCommunityScreeningFragment newInstance() {
         return new FormKartuCommunityScreeningFragment();
@@ -77,11 +80,13 @@ public class FormKartuCommunityScreeningFragment extends Fragment {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels);
                 pendaftaranViewModel.setFormPagerPositionLiveData(position);
                 int pagePosition = position + 1;
-                pageControlInfo.setText(pagePosition+"/"+adapterPagerFormKCS.getItemCount());
+                String value = pagePosition +"/"+adapterPagerFormKCS.getItemCount();
+                pageControlInfo.setText(value);
                 if(pagePosition == adapterPagerFormKCS.getItemCount()){
                     fabNextControl.hide();
                 } else {
-                    fabNextControl.show();
+                    if(validInputs)
+                        fabNextControl.show();
                 }
             }
 
@@ -98,14 +103,38 @@ public class FormKartuCommunityScreeningFragment extends Fragment {
 
         formViewPager.setUserInputEnabled(false);
 
-        fabNextControl.setOnClickListener(v -> {
-            formViewPager.setCurrentItem(
-                    formViewPager.getCurrentItem() + 1
-            );
+        fabNextControl.setOnClickListener(v -> formViewPager.setCurrentItem(
+                formViewPager.getCurrentItem() + 1
+        ));
+
+        return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        pendaftaranViewModel.getFormPagerPositionLiveData().observe(getActivity(), position -> page_position = position);
+
+        pendaftaranViewModel.getValidInputLiveData().observe(getActivity(), aBoolean -> {
+            Log.d("wtf", "onCreateView: "+aBoolean.toString());
+            validInputs = aBoolean;
+            if(aBoolean) fabNextControl.show();
+            else fabNextControl.hide();
         });
 
-        pendaftaranViewModel.getFormPagerPositionLiveData().observe(getActivity(), position -> {
+        pendaftaranViewModel.getInputErrors().observe(getActivity(), stringMapMap -> {
+            try {
+                Map<String, String> inputErrorDataDiri = stringMapMap.get(FormInfoDataDiriFragment.KEY);
+                Log.d("wtf", "onCreateView: "+inputErrorDataDiri.size() + " | " + validInputs);
+                if((inputErrorDataDiri != null && inputErrorDataDiri.size() > 0) || !validInputs){
+                    fabNextControl.hide();
+                } else {
+                    fabNextControl.show();
+                }
+            } catch (Exception ignored){
 
+            }
         });
 
         pendaftaranViewModel.getNextPageLiveData().observe(getActivity(), isNext -> {
@@ -118,8 +147,6 @@ public class FormKartuCommunityScreeningFragment extends Fragment {
                 formViewPager.setCurrentItem(formViewPager.getCurrentItem()-1, true);
             }
         });
-
-        return root;
     }
 
     public void setCurrentPage(int item) {

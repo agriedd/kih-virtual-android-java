@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.komodoindotech.kihvirtual.ui.pendaftaran.FormKartuCommunityScreeningFragment;
 import com.komodoindotech.kihvirtual.ui.pendaftaran.KonfirmasiPendaftaranFragment;
