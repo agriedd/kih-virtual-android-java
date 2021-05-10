@@ -13,26 +13,16 @@ import android.view.View;
  * status bar and navigation/system bar) with user interaction.
  */
 public class SplashActivity extends AppCompatActivity {
-    /**
-     * Whether or not the system UI should be auto-hidden after
-     * {@link #AUTO_SKIP_DELAY_MILLIS} milliseconds.
-     */
-    private static final boolean AUTO_HIDE = true;
 
-    /**
-     * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
-     * user interaction before hiding the system UI.
-     */
-    private static final int AUTO_SKIP_DELAY_MILLIS = 0;
+    private static final int AUTO_SKIP_DELAY_MILLIS = 2000;
 
     /**
      * Some older devices needs a small delay between UI widget updates
      * and a change of the status and navigation bar.
      */
-    private static final int UI_ANIMATION_DELAY = 0;
+    private static final int UI_ANIMATION_DELAY = 3000;
     private final Handler mHideHandler = new Handler();
     private final Handler mSkipHandler = new Handler();
-    private Runnable mSkipRunnable;
 
     private final Runnable mHideRunnable = new Runnable() {
         @Override
@@ -45,18 +35,20 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        hide();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Runnable mSkipRunnable = () -> startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        mSkipHandler.postDelayed(mSkipRunnable, AUTO_SKIP_DELAY_MILLIS);
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
-        // Trigger the initial hide() shortly after the activity has been
-        // created, to briefly hint to the user that UI controls
-        // are available.
-        delayedHide(0);
-        mSkipRunnable = () -> startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        mSkipHandler.postDelayed(mSkipRunnable, AUTO_SKIP_DELAY_MILLIS);
     }
 
     private void hide() {
@@ -69,16 +61,6 @@ public class SplashActivity extends AppCompatActivity {
             decorView.setSystemUiVisibility(uiOptions);
             actionBar.hide();
         }
-    }
-
-
-    /**
-     * Schedules a call to hide() in delay milliseconds, canceling any
-     * previously scheduled calls.
-     */
-    private void delayedHide(int delayMillis) {
-        mHideHandler.removeCallbacks(mHideRunnable);
-        mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
     @Override

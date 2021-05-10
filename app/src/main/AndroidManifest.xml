@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.KIHVirtual">
-        <activity android:name=".ArticleShowActivity"></activity>
+        <activity android:name=".PendaftaranActivity"></activity>
+        <activity android:name=".ArticleShowActivity" />
 
         <meta-data
             android:name="firebase_performance_logcat_enabled"
@@ -35,8 +36,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>

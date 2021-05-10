@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.komodoindotech.kihvirtual.R;
 import com.komodoindotech.kihvirtual.json.ArticleObject;
@@ -26,11 +25,8 @@ import com.komodoindotech.kihvirtual.json.ArticleObject;
 public class ArticleShowFragment extends Fragment {
 
     private static final String TAG = "articleshowfragment";
-    private MainViewModel mViewModel;
-    private View root;
     private TextView title, body;
     private ImageView cover;
-    private ArticleObject articleObject;
 
     public static ArticleShowFragment newInstance() {
         return new ArticleShowFragment();
@@ -39,7 +35,7 @@ public class ArticleShowFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_show_article, container, false);
+        View root = inflater.inflate(R.layout.fragment_show_article, container, false);
 
         title = root.findViewById(R.id.article_title);
         body = root.findViewById(R.id.article_body);
@@ -51,7 +47,7 @@ public class ArticleShowFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(getActivity()).get(MainViewModel.class);
+        MainViewModel mViewModel = new ViewModelProvider(getActivity()).get(MainViewModel.class);
         mViewModel.getArticle().observe(getActivity(), bindArticle);
     }
 

@@ -15,4 +15,12 @@
     <string name="terjadi_sebuah_kesalahan">Terjadi sebuah kesalahan</string>
     <string name="pesan_error_404">Mohon Maaf! Artikel yang Anda minta tidak ditemukan</string>
     <string name="kembali">Kembali</string>
+    <string name="bagikan">Bagikan</string>
+    <string name="daftar">Daftar</string>
+    <string name="terakhir_diupdate">Terakhir diupdate:</string>
+    <string name="nama">Nama</string>
+    <string name="pekerjaan_suami">Pekerjaan Suami</string>
+    <string name="pekerjaan_ibu">Pekerjaan Ibu</string>
+    <string name="selanjutnya">Selanjutnya</string>
+    <string name="lewati">Lewati</string>
 </resources>

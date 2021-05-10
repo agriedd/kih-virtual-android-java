@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
-import com.alibaba.fastjson.JSON;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.komodoindotech.kihvirtual.R;
 import com.komodoindotech.kihvirtual.json.ArticleObject;
@@ -26,8 +25,6 @@ import com.komodoindotech.kihvirtual.json.ArticleObject;
 public class ArticleShowUrlFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = "articleshowurlfragment";
-    private View root;
-    private MainViewModel mainViewModel;
     private WebView webViewArticle;
     private FloatingActionButton articleShareButton;
     private ArticleObject article;
@@ -47,9 +44,9 @@ public class ArticleShowUrlFragment extends Fragment implements View.OnClickList
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_article_show_url, container, false);
+        View root = inflater.inflate(R.layout.fragment_article_show_url, container, false);
 
-        mainViewModel = new ViewModelProvider(getActivity()).get(MainViewModel.class);
+        MainViewModel mainViewModel = new ViewModelProvider(getActivity()).get(MainViewModel.class);
         mainViewModel.getArticle().observe(getActivity(), bindArticle);
         webViewArticle = root.findViewById(R.id.webview_article);
         articleShareButton = root.findViewById(R.id.article_share_button);
@@ -63,7 +60,7 @@ public class ArticleShowUrlFragment extends Fragment implements View.OnClickList
     private void init() {
     }
 
-    private Observer<ArticleObject> bindArticle = articleObject -> {
+    private final Observer<ArticleObject> bindArticle = articleObject -> {
         article = articleObject;
         if(articleObject.getUrl() != null && articleObject.getUrl().length() > 0){
             webViewArticle.loadUrl(articleObject.getUrl());

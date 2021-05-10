@@ -24,6 +24,7 @@
         android:id="@+id/article_share_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"/>
+        android:layout_margin="16dp"
+        android:contentDescription="@string/bagikan"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

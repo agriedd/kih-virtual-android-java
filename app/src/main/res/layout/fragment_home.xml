@@ -6,25 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment"
     android:id="@+id/container">
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/refresh_home"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="-73dp">
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:id="@+id/linearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
+
                     <LinearLayout
                         android:id="@+id/container_belum_login"
                         android:layout_width="match_parent"
@@ -48,38 +55,43 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:background="#1000"
-                        android:layout_gravity="end"/>
+                        android:layout_gravity="end"
+                        android:background="#1000" />
                 </LinearLayout>
+
                 <LinearLayout
+                    android:id="@+id/container_info_last_update_home"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:gravity="center"
-                    android:paddingVertical="10dp"
+                    android:orientation="vertical"
                     android:paddingHorizontal="20dp"
-                    android:id="@+id/container_info_last_update_home"
+                    android:paddingVertical="10dp"
                     android:visibility="gone">
+
                     <TextView
+                        android:id="@+id/info_last_update_home"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/info_last_update_home"
-                        android:text="Terakhir diupdate:"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Disabled"/>
+                        android:text="@string/terakhir_diupdate"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Disabled" />
                 </LinearLayout>
+
                 <FrameLayout
                     android:id="@+id/frame_artikel"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_baseline_pregnant_woman_24"
-        android:text="Daftar"
+        android:id="@+id/btn_daftar"
+        app:icon="@drawable/ic_baseline_pregnant_woman_24"
+        android:text="@string/daftar"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

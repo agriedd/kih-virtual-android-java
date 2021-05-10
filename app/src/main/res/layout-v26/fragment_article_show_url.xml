@@ -25,6 +25,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="16dp"
-        android:tooltipText="Bagikan"/>
+        android:tooltipText="@string/bagikan"
+        android:contentDescription="@string/bagikan" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
