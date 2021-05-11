@@ -55,14 +55,14 @@ public class FormKartuCommunityScreeningFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_form_kartu_community_screening, container, false);
 
-        pendaftaranViewModel = new ViewModelProvider(getActivity()).get(PendaftaranViewModel.class);
+        pendaftaranViewModel = new ViewModelProvider(requireActivity()).get(PendaftaranViewModel.class);
 
         formViewPager = root.findViewById(R.id.form_pager);
         bottomAppBar = root.findViewById(R.id.bottomappbar);
         pageControlInfo = root.findViewById(R.id.page_control_info);
         fabNextControl = root.findViewById(R.id.fab_next_controll);
 
-        ((AppCompatActivity) getActivity()).setSupportActionBar(bottomAppBar);
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(bottomAppBar);
 
         fragmentsForm = new ArrayList<>();
         fragmentsForm.add(FormInfoDataDiriFragment.newInstance());
@@ -71,7 +71,7 @@ public class FormKartuCommunityScreeningFragment extends Fragment {
         fragmentsForm.add(FormRiwayatImunisasiTTFragment.newInstance());
         fragmentsForm.add(FormKeluhanFragment.newInstance());
 
-        adapterPagerFormKCS = new AdapterPagerFormKCS(getActivity(), fragmentsForm,  getContext());
+        adapterPagerFormKCS = new AdapterPagerFormKCS(requireActivity(), fragmentsForm,  getContext());
 
         formViewPager.setAdapter(adapterPagerFormKCS);
         formViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -114,20 +114,20 @@ public class FormKartuCommunityScreeningFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        pendaftaranViewModel.getFormPagerPositionLiveData().observe(getActivity(), position -> page_position = position);
+        pendaftaranViewModel.getFormPagerPositionLiveData().observe(requireActivity(), position -> page_position = position);
 
-        pendaftaranViewModel.getValidInputLiveData().observe(getActivity(), aBoolean -> {
+        pendaftaranViewModel.getValidInputLiveData().observe(requireActivity(), aBoolean -> {
             Log.d("wtf", "onCreateView: "+aBoolean.toString());
             validInputs = aBoolean;
             if(aBoolean) fabNextControl.show();
             else fabNextControl.hide();
         });
 
-        pendaftaranViewModel.getInputErrors().observe(getActivity(), stringMapMap -> {
+        pendaftaranViewModel.getInputErrors().observe(requireActivity(), stringMapMap -> {
             try {
                 Map<String, String> inputErrorDataDiri = stringMapMap.get(FormInfoDataDiriFragment.KEY);
-                Log.d("wtf", "onCreateView: "+inputErrorDataDiri.size() + " | " + validInputs);
-                if((inputErrorDataDiri != null && inputErrorDataDiri.size() > 0) || !validInputs){
+                assert inputErrorDataDiri != null;
+                if(inputErrorDataDiri.size() > 0 || !validInputs){
                     fabNextControl.hide();
                 } else {
                     fabNextControl.show();
@@ -137,12 +137,12 @@ public class FormKartuCommunityScreeningFragment extends Fragment {
             }
         });
 
-        pendaftaranViewModel.getNextPageLiveData().observe(getActivity(), isNext -> {
+        pendaftaranViewModel.getNextPageLiveData().observe(requireActivity(), isNext -> {
             if(isNext){
                 formViewPager.setCurrentItem(formViewPager.getCurrentItem()+1, true);
             }
         });
-        pendaftaranViewModel.getPreviousPageLiveData().observe(getActivity(), isPrev -> {
+        pendaftaranViewModel.getPreviousPageLiveData().observe(requireActivity(), isPrev -> {
             if(isPrev){
                 formViewPager.setCurrentItem(formViewPager.getCurrentItem()-1, true);
             }
