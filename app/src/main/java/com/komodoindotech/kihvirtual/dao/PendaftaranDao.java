@@ -22,7 +22,7 @@ public interface PendaftaranDao {
     PendaftaranDanRiwayat getLatest();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Pendaftaran... pendaftarans);
+    long insert(Pendaftaran pendaftaran);
 
     @Delete
     void delete(Pendaftaran pendaftaran);

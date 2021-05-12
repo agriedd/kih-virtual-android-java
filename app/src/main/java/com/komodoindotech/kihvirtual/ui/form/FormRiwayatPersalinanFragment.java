@@ -2,7 +2,6 @@ package com.komodoindotech.kihvirtual.ui.form;
 
 import android.os.Bundle;
 
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,18 +11,14 @@ import android.view.ViewGroup;
 import android.widget.Switch;
 
 import com.komodoindotech.kihvirtual.R;
-import com.komodoindotech.kihvirtual.ui.pendaftaran.InformasiFormRiwayatKehamilanFragment;
 import com.komodoindotech.kihvirtual.ui.pendaftaran.InformasiFormRiwayatPersalinanFragment;
 import com.komodoindotech.kihvirtual.ui.pendaftaran.PendaftaranViewModel;
-import com.skydoves.balloon.ArrowOrientation;
-import com.skydoves.balloon.Balloon;
-import com.skydoves.balloon.BalloonAnimation;
 
 public class FormRiwayatPersalinanFragment extends Fragment {
 
-    private Switch statusRiwayatKehamilanView;
+    private Switch statusRiwayatPersalinanView;
     private PendaftaranViewModel pendaftaranViewModel;
-    private boolean statusRiwayatKehamilan;
+    private boolean statusRiwayatPersalinan;
 
     public FormRiwayatPersalinanFragment() {
     }
@@ -41,39 +36,24 @@ public class FormRiwayatPersalinanFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_form_riwayat_persalinan, container, false);
 
-        statusRiwayatKehamilanView = root.findViewById(R.id.status_riwayat_persalinan);
+        statusRiwayatPersalinanView = root.findViewById(R.id.status_riwayat_persalinan);
 
-        pendaftaranViewModel = new ViewModelProvider(getActivity()).get(PendaftaranViewModel.class);
+        pendaftaranViewModel = new ViewModelProvider(requireActivity()).get(PendaftaranViewModel.class);
 
-        statusRiwayatKehamilanView.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            pendaftaranViewModel.setRiwayatKehamilanLiveData(isChecked);
+        statusRiwayatPersalinanView.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            pendaftaranViewModel.setRiwayatPersalinanLiveData(isChecked);
         });
 
-        pendaftaranViewModel.getRiwayatKehamilanLiveData().observe(getActivity(), aBoolean -> {
-            statusRiwayatKehamilan = aBoolean;
-            statusRiwayatKehamilanView.setChecked(aBoolean);
-            if(statusRiwayatKehamilan){
+        pendaftaranViewModel.getRiwayatPersalinanLiveData().observe(getActivity(), aBoolean -> {
+            statusRiwayatPersalinan = aBoolean;
+            statusRiwayatPersalinanView.setChecked(aBoolean);
+            if(statusRiwayatPersalinan){
                 replaceFragment(FormRiwayatPersalinanRecyclerFragment.newInstance());
             } else {
                 replaceFragment(InformasiFormRiwayatPersalinanFragment.newInstance());
             }
         });
 
-//        Balloon balloon = new Balloon.Builder(getContext())
-//                .setArrowSize(10)
-//                .setArrowOrientation(ArrowOrientation.TOP)
-//                .setArrowVisible(true)
-//                .setWidthRatio(.75f)
-//                .setHeight(80)
-//                .setMargin(10)
-//                .setArrowPosition(0.8f)
-//                .setText("Geser, jika Ibu memiliki riwayat persalinan sebelumnya")
-//                .setTextColor(ContextCompat.getColor(getContext(), R.color.white))
-//                .setBackgroundColor(ContextCompat.getColor(getContext(), R.color.teal_700))
-//                .setBalloonAnimation(BalloonAnimation.FADE)
-//                .setLifecycleOwner(getActivity())
-//                .build();
-//        balloon.showAlignBottom(statusRiwayatKehamilanView);
         replaceFragment(InformasiFormRiwayatPersalinanFragment.newInstance());
 
         return root;

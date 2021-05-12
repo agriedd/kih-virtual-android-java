@@ -11,8 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.KIHVirtual">
-        <activity android:name=".ReviewPendaftaran"></activity>
-        <activity android:name=".PendaftaranActivity" />
+        <activity android:name=".ReviewPendaftaran" />
+        <activity android:name=".PendaftaranActivity"/>
         <activity android:name=".ArticleShowActivity" />
 
         <meta-data

@@ -14,17 +14,29 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.komodoindotech.kihvirtual.R;
 import com.komodoindotech.kihvirtual.json.PilihanObject;
+import com.komodoindotech.kihvirtual.models.RiwayatKeluhan;
 
 import java.util.List;
 
 public class AdapterRecyclerFormKeluhan extends RecyclerView.Adapter<AdapterRecyclerFormKeluhan.viewHolder> {
 
-    private Context mContext;
-    private List<PilihanObject> pilihanObjects;
+    public static interface onCheckedChangeListener{
+        void onChange(Boolean status);
+    }
 
-    public AdapterRecyclerFormKeluhan(Context mContext, List<PilihanObject> pilihanObjects) {
+    private Context mContext;
+    private List<RiwayatKeluhan> pilihanObjects;
+    private onCheckedChangeListener listener;
+
+    public AdapterRecyclerFormKeluhan(Context mContext, List<RiwayatKeluhan> pilihanObjects) {
         this.mContext = mContext;
         this.pilihanObjects = pilihanObjects;
+    }
+
+    public AdapterRecyclerFormKeluhan(Context mContext, List<RiwayatKeluhan> pilihanObjects, onCheckedChangeListener listener) {
+        this.mContext = mContext;
+        this.pilihanObjects = pilihanObjects;
+        this.listener = listener;
     }
 
     @NonNull
@@ -37,7 +49,7 @@ public class AdapterRecyclerFormKeluhan extends RecyclerView.Adapter<AdapterRecy
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
         if(getItemViewType(position) == 1){
-            holder.bind(mContext, pilihanObjects.get(position), position);
+            holder.bind(mContext, pilihanObjects.get(position), position, listener);
         } else {
             holder.bindLabel(mContext, pilihanObjects.get(position), position);
         }
@@ -67,12 +79,17 @@ public class AdapterRecyclerFormKeluhan extends RecyclerView.Adapter<AdapterRecy
             container = itemView.findViewById(R.id.pilihan_container);
         }
 
-        public void bind(Context mContext, PilihanObject pilihanObject, int position) {
+        public void bind(Context mContext, RiwayatKeluhan pilihanObject, int position, onCheckedChangeListener listener) {
             label.setText(Html.fromHtml(pilihanObject.getLabel()));
             numbering.setText(position + ". ");
+            aSwitch.setChecked(pilihanObject.value != null ? pilihanObject.value : false);
+            aSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                pilihanObject.value = isChecked;
+                listener.onChange(isChecked);
+            });
         }
 
-        public void bindLabel(Context mContext, PilihanObject pilihanObject, int position) {
+        public void bindLabel(Context mContext, RiwayatKeluhan pilihanObject, int position) {
             label.setText(pilihanObject.getLabel());
             aSwitch.setVisibility(View.GONE);
         }

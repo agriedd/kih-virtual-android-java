@@ -15,7 +15,7 @@ public class KonfirmasiPendaftaranViewModel extends AndroidViewModel {
     private static final String TAG = "konfirmasipendaftaranvm";
     private static final String STATUS = "status";
     // TODO: 5/9/2021 segera ganti
-    private String url = "https://gmitdiaspora.org";
+    private String url = "https://sites.google.com/view/kih-virtual/persetujuan-data-pengguna";
     private Boolean agreement_status;
 
     private MutableLiveData<Boolean> agreementStatusLiveData;

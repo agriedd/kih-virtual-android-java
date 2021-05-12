@@ -2,6 +2,7 @@ package com.komodoindotech.kihvirtual.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "riwayat_persalinan")
@@ -22,9 +23,32 @@ public class RiwayatPersalinan {
     @ColumnInfo(name = "tindakan")
     public String tindakan;
     @ColumnInfo(name = "value")
-    public Boolean value;
+    public Boolean value = false;
     @ColumnInfo(name = "created_at")
     public Long created_at;
     @ColumnInfo(name = "updated_at")
     public Long updated_at;
+
+    @Ignore
+    public Boolean disabled = false;
+
+    public RiwayatPersalinan(String label, Boolean disabled) {
+        this.label = label;
+        this.disabled = disabled;
+    }
+
+    public RiwayatPersalinan(String uid, String label, int warna, String tindakan) {
+        this.uid = uid;
+        this.label = label;
+        this.warna = warna;
+        this.tindakan = tindakan;
+    }
+
+    public Boolean getDisabled() {
+        return disabled;
+    }
+
+    public String getLabel() {
+        return label;
+    }
 }

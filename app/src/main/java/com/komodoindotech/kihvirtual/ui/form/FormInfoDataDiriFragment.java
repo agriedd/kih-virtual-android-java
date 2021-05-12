@@ -2,23 +2,26 @@ package com.komodoindotech.kihvirtual.ui.form;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputLayout;
 import com.komodoindotech.kihvirtual.R;
-import com.komodoindotech.kihvirtual.json.PendaftaranObject;
+import com.komodoindotech.kihvirtual.models.Pendaftaran;
 import com.komodoindotech.kihvirtual.ui.pendaftaran.PendaftaranViewModel;
 
 import java.text.SimpleDateFormat;
@@ -32,7 +35,7 @@ public class FormInfoDataDiriFragment extends Fragment {
     private static final int MINIMUM_UMUR = 0;
     public static final String KEY = "data_diri";
     private View root;
-    private Toolbar toolbar;
+    private MaterialToolbar toolbar;
     private AppCompatEditText nama, umur, alamat, hamil_ke, pendidikan_istri, pendidikan_suami,
             pekerjaan_istri, pekerjaan_suami, haid_terakhir, usia_anak_terakhir,
             lama_menikah;
@@ -42,7 +45,7 @@ public class FormInfoDataDiriFragment extends Fragment {
 
     private Map<String, String> inputErrors;
     private PendaftaranViewModel pendaftaranViewModel;
-    private PendaftaranObject pendaftaranObject;
+    private Pendaftaran pendaftaranObject;
 
     private Long selected_date;
 
@@ -60,21 +63,27 @@ public class FormInfoDataDiriFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_form_info_data_diri, container, false);
-        pendaftaranViewModel = new ViewModelProvider(getActivity()).get(PendaftaranViewModel.class);
+        pendaftaranViewModel = new ViewModelProvider(requireActivity()).get(PendaftaranViewModel.class);
         initView();
         initToolbar();
         setInputEvent();
-        pendaftaranViewModel.getInputErrors().observe(getActivity(), stringMapMap -> {
+        pendaftaranViewModel.getInputErrors().observe(requireActivity(), stringMapMap -> {
 
         });
         return root;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_only_close, menu);
     }
 
     private void setInputEvent() {
 
         inputErrors = new HashMap<>();
         pendaftaranViewModel.setInputError(KEY, inputErrors);
-        pendaftaranObject = new PendaftaranObject();
+        pendaftaranObject = new Pendaftaran();
 
         haid_terakhir.setOnClickListener(v -> {
             MaterialDatePicker.Builder<Long> builder = MaterialDatePicker
@@ -89,7 +98,7 @@ public class FormInfoDataDiriFragment extends Fragment {
 
             MaterialDatePicker<Long> materialDatePicker = builder.build();
 
-            materialDatePicker.show(getActivity().getSupportFragmentManager(), "Tanggal");
+            materialDatePicker.show(requireActivity().getSupportFragmentManager(), "Tanggal");
             materialDatePicker.addOnPositiveButtonClickListener(selection -> {
                 Date date = new Date(selection);
                 selected_date = selection;
@@ -418,7 +427,9 @@ public class FormInfoDataDiriFragment extends Fragment {
 
     private void initToolbar() {
         AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
+        assert appCompatActivity != null;
         appCompatActivity.setSupportActionBar(toolbar);
+        setHasOptionsMenu(true);
     }
 
     private void initView() {
@@ -447,6 +458,23 @@ public class FormInfoDataDiriFragment extends Fragment {
         haid_terakhir_layout = root.findViewById(R.id.haid_terakhir_layout);
         usia_anak_terakhir_layout = root.findViewById(R.id.usia_anak_terakhir_layout);
         lama_menikah_layout = root.findViewById(R.id.lama_menikah_layout);
+
+
+        /**
+         *
+         * developement
+         */
+        nama.setText("lorem");
+        umur.setText("1");
+        alamat.setText("lorem");
+        hamil_ke.setText("1");
+        pendidikan_istri.setText("lorem");
+        pendidikan_suami.setText("lorem");
+        pekerjaan_istri.setText("lorem");
+        pekerjaan_suami.setText("lorem");
+        haid_terakhir.setText("1");
+        usia_anak_terakhir.setText("1");
+        lama_menikah.setText("1");
 
     }
 }

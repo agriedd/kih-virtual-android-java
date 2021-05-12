@@ -1,109 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.form.FormInfoDataDiriFragment"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
-    <androidx.appcompat.widget.Toolbar
+    android:fitsSystemWindows="true">
+
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:fitsSystemWindows="true"
-        app:title="Kau Community Screening"
-        app:subtitle="Oleh Keluarga"
+        android:layout_height="wrap_content"
+        app:elevation="3dp"
         android:elevation="3dp"
-        android:id="@+id/toolbar_form_data_diri">
-    </androidx.appcompat.widget.Toolbar>
-    <ScrollView
+        android:layout_marginBottom="6dp"
+        android:theme="@style/Style.KIHVirtual.Toolbar"
+        android:orientation="vertical">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar_form_data_diri"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:subtitle="Oleh Keluarga"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:title="Kau Community Screening"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:paddingHorizontal="20dp"
             android:paddingTop="20dp"
-            android:paddingBottom="100dp"
-            android:paddingHorizontal="20dp">
+            android:paddingBottom="100dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="0dp"
                 android:paddingHorizontal="20dp"
+                android:paddingTop="0dp"
                 android:paddingBottom="8dp">
+
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/nama_layout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/nama"
-                    android:id="@+id/nama_layout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    android:hint="@string/nama">
+
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/nama"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/nama"/>
+                        android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="0dp"
                 android:paddingHorizontal="20dp"
+                android:paddingTop="0dp"
                 android:paddingBottom="8dp">
+
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/umur_layout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/umur"
-                    app:placeholderText="Dalam Tahun"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:helperText="Umur dalam tahun"
                     app:helperTextEnabled="true"
-                    android:id="@+id/umur_layout"
-                    app:helperText="Umur dalam tahun">
+                    app:placeholderText="Dalam Tahun">
+
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/umur"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/umur"
-                        android:inputType="numberSigned|number"/>
+                        android:inputType="numberSigned|number" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="0dp"
                 android:paddingHorizontal="20dp"
+                android:paddingTop="0dp"
                 android:paddingBottom="8dp">
+
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/alamat_layout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/alamat"
-                    android:id="@+id/alamat_layout"
-                    app:placeholderText="Alamat tinggal"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    app:placeholderText="Alamat tinggal">
+
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/alamat"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/alamat"/>
+                        android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="0dp"
                 android:paddingHorizontal="20dp"
+                android:paddingTop="0dp"
                 android:paddingBottom="8dp">
+
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/hamil_ke_layout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/hamil_ke"
-                    android:id="@+id/hamil_ke_layout"
-                    app:placeholderText="Hamil Kali ke-"
                     app:helperText="Bila baru pertama kali, kolom dapat dikosongkan atau diisi dengan nilai 1"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    app:placeholderText="Hamil Kali ke-">
+
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/hamil_ke"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/hamil_ke"
-                        android:inputType="numberSigned|number"/>
+                        android:inputType="numberSigned|number" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
@@ -113,48 +136,55 @@
                 android:paddingHorizontal="20dp"
                 android:paddingTop="12dp"
                 android:paddingBottom="8dp">
+
                 <TextView
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/pendidikan"
-                    style="@style/TextAppearance.AppCompat.Subhead"/>
+                    android:text="@string/pendidikan" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="0dp"
                 android:paddingHorizontal="20dp"
+                android:paddingTop="0dp"
                 android:paddingBottom="8dp">
+
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/pendidikan_istri_layout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/pendidikan_ibu"
-                    android:id="@+id/pendidikan_istri_layout"
-                    app:placeholderText="Pendidikan Terakhir / Sekarang"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    app:placeholderText="Pendidikan Terakhir / Sekarang">
+
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/pendidikan_istri"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/pendidikan_istri"/>
+                        android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="0dp"
                 android:paddingHorizontal="20dp"
+                android:paddingTop="0dp"
                 android:paddingBottom="8dp">
+
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/pendidikan_suami_layout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/pendidikan_suami"
-                    android:id="@+id/pendidikan_suami_layout"
-                    app:placeholderText="Pendidikan Terakhir / Sekarang"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    app:placeholderText="Pendidikan Terakhir / Sekarang">
+
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/pendidikan_suami"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/pendidikan_suami"/>
+                        android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
@@ -164,111 +194,126 @@
                 android:paddingHorizontal="20dp"
                 android:paddingTop="12dp"
                 android:paddingBottom="8dp">
+
                 <TextView
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/pekerjaan"
-                    style="@style/TextAppearance.AppCompat.Subhead"/>
+                    android:text="@string/pekerjaan" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="0dp"
                 android:paddingHorizontal="20dp"
+                android:paddingTop="0dp"
                 android:paddingBottom="8dp">
+
                 <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/pekerjaan_ibu"
                     android:id="@+id/pekerjaan_istri_layout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/pekerjaan_istri"/>
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="0dp"
-                android:paddingHorizontal="20dp"
-                android:paddingBottom="8dp">
-                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/pekerjaan_suami"
-                    android:id="@+id/pekerjaan_suami_layout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    android:hint="@string/pekerjaan_ibu">
+
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/pekerjaan_istri"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/pekerjaan_suami"/>
+                        android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="0dp"
                 android:paddingHorizontal="20dp"
+                android:paddingTop="0dp"
                 android:paddingBottom="8dp">
+
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/pekerjaan_suami_layout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/pekerjaan_suami">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/pekerjaan_suami"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="0dp"
+                android:paddingBottom="8dp">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/haid_terakhir_layout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/haid_terakhir"
-                    android:id="@+id/haid_terakhir_layout"
-                    app:startIconDrawable="@drawable/ic_baseline_calendar_today_24"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
+
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/haid_terakhir"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/haid_terakhir"
-                        android:focusable="false"/>
+                        android:focusable="false" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="0dp"
                 android:paddingHorizontal="20dp"
+                android:paddingTop="0dp"
                 android:paddingBottom="8dp">
+
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/usia_anak_terakhir_layout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/usia_anak_terakhir"
-                    android:id="@+id/usia_anak_terakhir_layout"
-                    app:helperText="Opsional, dapat diabaikan"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    app:helperText="Opsional, dapat diabaikan">
+
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/usia_anak_terakhir"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/usia_anak_terakhir"
-                        android:inputType="numberSigned|number"/>
+                        android:inputType="numberSigned|number" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="0dp"
                 android:paddingHorizontal="20dp"
+                android:paddingTop="0dp"
                 android:paddingBottom="8dp">
+
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/lama_menikah_layout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/lama_menikah"
-                    android:id="@+id/lama_menikah_layout"
-                    app:placeholderText="Dalam Tahun"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:helperText="Lama menikah dalam tahun (Opsional, dapat diabaikan)"
                     app:helperTextEnabled="true"
-                    app:helperText="Lama menikah dalam tahun (Opsional, dapat diabaikan)">
+                    app:placeholderText="Dalam Tahun">
+
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/lama_menikah"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/lama_menikah"
-                        android:inputType="numberSigned|number"/>
+                        android:inputType="numberSigned|number" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

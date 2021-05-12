@@ -3,11 +3,10 @@ package com.komodoindotech.kihvirtual.models;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
-import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "riwayat_kehamilan")
-public class RiwayatKehamilan {
+@Entity(tableName = "riwayat_keluhan")
+public class RiwayatKeluhan {
 
     @PrimaryKey(autoGenerate = true)
     public int id;
@@ -33,24 +32,20 @@ public class RiwayatKehamilan {
     @Ignore
     public Boolean disabled = false;
 
-    public Boolean getDisabled() {
-        return disabled;
-    }
-
-    public void setDisabled(Boolean disabled) {
-        this.disabled = disabled;
-    }
-
-    public RiwayatKehamilan(String label, Boolean disabled) {
+    public RiwayatKeluhan(String label, Boolean disabled) {
         this.label = label;
         this.disabled = disabled;
     }
 
-    public RiwayatKehamilan(String uid, String label, int warna, String tindakan) {
+    public RiwayatKeluhan(String uid, String label, int warna, String tindakan) {
         this.uid = uid;
         this.label = label;
         this.warna = warna;
         this.tindakan = tindakan;
+    }
+
+    public Boolean getDisabled() {
+        return disabled;
     }
 
     public String getLabel() {

@@ -12,7 +12,7 @@ import com.komodoindotech.kihvirtual.models.Article;
 import java.util.List;
 
 @Dao
-public interface  ArticleDao {
+public interface ArticleDao {
     @Query("SELECT * FROM article")
     LiveData<List<Article>> getAll();
 

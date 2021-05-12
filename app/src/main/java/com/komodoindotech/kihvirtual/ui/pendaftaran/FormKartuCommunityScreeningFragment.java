@@ -127,7 +127,7 @@ public class FormKartuCommunityScreeningFragment extends Fragment {
             try {
                 Map<String, String> inputErrorDataDiri = stringMapMap.get(FormInfoDataDiriFragment.KEY);
                 assert inputErrorDataDiri != null;
-                if(inputErrorDataDiri.size() > 0 || !validInputs){
+                if((inputErrorDataDiri.size() > 0 || !validInputs) || page_position + 1 == adapterPagerFormKCS.getItemCount()){
                     fabNextControl.hide();
                 } else {
                     fabNextControl.show();

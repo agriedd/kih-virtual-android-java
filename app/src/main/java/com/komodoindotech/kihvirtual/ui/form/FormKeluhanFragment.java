@@ -19,6 +19,7 @@ import com.komodoindotech.kihvirtual.R;
 import com.komodoindotech.kihvirtual.ReviewPendaftaran;
 import com.komodoindotech.kihvirtual.adapters.AdapterRecyclerFormKeluhan;
 import com.komodoindotech.kihvirtual.json.PilihanObject;
+import com.komodoindotech.kihvirtual.models.RiwayatKeluhan;
 import com.komodoindotech.kihvirtual.ui.pendaftaran.PendaftaranViewModel;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class FormKeluhanFragment extends Fragment {
     private Toolbar toolbar;
     private RecyclerView listKeluhanView;
     private AdapterRecyclerFormKeluhan adapterRecyclerFormKeluhan;
-    private List<PilihanObject> pilihanObjects;
+    private List<RiwayatKeluhan> pilihanObjects;
     private PendaftaranViewModel pendaftaranViewModel;
 
     public FormKeluhanFragment() {}
@@ -68,101 +69,99 @@ public class FormKeluhanFragment extends Fragment {
     private void initRecyclerView() {
 
         pilihanObjects = new ArrayList<>();
-        PilihanObject pilihanObject = new PilihanObject("Silahkan centang pilihan-pilihan dibawah yang pernah dialami Ibu");
-        pilihanObject.setDisabled(true);
-        pilihanObjects.add(pilihanObject);
+        pilihanObjects.add(new RiwayatKeluhan("Silahkan centang pilihan-pilihan dibawah yang pernah dialami Ibu", false));
 
-        pilihanObjects.add(new PilihanObject(
+        pilihanObjects.add(new RiwayatKeluhan(
                 "klh01",
                 "Kehamilan ini tidak diingikan oleh keluarga",
-                false, new String[] { "koseling" }, PilihanObject.WARNA_KUNING));
-        pilihanObjects.add(new PilihanObject(
+                PilihanObject.WARNA_KUNING, "konseling"));
+        pilihanObjects.add(new RiwayatKeluhan(
                 "klh02",
                 "Ibu hamil merokok atau Ibu hamil tinggal bersama anggota keluarga yang merokok.",
-                false, new String[] { "koseling" }, PilihanObject.WARNA_KUNING));
-        pilihanObjects.add(new PilihanObject(
+                PilihanObject.WARNA_KUNING, "konseling"));
+        pilihanObjects.add(new RiwayatKeluhan(
                 "klh03",
                 "Ibu muntah terus menerus dan tidak mau makan",
-                false, new String[] { "rujuk" }, PilihanObject.WARNA_MERAH));
-        pilihanObjects.add(new PilihanObject(
+                PilihanObject.WARNA_MERAH, "rujuk"));
+        pilihanObjects.add(new RiwayatKeluhan(
                 "klh04",
                 "Ibu mengalami pusing /sakit kepala terus menerus",
-                false, new String[] {"rujuk"}, PilihanObject.WARNA_MERAH));
-        pilihanObjects.add(new PilihanObject(
+                PilihanObject.WARNA_MERAH, "rujuk"));
+        pilihanObjects.add(new RiwayatKeluhan(
                 "klh05",
                 "Ibu pusing /sakit kepala setiap baru bangun tidur",
-                false, new String[] { "konseling" }, PilihanObject.WARNA_KUNING));
-        pilihanObjects.add(new PilihanObject(
+                PilihanObject.WARNA_KUNING, "konseling"));
+        pilihanObjects.add(new RiwayatKeluhan(
                 "klh06",
                 "Demam tinggi, menggigil dan berkeringat",
-                false, new String[] { "rujuk" }, PilihanObject.WARNA_MERAH));
+                PilihanObject.WARNA_MERAH, "rujuk"));
 
-        pilihanObjects.add(new PilihanObject(
+        pilihanObjects.add(new RiwayatKeluhan(
                 "klh07",
                 "Bengkak pada kaki, tangan dan wajah",
-                false, new String[] { "rujuk" }, PilihanObject.WARNA_MERAH));
-        pilihanObjects.add(new PilihanObject(
+                PilihanObject.WARNA_MERAH, "rujuk"));
+        pilihanObjects.add(new RiwayatKeluhan(
                 "klh08",
                 "Ibu mengalami mata berkunang-kunang",
-                false, new String[] { "rujuk" }, PilihanObject.WARNA_MERAH));
-        pilihanObjects.add(new PilihanObject(
+                PilihanObject.WARNA_MERAH, "rujuk"));
+        pilihanObjects.add(new RiwayatKeluhan(
                 "klh09",
                 "Pergerakan janin berkurang (<10 kali/hari)",
-                false, new String[] { "konseling", "rujuk" }, PilihanObject.WARNA_KUNING));
-        pilihanObjects.add(new PilihanObject(
+                PilihanObject.WARNA_KUNING, "konseling, rujuk"));
+        pilihanObjects.add(new RiwayatKeluhan(
                 "klh10",
                 "Tidak merasakan pergerakan janin",
-                false, new String[] { "rujuk" }, PilihanObject.WARNA_MERAH));
-        pilihanObjects.add(new PilihanObject(
+                PilihanObject.WARNA_MERAH, "rujuk"));
+        pilihanObjects.add(new RiwayatKeluhan(
                 "klh11",
                 "Mengalami pendarahan bercak",
-                false, new String[] { "rujuk" }, PilihanObject.WARNA_MERAH));
-        pilihanObjects.add(new PilihanObject(
+                PilihanObject.WARNA_MERAH, "rujuk"));
+        pilihanObjects.add(new RiwayatKeluhan(
                 "klh12",
                 "Ibu mengalami pendarahan (darah segar)",
-                false, new String[] { "rujuk" }, PilihanObject.WARNA_MERAH));
-        pilihanObjects.add(new PilihanObject(
+                PilihanObject.WARNA_MERAH, "rujuk"));
+        pilihanObjects.add(new RiwayatKeluhan(
                 "klh13",
                 "Ibu mengalami diare berulang",
-                false, new String[] { "konseling", "rujuk" }, PilihanObject.WARNA_KUNING));
-        pilihanObjects.add(new PilihanObject(
+                PilihanObject.WARNA_KUNING, "konseling, rujuk"));
+        pilihanObjects.add(new RiwayatKeluhan(
                 "klh14",
                 "Ibu mengalami nyeri saat buang air kecil",
-                false, new String[] { "konseling", "rujuk" }, PilihanObject.WARNA_KUNING));
-        pilihanObjects.add(new PilihanObject(
+                PilihanObject.WARNA_KUNING, "konseling, rujuk"));
+        pilihanObjects.add(new RiwayatKeluhan(
                 "klh15",
                 "Ibu mengalami keputihan",
-                false, new String[] { "konseling" }, PilihanObject.WARNA_KUNING));
-        pilihanObjects.add(new PilihanObject(
+                PilihanObject.WARNA_KUNING, "konseling"));
+        pilihanObjects.add(new RiwayatKeluhan(
                 "klh16",
                 "Ibu mengalami tidak bisa tidur",
-                false, new String[] { "konseling" }, PilihanObject.WARNA_KUNING));
-        pilihanObjects.add(new PilihanObject(
+                PilihanObject.WARNA_KUNING, "konseling"));
+        pilihanObjects.add(new RiwayatKeluhan(
                 "klh17",
                 "Ibu mengalami jantung berdebar-debar",
-                false, new String[] { "konseling", "rujuk" }, PilihanObject.WARNA_KUNING));
-        pilihanObjects.add(new PilihanObject(
+                PilihanObject.WARNA_KUNING, "konseling, rujuk"));
+        pilihanObjects.add(new RiwayatKeluhan(
                 "klh18",
                 "Umur ibu hamil anak pertama terlalu muda (<16 tahun) atau terlalu tua (> 30 tahun)",
-                false, new String[] { "konseling" }, PilihanObject.WARNA_KUNING));
-        pilihanObjects.add(new PilihanObject(
+                PilihanObject.WARNA_KUNING, "konseling"));
+        pilihanObjects.add(new RiwayatKeluhan(
                 "klh19",
                 "Jarak dengan kehamilan sebelumnya kurang dari 2 tahun atau lebih dari 10 tahun",
-                false, new String[] { "konseling" }, PilihanObject.WARNA_KUNING));
-        pilihanObjects.add(new PilihanObject(
+                PilihanObject.WARNA_KUNING, "konseling"));
+        pilihanObjects.add(new RiwayatKeluhan(
                 "klh20",
                 "Ibu hamil terlalu kurus atau terlalu gemuk",
-                false, new String[] { "konseling" }, PilihanObject.WARNA_KUNING));
-        pilihanObjects.add(new PilihanObject(
+                PilihanObject.WARNA_KUNING, "konseling"));
+        pilihanObjects.add(new RiwayatKeluhan(
                 "klh21",
                 "Ibu khawatir akan kehamilannya",
-                false, new String[] { "konseling" }, PilihanObject.WARNA_KUNING));
-        pilihanObjects.add(new PilihanObject(
+                PilihanObject.WARNA_KUNING, "konseling"));
+        pilihanObjects.add(new RiwayatKeluhan(
                 "klh22",
                 "Ibu khawatir dengan proses persalinan yang akan dihadapi",
-                false, new String[] { "konseling" }, PilihanObject.WARNA_KUNING));
+                PilihanObject.WARNA_KUNING, "konseling"));
 
-        adapterRecyclerFormKeluhan = new AdapterRecyclerFormKeluhan(getContext(), pilihanObjects);
+        adapterRecyclerFormKeluhan = new AdapterRecyclerFormKeluhan(getContext(), pilihanObjects, listener);
 
         listKeluhanView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         listKeluhanView.setAdapter(adapterRecyclerFormKeluhan);
@@ -174,6 +173,10 @@ public class FormKeluhanFragment extends Fragment {
     }
 
     private void openReview() {
+        pendaftaranViewModel.storePendaftaran();
         pendaftaranViewModel.openReview();
     }
+    AdapterRecyclerFormKeluhan.onCheckedChangeListener listener = status -> {
+        pendaftaranViewModel.setRiwayatKeluhanObjectLiveData(pilihanObjects);
+    };
 }
