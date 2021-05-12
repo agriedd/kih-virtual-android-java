@@ -2,21 +2,17 @@ package com.komodoindotech.kihvirtual.ui.pendaftaran;
 
 import android.app.Activity;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.viewpager2.widget.ViewPager2;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
-import com.google.android.material.bottomappbar.BottomAppBar;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager2.widget.ViewPager2;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.komodoindotech.kihvirtual.R;
 import com.komodoindotech.kihvirtual.adapters.AdapterPagerFormKCS;
@@ -126,7 +122,7 @@ public class FormKartuCommunityScreeningFragment extends Fragment {
         pendaftaranViewModel.getValidInputLiveData().observe(requireActivity(), aBoolean -> {
             Log.d("wtf", "onCreateView: "+aBoolean.toString());
             validInputs = aBoolean;
-            if(aBoolean || true) fabNextControl.show();
+            if(aBoolean) fabNextControl.show();
             else fabNextControl.hide();
         });
 
@@ -134,7 +130,7 @@ public class FormKartuCommunityScreeningFragment extends Fragment {
             try {
                 Map<String, String> inputErrorDataDiri = stringMapMap.get(FormInfoDataDiriFragment.KEY);
                 assert inputErrorDataDiri != null;
-                if((inputErrorDataDiri.size() > 0 || !validInputs) || page_position + 1 == adapterPagerFormKCS.getItemCount() && false){
+                if((inputErrorDataDiri.size() > 0 || !validInputs) || page_position + 1 == adapterPagerFormKCS.getItemCount()){
                     fabNextControl.hide();
                 } else {
                     fabNextControl.show();

@@ -15,7 +15,7 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.komodoindotech.kihvirtual.R;
-import com.komodoindotech.kihvirtual.json.TanggalObject;
+import com.komodoindotech.kihvirtual.models.RiwayatImunisasi;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,12 +24,18 @@ import java.util.Locale;
 
 public class AdapterRecyclerRiwayatImunisasiTTR extends RecyclerView.Adapter<AdapterRecyclerRiwayatImunisasiTTR.viewHolder> {
 
-    private final Context mContext;
-    private final List<TanggalObject> tanggalObjects;
+    public interface onSetDate{
+        void onChange(Long date);
+    }
 
-    public AdapterRecyclerRiwayatImunisasiTTR(Context mContext, List<TanggalObject> tanggalObjects) {
+    private final Context mContext;
+    private final List<RiwayatImunisasi> tanggalObjects;
+    private final onSetDate listener;
+
+    public AdapterRecyclerRiwayatImunisasiTTR(Context mContext, List<RiwayatImunisasi> tanggalObjects, onSetDate listener) {
         this.mContext = mContext;
         this.tanggalObjects = tanggalObjects;
+        this.listener = listener;
     }
 
     @NonNull
@@ -41,7 +47,7 @@ public class AdapterRecyclerRiwayatImunisasiTTR extends RecyclerView.Adapter<Ada
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-        holder.bind(mContext, tanggalObjects.get(position));
+        holder.bind(mContext, tanggalObjects.get(position), listener);
     }
 
     @Override
@@ -63,7 +69,7 @@ public class AdapterRecyclerRiwayatImunisasiTTR extends RecyclerView.Adapter<Ada
             clearButton = itemView.findViewById(R.id.button_clear);
         }
 
-        public void bind(Context mContext, TanggalObject pendaftaranObject) {
+        public void bind(Context mContext, RiwayatImunisasi pendaftaranObject, onSetDate listener) {
             inputLayout.setHint(pendaftaranObject.getLabel());
             editText.setText(pendaftaranObject.getValue());
             editText.setOnClickListener(v -> {
@@ -87,12 +93,16 @@ public class AdapterRecyclerRiwayatImunisasiTTR extends RecyclerView.Adapter<Ada
                     String dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(date);
                     editText.setText(dateFormat);
                     clearButton.setVisibility(View.VISIBLE);
+                    pendaftaranObject.value = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date);
+                    listener.onChange(selection);
                 });
             });
             clearButton.setOnClickListener(v -> {
                 editText.setText(null);
                 clearButton.setVisibility(View.GONE);
                 selected_date = null;
+                pendaftaranObject.value = null;
+                listener.onChange(null);
             });
         }
     }

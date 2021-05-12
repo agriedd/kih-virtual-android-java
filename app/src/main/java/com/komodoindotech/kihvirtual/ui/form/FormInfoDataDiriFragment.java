@@ -76,17 +76,17 @@ public class FormInfoDataDiriFragment extends Fragment {
     }
 
     private void setDefaultValues() {
-        nama.setText("lorem");
-        umur.setText("1");
-        alamat.setText("lorem");
-        hamil_ke.setText("1");
-        pendidikan_istri.setText("lorem");
-        pendidikan_suami.setText("lorem");
-        pekerjaan_istri.setText("lorem");
-        pekerjaan_suami.setText("lorem");
-        haid_terakhir.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
-        usia_anak_terakhir.setText("1");
-        lama_menikah.setText("1");
+//        nama.setText("lorem");
+//        umur.setText("1");
+//        alamat.setText("lorem");
+//        hamil_ke.setText("1");
+//        pendidikan_istri.setText("lorem");
+//        pendidikan_suami.setText("lorem");
+//        pekerjaan_istri.setText("lorem");
+//        pekerjaan_suami.setText("lorem");
+//        haid_terakhir.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
+//        usia_anak_terakhir.setText("1");
+//        lama_menikah.setText("1");
     }
 
     @Override

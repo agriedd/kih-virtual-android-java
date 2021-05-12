@@ -1,20 +1,21 @@
 package com.komodoindotech.kihvirtual.ui.form;
 
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.appbar.MaterialToolbar;
 import com.komodoindotech.kihvirtual.R;
 import com.komodoindotech.kihvirtual.adapters.AdapterRecyclerRiwayatImunisasiTTR;
-import com.komodoindotech.kihvirtual.json.TanggalObject;
+import com.komodoindotech.kihvirtual.models.RiwayatImunisasi;
+import com.komodoindotech.kihvirtual.ui.pendaftaran.PendaftaranViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,8 @@ public class FormRiwayatImunisasiTTFragment extends Fragment {
 
     private RecyclerView formRiwayatImunisasiTTView;
     private MaterialToolbar toolbar;
+    private PendaftaranViewModel pendaftaranViewModel;
+    private List<RiwayatImunisasi> tanggalObjects;
 
     public FormRiwayatImunisasiTTFragment() {}
 
@@ -39,6 +42,8 @@ public class FormRiwayatImunisasiTTFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_form_riwayat_imunisasi_t_t, container, false);
+
+        pendaftaranViewModel = new ViewModelProvider(requireActivity()).get(PendaftaranViewModel.class);
 
         toolbar = root.findViewById(R.id.toolbar_riwayat_imuntt);
         formRiwayatImunisasiTTView = root.findViewById(R.id.list_riwayat_imunisasi_tt);
@@ -57,16 +62,19 @@ public class FormRiwayatImunisasiTTFragment extends Fragment {
 
     private void initRiwayatImunisasiRecycler() {
 
-        List<TanggalObject> tanggalObjects = new ArrayList<>();
-        tanggalObjects.add(new TanggalObject("tt1", "TT1 tanggal"));
-        tanggalObjects.add(new TanggalObject("tt2", "TT2 tanggal"));
-        tanggalObjects.add(new TanggalObject("tt3", "TT3 tanggal"));
-        tanggalObjects.add(new TanggalObject("tt4", "TT4 tanggal"));
-        tanggalObjects.add(new TanggalObject("tt5", "TT5 tanggal"));
+        tanggalObjects = new ArrayList<>();
 
-        AdapterRecyclerRiwayatImunisasiTTR adapterRecyclerRiwayatImunisasiTTR = new AdapterRecyclerRiwayatImunisasiTTR(getContext(), tanggalObjects);
+        tanggalObjects.add(new RiwayatImunisasi("tt1", "TT1 tanggal"));
+        tanggalObjects.add(new RiwayatImunisasi("tt2", "TT2 tanggal"));
+        tanggalObjects.add(new RiwayatImunisasi("tt3", "TT3 tanggal"));
+        tanggalObjects.add(new RiwayatImunisasi("tt4", "TT4 tanggal"));
+        tanggalObjects.add(new RiwayatImunisasi("tt5", "TT5 tanggal"));
+
+        AdapterRecyclerRiwayatImunisasiTTR adapterRecyclerRiwayatImunisasiTTR = new AdapterRecyclerRiwayatImunisasiTTR(getContext(), tanggalObjects, listener);
 
         formRiwayatImunisasiTTView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         formRiwayatImunisasiTTView.setAdapter(adapterRecyclerRiwayatImunisasiTTR);
     }
+
+    private final AdapterRecyclerRiwayatImunisasiTTR.onSetDate listener = date -> pendaftaranViewModel.setRiwayatImunisasiObjectLiveData(tanggalObjects);
 }

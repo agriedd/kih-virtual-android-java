@@ -22,7 +22,10 @@ public interface RiwayatImunisasiDao {
     RiwayatImunisasi getLatest();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(RiwayatImunisasi... riwayatImunisasis);
+    Long insert(RiwayatImunisasi riwayatImunisasi);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Long[] insertAll(List<RiwayatImunisasi> riwayatImunisasis);
 
     @Delete
     void delete(RiwayatImunisasi riwayatImunisasi);

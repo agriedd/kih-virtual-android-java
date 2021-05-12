@@ -23,4 +23,17 @@ public class RiwayatImunisasi {
     public Long created_at;
     @ColumnInfo(name = "updated_at")
     public Long updated_at;
+
+    public RiwayatImunisasi(String uid, String label) {
+        this.uid = uid;
+        this.label = label;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public String getValue() {
+        return value;
+    }
 }
