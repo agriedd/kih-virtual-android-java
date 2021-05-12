@@ -2,18 +2,21 @@ package com.komodoindotech.kihvirtual.ui.form;
 
 import android.os.Bundle;
 
-import androidx.appcompat.widget.TooltipCompat;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Switch;
 
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.komodoindotech.kihvirtual.R;
-import com.komodoindotech.kihvirtual.ui.article_show.ArticleNotFoundFragment;
 import com.komodoindotech.kihvirtual.ui.pendaftaran.InformasiFormRiwayatKehamilanFragment;
 import com.komodoindotech.kihvirtual.ui.pendaftaran.PendaftaranViewModel;
 import com.skydoves.balloon.ArrowOrientation;
@@ -24,7 +27,8 @@ public class FormRiwayatKehamilanFragment extends Fragment {
 
     private PendaftaranViewModel pendaftaranViewModel;
     private Boolean statusRiwayatKehamilan;
-    private Switch statusRiwayatKehamilanView;
+    private SwitchMaterial statusRiwayatKehamilanView;
+    private MaterialToolbar toolbar;
 
     public FormRiwayatKehamilanFragment() {
 
@@ -44,14 +48,14 @@ public class FormRiwayatKehamilanFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_from_riwayat_kehamilan, container, false);
 
         statusRiwayatKehamilanView = root.findViewById(R.id.status_riwayat_kehamilan);
+        toolbar = root.findViewById(R.id.toolbar);
+        initToolbar();
 
-        pendaftaranViewModel = new ViewModelProvider(getActivity()).get(PendaftaranViewModel.class);
+        pendaftaranViewModel = new ViewModelProvider(requireActivity()).get(PendaftaranViewModel.class);
 
-        statusRiwayatKehamilanView.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            pendaftaranViewModel.setRiwayatKehamilanLiveData(isChecked);
-        });
+        statusRiwayatKehamilanView.setOnCheckedChangeListener((buttonView, isChecked) -> pendaftaranViewModel.setRiwayatKehamilanLiveData(isChecked));
 
-        pendaftaranViewModel.getRiwayatKehamilanLiveData().observe(getActivity(), aBoolean -> {
+        pendaftaranViewModel.getRiwayatKehamilanLiveData().observe(requireActivity(), aBoolean -> {
             statusRiwayatKehamilan = aBoolean;
             statusRiwayatKehamilanView.setChecked(aBoolean);
             if(statusRiwayatKehamilan){
@@ -66,11 +70,23 @@ public class FormRiwayatKehamilanFragment extends Fragment {
         return root;
     }
 
+    private void initToolbar() {
+        AppCompatActivity appCompatActivity = (AppCompatActivity) requireActivity();
+        appCompatActivity.setSupportActionBar(toolbar);
+        setHasOptionsMenu(true);
+        toolbar.setNavigationOnClickListener(v -> pendaftaranViewModel.previousPageForm());
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
     @Override
     public void onStart() {
         super.onStart();
 
-        Balloon balloon = new Balloon.Builder(getContext())
+        Balloon balloon = new Balloon.Builder(requireContext())
                 .setArrowSize(10)
                 .setArrowOrientation(ArrowOrientation.TOP)
                 .setArrowVisible(true)
@@ -79,8 +95,8 @@ public class FormRiwayatKehamilanFragment extends Fragment {
                 .setMargin(10)
                 .setArrowPosition(0.8f)
                 .setText("Geser, jika Ibu memiliki riwayat kehamilan sebelumnya")
-                .setTextColor(ContextCompat.getColor(getContext(), R.color.white))
-                .setBackgroundColor(ContextCompat.getColor(getContext(), R.color.teal_700))
+                .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                .setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.teal_700))
                 .setBalloonAnimation(BalloonAnimation.FADE)
                 .setLifecycleOwner(getActivity())
                 .build();

@@ -37,4 +37,8 @@
     <string name="usia_anak_terakhir">Usia Anak Terakhir</string>
     <string name="lama_menikah">Lama Menikah</string>
     <string name="tutup">Tutup</string>
+    <string name="riwayat_persalinan_yang_lalu">Riwayat persalinan yang lalu</string>
+    <string name="ibu_memiliki_riwayat_persalinan_sebelumnya">Ibu memiliki riwayat persalinan sebelumnya</string>
+    <string name="info_skip_persalinan">Lewati bila Ibu baru pertama kali dan belum memiliki riwayat persalinan sebelumnya</string>
+    <string name="remove_date">Remove date</string>
 </resources>

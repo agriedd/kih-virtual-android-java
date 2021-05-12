@@ -16,6 +16,21 @@
         <item name="cardViewStyle">@style/Style.KIHVirtual.Component.Cardview</item>
     </style>
 
+    <style name="Style.KIHVirtual.Component.Secondary" parent="Theme.KIHVirtual">
+        <item name="colorSecondary">@color/black_900</item>
+        <item name="colorSecondaryVariant">@color/black_800</item>
+        <item name="colorOnSecondary">@color/teal_200</item>
+        <item name="tint">@color/teal_200</item>
+        <item name="drawableTint">@color/teal_200</item>
+    </style>
+    <style name="Style.KIHVirtual.Component.Secondary.Error" parent="Theme.KIHVirtual">
+        <item name="colorSecondary">@color/black_900</item>
+        <item name="colorSecondaryVariant">@color/black_800</item>
+        <item name="colorOnSecondary">@color/red_300</item>
+        <item name="tint">@color/red_300</item>
+        <item name="drawableTint">@color/red_300</item>
+    </style>
+
     <style name="Style.KIHVirtual.Component.Cardview">
         <item name="cardBackgroundColor">@color/black_900</item>
     </style>

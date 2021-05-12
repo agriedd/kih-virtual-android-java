@@ -1,5 +1,6 @@
 package com.komodoindotech.kihvirtual.ui.pendaftaran;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
@@ -32,7 +35,6 @@ public class FormKartuCommunityScreeningFragment extends Fragment {
     ViewPager2 formViewPager;
     AdapterPagerFormKCS adapterPagerFormKCS;
     List<Fragment> fragmentsForm;
-    BottomAppBar bottomAppBar;
     TextView pageControlInfo;
     FloatingActionButton fabNextControl;
     PendaftaranViewModel pendaftaranViewModel;
@@ -58,11 +60,8 @@ public class FormKartuCommunityScreeningFragment extends Fragment {
         pendaftaranViewModel = new ViewModelProvider(requireActivity()).get(PendaftaranViewModel.class);
 
         formViewPager = root.findViewById(R.id.form_pager);
-        bottomAppBar = root.findViewById(R.id.bottomappbar);
         pageControlInfo = root.findViewById(R.id.page_control_info);
         fabNextControl = root.findViewById(R.id.fab_next_controll);
-
-        ((AppCompatActivity) requireActivity()).setSupportActionBar(bottomAppBar);
 
         fragmentsForm = new ArrayList<>();
         fragmentsForm.add(FormInfoDataDiriFragment.newInstance());
@@ -75,6 +74,7 @@ public class FormKartuCommunityScreeningFragment extends Fragment {
 
         formViewPager.setAdapter(adapterPagerFormKCS);
         formViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels);
@@ -97,7 +97,14 @@ public class FormKartuCommunityScreeningFragment extends Fragment {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                super.onPageScrollStateChanged(state);
+//                super.onPageScrollStateChanged(state);
+                if (state == ViewPager2.SCROLL_STATE_IDLE){
+                    InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    View view = requireActivity().getCurrentFocus();
+                    if (view == null)
+                        view = new View(requireActivity());
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
             }
         });
 
@@ -119,7 +126,7 @@ public class FormKartuCommunityScreeningFragment extends Fragment {
         pendaftaranViewModel.getValidInputLiveData().observe(requireActivity(), aBoolean -> {
             Log.d("wtf", "onCreateView: "+aBoolean.toString());
             validInputs = aBoolean;
-            if(aBoolean) fabNextControl.show();
+            if(aBoolean || true) fabNextControl.show();
             else fabNextControl.hide();
         });
 
@@ -127,7 +134,7 @@ public class FormKartuCommunityScreeningFragment extends Fragment {
             try {
                 Map<String, String> inputErrorDataDiri = stringMapMap.get(FormInfoDataDiriFragment.KEY);
                 assert inputErrorDataDiri != null;
-                if((inputErrorDataDiri.size() > 0 || !validInputs) || page_position + 1 == adapterPagerFormKCS.getItemCount()){
+                if((inputErrorDataDiri.size() > 0 || !validInputs) || page_position + 1 == adapterPagerFormKCS.getItemCount() && false){
                     fabNextControl.hide();
                 } else {
                     fabNextControl.show();
@@ -144,6 +151,14 @@ public class FormKartuCommunityScreeningFragment extends Fragment {
         });
         pendaftaranViewModel.getPreviousPageLiveData().observe(requireActivity(), isPrev -> {
             if(isPrev){
+                InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                //Find the currently focused view, so we can grab the correct window token from it.
+                View view = requireActivity().getCurrentFocus();
+                //If no view currently has focus, create a new one, just so we can grab a window token from it
+                if (view == null) {
+                    view = new View(requireActivity());
+                }
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 formViewPager.setCurrentItem(formViewPager.getCurrentItem()-1, true);
             }
         });

@@ -13,6 +13,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -67,16 +68,39 @@ public class FormInfoDataDiriFragment extends Fragment {
         initView();
         initToolbar();
         setInputEvent();
+        setDefaultValues();
         pendaftaranViewModel.getInputErrors().observe(requireActivity(), stringMapMap -> {
 
         });
         return root;
     }
 
+    private void setDefaultValues() {
+        nama.setText("lorem");
+        umur.setText("1");
+        alamat.setText("lorem");
+        hamil_ke.setText("1");
+        pendidikan_istri.setText("lorem");
+        pendidikan_suami.setText("lorem");
+        pekerjaan_istri.setText("lorem");
+        pekerjaan_suami.setText("lorem");
+        haid_terakhir.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
+        usia_anak_terakhir.setText("1");
+        lama_menikah.setText("1");
+    }
+
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_only_close, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menu_exit_activity) {
+            requireActivity().finish();
+        }
+        return true;
     }
 
     private void setInputEvent() {
@@ -460,21 +484,6 @@ public class FormInfoDataDiriFragment extends Fragment {
         lama_menikah_layout = root.findViewById(R.id.lama_menikah_layout);
 
 
-        /**
-         *
-         * developement
-         */
-        nama.setText("lorem");
-        umur.setText("1");
-        alamat.setText("lorem");
-        hamil_ke.setText("1");
-        pendidikan_istri.setText("lorem");
-        pendidikan_suami.setText("lorem");
-        pekerjaan_istri.setText("lorem");
-        pekerjaan_suami.setText("lorem");
-        haid_terakhir.setText("1");
-        usia_anak_terakhir.setText("1");
-        lama_menikah.setText("1");
 
     }
 }

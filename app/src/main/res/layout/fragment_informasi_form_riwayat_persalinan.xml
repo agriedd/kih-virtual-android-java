@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Lewati bila Ibu baru pertama kali dan belum memiliki riwayat persalinan sebelumnya"
+                android:text="@string/info_skip_persalinan"
                 android:textAlignment="center" />
 
         </LinearLayout>
@@ -48,10 +48,11 @@
                 android:layout_margin="16dp"
                 android:text="@string/lewati"
                 android:textAllCaps="false"
-                android:theme="@style/Style.KIHVirtual.Component"
                 app:icon="@drawable/ic_baseline_chevron_right_24"
                 app:iconGravity="end"
-                android:paddingStart="20dp"/>
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:theme="@style/Style.KIHVirtual.Component.Secondary"/>
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

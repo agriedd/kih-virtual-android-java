@@ -1,42 +1,31 @@
 package com.komodoindotech.kihvirtual.adapters;
 
-import android.app.DatePickerDialog;
 import android.content.Context;
-import android.util.Log;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
-import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.alibaba.fastjson.JSON;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.komodoindotech.kihvirtual.R;
-import com.komodoindotech.kihvirtual.json.PendaftaranObject;
 import com.komodoindotech.kihvirtual.json.TanggalObject;
 
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class AdapterRecyclerRiwayatImunisasiTTR extends RecyclerView.Adapter<AdapterRecyclerRiwayatImunisasiTTR.viewHolder> {
 
-    private Context mContext;
-    private List<TanggalObject> tanggalObjects;
+    private final Context mContext;
+    private final List<TanggalObject> tanggalObjects;
 
     public AdapterRecyclerRiwayatImunisasiTTR(Context mContext, List<TanggalObject> tanggalObjects) {
         this.mContext = mContext;
@@ -52,7 +41,7 @@ public class AdapterRecyclerRiwayatImunisasiTTR extends RecyclerView.Adapter<Ada
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-        holder.bind(mContext, tanggalObjects.get(position), position);
+        holder.bind(mContext, tanggalObjects.get(position));
     }
 
     @Override
@@ -64,7 +53,7 @@ public class AdapterRecyclerRiwayatImunisasiTTR extends RecyclerView.Adapter<Ada
 
         TextInputLayout inputLayout;
         AppCompatEditText editText;
-        AppCompatImageButton clearButton;
+        FloatingActionButton clearButton;
         Date selected_date;
 
         public viewHolder(@NonNull View itemView) {
@@ -74,11 +63,11 @@ public class AdapterRecyclerRiwayatImunisasiTTR extends RecyclerView.Adapter<Ada
             clearButton = itemView.findViewById(R.id.button_clear);
         }
 
-        public void bind(Context mContext, TanggalObject pendaftaranObject, int position) {
+        public void bind(Context mContext, TanggalObject pendaftaranObject) {
             inputLayout.setHint(pendaftaranObject.getLabel());
             editText.setText(pendaftaranObject.getValue());
             editText.setOnClickListener(v -> {
-                MaterialDatePicker.Builder builder = MaterialDatePicker
+                MaterialDatePicker.Builder<Long> builder = MaterialDatePicker
                         .Builder
                         .datePicker()
                         .setTitleText("Pilih tanggal");
@@ -95,7 +84,7 @@ public class AdapterRecyclerRiwayatImunisasiTTR extends RecyclerView.Adapter<Ada
                 materialDatePicker.addOnPositiveButtonClickListener(selection -> {
                     Date date = new Date(selection);
                     selected_date = date;
-                    String dateFormat = new SimpleDateFormat("dd-MM-yyyy").format(date);
+                    String dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(date);
                     editText.setText(dateFormat);
                     clearButton.setVisibility(View.VISIBLE);
                 });
@@ -107,5 +96,4 @@ public class AdapterRecyclerRiwayatImunisasiTTR extends RecyclerView.Adapter<Ada
             });
         }
     }
-
 }

@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Lewati bila Ibu baru pertama kali, dan belum memiliki riwayat kehamilan sebelumnya"
+                android:text="Lewati bila Ibu baru pertama kali dan belum memiliki riwayat kehamilan sebelumnya"
                 android:textAlignment="center" />
 
         </LinearLayout>
@@ -49,7 +49,7 @@
                 android:layout_margin="16dp"
                 android:text="@string/lewati"
                 android:textAllCaps="false"
-                android:theme="@style/Style.KIHVirtual.Component"
+                android:theme="@style/Style.KIHVirtual.Component.Secondary"
                 app:icon="@drawable/ic_baseline_chevron_right_24"
                 app:iconGravity="end"
                 android:paddingStart="20dp"
