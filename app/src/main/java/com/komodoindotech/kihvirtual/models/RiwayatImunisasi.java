@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "riwayat_imunisasi")
-public class RiwayatImunisasi {
+public class RiwayatImunisasi extends RiwayatContract {
 
     @PrimaryKey(autoGenerate = true)
     public int id;

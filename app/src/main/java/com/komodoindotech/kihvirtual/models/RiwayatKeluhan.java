@@ -6,7 +6,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "riwayat_keluhan")
-public class RiwayatKeluhan {
+public class RiwayatKeluhan extends RiwayatContract {
 
     @PrimaryKey(autoGenerate = true)
     public int id;
@@ -33,6 +33,12 @@ public class RiwayatKeluhan {
     public Boolean disabled = false;
 
     public RiwayatKeluhan(String label, Boolean disabled) {
+        this.label = label;
+        this.disabled = disabled;
+    }
+
+    public RiwayatKeluhan(String uid, String label, Boolean disabled) {
+        this.uid = uid;
         this.label = label;
         this.disabled = disabled;
     }

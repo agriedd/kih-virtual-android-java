@@ -1,51 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.form.FormKeluhanFragment">
+    tools:context=".ui.form.FormKeluhanFragment"
+    android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_keluhan"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:subtitle="Keluhan yang dirasakan saat ini"
-        app:title="Keluhan Yang Dirasakan" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_form_keluhan"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        app:layout_constraintBottom_toTopOf="@id/linearLayout4"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_keluhan"/>
-
-    <LinearLayout
-        android:id="@+id/linearLayout4"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="?actionBarSize">
-        <View
+        app:elevation="3dp"
+        android:elevation="3dp"
+        android:layout_marginBottom="6dp"
+        android:theme="@style/Style.KIHVirtual.Toolbar"
+        android:orientation="vertical">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="#3000"></View>
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+            app:subtitle="Keluhan yang dirasakan saat ini"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:title="Kau Community Screening"/>
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <Button
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_form_keluhan"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <LinearLayout
+            android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginVertical="12dp"
-            android:id="@+id/button_review"
-            android:text="Review data yang sudah Ibu masukan"
-            android:theme="@style/Style.KIHVirtual.Component"
-            android:padding="20dp"/>
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="?actionBarSize">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#3000" />
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginVertical="12dp"
+                android:id="@+id/button_review"
+                android:text="@string/review_button"
+                android:theme="@style/Style.KIHVirtual.Component"
+                android:padding="20dp"/>
+        </LinearLayout>
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

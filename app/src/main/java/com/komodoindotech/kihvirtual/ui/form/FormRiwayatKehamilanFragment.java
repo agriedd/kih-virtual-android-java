@@ -86,21 +86,21 @@ public class FormRiwayatKehamilanFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        Balloon balloon = new Balloon.Builder(requireContext())
-                .setArrowSize(10)
-                .setArrowOrientation(ArrowOrientation.TOP)
-                .setArrowVisible(true)
-                .setWidthRatio(.75f)
-                .setHeight(80)
-                .setMargin(10)
-                .setArrowPosition(0.8f)
-                .setText("Geser, jika Ibu memiliki riwayat kehamilan sebelumnya")
-                .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-                .setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.teal_700))
-                .setBalloonAnimation(BalloonAnimation.FADE)
-                .setLifecycleOwner(getActivity())
-                .build();
-        balloon.showAlignBottom(statusRiwayatKehamilanView);
+//        Balloon balloon = new Balloon.Builder(requireContext())
+//                .setArrowSize(10)
+//                .setArrowOrientation(ArrowOrientation.TOP)
+//                .setArrowVisible(true)
+//                .setWidthRatio(.75f)
+//                .setHeight(80)
+//                .setMargin(10)
+//                .setArrowPosition(0.8f)
+//                .setText("Geser, jika Ibu memiliki riwayat kehamilan sebelumnya")
+//                .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+//                .setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.teal_700))
+//                .setBalloonAnimation(BalloonAnimation.FADE)
+//                .setLifecycleOwner(getActivity())
+//                .build();
+//        balloon.showAlignBottom(statusRiwayatKehamilanView);
     }
 
     public void replaceFragment(Fragment fragment){

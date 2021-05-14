@@ -59,11 +59,21 @@ public class AdapterRecyclerFormRiwayatPersalinan extends RecyclerView.Adapter<A
         return pilihanObjects.size();
     }
 
+    @Override
+    public void onViewAttachedToWindow(@NonNull viewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        holder.aSwitch.setChecked(
+                pilihanObjects.get(
+                        holder.getAdapterPosition()
+                ).value
+        );
+    }
+
     public static class viewHolder extends RecyclerView.ViewHolder{
 
-        TextView label, numbering;
-        CheckBox aSwitch;
-        CardView container;
+        public TextView label, numbering;
+        public CheckBox aSwitch;
+        public CardView container;
 
         public viewHolder(@NonNull View itemView) {
             super(itemView);

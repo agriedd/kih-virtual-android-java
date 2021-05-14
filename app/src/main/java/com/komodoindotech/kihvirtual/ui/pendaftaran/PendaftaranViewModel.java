@@ -10,14 +10,17 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.alibaba.fastjson.JSON;
 import com.komodoindotech.kihvirtual.models.Pendaftaran;
+import com.komodoindotech.kihvirtual.models.PendaftaranDanRiwayat;
 import com.komodoindotech.kihvirtual.models.RiwayatImunisasi;
 import com.komodoindotech.kihvirtual.models.RiwayatKehamilan;
 import com.komodoindotech.kihvirtual.models.RiwayatKeluhan;
 import com.komodoindotech.kihvirtual.models.RiwayatPersalinan;
+import com.komodoindotech.kihvirtual.repositories.KeluhanRepository;
 import com.komodoindotech.kihvirtual.repositories.PendaftaranRepository;
 import com.komodoindotech.kihvirtual.repositories.RiwayatImunisasiRepository;
 import com.komodoindotech.kihvirtual.repositories.RiwayatKehamilanRepository;
 import com.komodoindotech.kihvirtual.repositories.RiwayatPersalinanRepository;
+import com.komodoindotech.kihvirtual.services.StoreKeluhan;
 import com.komodoindotech.kihvirtual.services.StorePendaftaran;
 import com.komodoindotech.kihvirtual.services.StoreRiwayatImunisasi;
 import com.komodoindotech.kihvirtual.services.StoreRiwayatKehamilan;
@@ -200,6 +203,14 @@ public class PendaftaranViewModel extends AndroidViewModel {
             riwayatImunisasi.updated_at = new Date().getTime();
         }
         StoreRiwayatImunisasi.handler(new RiwayatImunisasiRepository(getApplication()), riwayatImunisasis);
+        for(RiwayatKeluhan riwayatKeluhan : riwayatKeluhans){
+            riwayatKeluhan.id_pendaftaran = (int) id_pendaftaran;
+            riwayatKeluhan.created_at = new Date().getTime();
+            riwayatKeluhan.updated_at = new Date().getTime();
+        }
+        StoreKeluhan.handler(new KeluhanRepository(getApplication()), riwayatKeluhans);
+        PendaftaranDanRiwayat pendaftaranDanRiwayat = new PendaftaranRepository(getApplication()).find(id_pendaftaran);
+        Log.d("wtf", "storePendaftaran: "+JSON.toJSONString(pendaftaranDanRiwayat));
     }
 
     public void setRiwayatKehamilanObjectLiveData(List<RiwayatKehamilan> pilihanObjects) {
@@ -213,5 +224,10 @@ public class PendaftaranViewModel extends AndroidViewModel {
     }
     public void setRiwayatImunisasiObjectLiveData(List<RiwayatImunisasi> riwayatImunisasiObjectLiveData) {
         this.riwayatImunisasiObjectLiveData.setValue(riwayatImunisasis = riwayatImunisasiObjectLiveData);
+    }
+
+    public PendaftaranDanRiwayat getLatestPendaftaran(){
+        PendaftaranRepository pendaftaranRepository = new PendaftaranRepository(getApplication());
+        return pendaftaranRepository.getLatest();
     }
 }

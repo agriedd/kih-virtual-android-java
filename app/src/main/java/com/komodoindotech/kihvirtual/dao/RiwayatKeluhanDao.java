@@ -20,7 +20,10 @@ public interface RiwayatKeluhanDao {
     RiwayatKeluhan getLatest();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(RiwayatKeluhan... riwayatKeluhans);
+    Long insert(RiwayatKeluhan riwayatKeluhan);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Long[] insertAll(List<RiwayatKeluhan> riwayatKeluhans);
 
     @Delete
     void delete(RiwayatKeluhan riwayatKehamilan);

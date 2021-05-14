@@ -16,13 +16,16 @@ import java.util.List;
 public interface PendaftaranDao {
 
     @Query("SELECT * FROM pendaftaran")
-    LiveData<List<Pendaftaran>> getAll();
+    LiveData<List<PendaftaranDanRiwayat>> getAll();
 
     @Query("SELECT * FROM pendaftaran ORDER BY created_at DESC LIMIT 1")
     PendaftaranDanRiwayat getLatest();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insert(Pendaftaran pendaftaran);
+
+    @Query("SELECT * FROM pendaftaran WHERE id=:id")
+    PendaftaranDanRiwayat find(Long id);
 
     @Delete
     void delete(Pendaftaran pendaftaran);

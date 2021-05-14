@@ -58,6 +58,7 @@ public class FormRiwayatImunisasiTTFragment extends Fragment {
     private void initToolbar() {
         AppCompatActivity appCompatActivity = (AppCompatActivity) requireActivity();
         appCompatActivity.setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(v -> pendaftaranViewModel.previousPageForm());
     }
 
     private void initRiwayatImunisasiRecycler() {

@@ -9,10 +9,13 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.alibaba.fastjson.JSON;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.komodoindotech.kihvirtual.R;
 import com.komodoindotech.kihvirtual.adapters.AdapterPagerFormKCS;
@@ -27,6 +30,10 @@ import java.util.List;
 import java.util.Map;
 
 public class FormKartuCommunityScreeningFragment extends Fragment {
+
+    private static final String VALID_INPUT = "valid_input";
+    private static final String PAGE_POSITION = "page_position";
+
 
     ViewPager2 formViewPager;
     AdapterPagerFormKCS adapterPagerFormKCS;
@@ -114,6 +121,15 @@ public class FormKartuCommunityScreeningFragment extends Fragment {
     }
 
     @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+    }
+
+    private void storeState() {
+        formViewPager.setCurrentItem(page_position);
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
 
@@ -163,4 +179,12 @@ public class FormKartuCommunityScreeningFragment extends Fragment {
     public void setCurrentPage(int item) {
         formViewPager.setCurrentItem(item);
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putInt("page_position", page_position);
+        outState.putBoolean("valid_input", validInputs);
+        super.onSaveInstanceState(outState);
+    }
+
 }

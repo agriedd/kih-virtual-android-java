@@ -3,11 +3,10 @@ package com.komodoindotech.kihvirtual.models;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
-import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "riwayat_kehamilan")
-public class RiwayatKehamilan {
+public class RiwayatKehamilan extends RiwayatContract {
 
     @PrimaryKey(autoGenerate = true)
     public int id;

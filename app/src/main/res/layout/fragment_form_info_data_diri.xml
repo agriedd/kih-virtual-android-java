@@ -302,7 +302,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/lama_menikah"
-                    app:helperText="Lama menikah dalam tahun (Opsional, dapat diabaikan)"
+                    app:helperText="Lama menikah dalam tahun"
                     app:helperTextEnabled="true"
                     app:placeholderText="Dalam Tahun">
 

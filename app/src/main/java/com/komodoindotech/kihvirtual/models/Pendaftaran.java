@@ -51,7 +51,7 @@ public class Pendaftaran {
 
     @Ignore
     public Boolean isError() {
-        Boolean valid = true;
+        boolean valid = true;
         if(nama == null || nama.trim().length() <= 0) valid = false;
         else if(alamat == null || alamat.trim().length() <= 0) valid = false;
         else if(pendidikan_istri == null || pendidikan_istri.trim().length() <= 0) valid = false;
@@ -61,6 +61,7 @@ public class Pendaftaran {
         else if(umur == null || umur <= 0) valid = false;
         else if(hamil_ke == null || hamil_ke <= 0) valid = false;
         else if(haid_terakhir == null) valid = false;
+        else if(lama_menikah == null || lama_menikah < 0) valid = false;
         return valid;
     }
 

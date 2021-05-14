@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,15 +30,13 @@ public class FormKeluhanFragment extends Fragment {
 
     private Toolbar toolbar;
     private RecyclerView listKeluhanView;
-    private AdapterRecyclerFormKeluhan adapterRecyclerFormKeluhan;
     private List<RiwayatKeluhan> pilihanObjects;
     private PendaftaranViewModel pendaftaranViewModel;
 
     public FormKeluhanFragment() {}
 
     public static FormKeluhanFragment newInstance() {
-        FormKeluhanFragment fragment = new FormKeluhanFragment();
-        return fragment;
+        return new FormKeluhanFragment();
     }
 
     @Override
@@ -49,14 +48,12 @@ public class FormKeluhanFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_form_keluhan, container, false);
 
-        pendaftaranViewModel = new ViewModelProvider(getActivity()).get(PendaftaranViewModel.class);
+        pendaftaranViewModel = new ViewModelProvider(requireActivity()).get(PendaftaranViewModel.class);
 
-        toolbar = root.findViewById(R.id.toolbar_keluhan);
+        toolbar = root.findViewById(R.id.toolbar);
         listKeluhanView = root.findViewById(R.id.list_form_keluhan);
         Button buttonReview = root.findViewById(R.id.button_review);
-        buttonReview.setOnClickListener(v -> {
-            openReview();
-        });
+        buttonReview.setOnClickListener(v -> openReview());
 
         setToolbar();
 
@@ -69,7 +66,7 @@ public class FormKeluhanFragment extends Fragment {
     private void initRecyclerView() {
 
         pilihanObjects = new ArrayList<>();
-        pilihanObjects.add(new RiwayatKeluhan("Silahkan centang pilihan-pilihan dibawah yang pernah dialami Ibu", false));
+        pilihanObjects.add(new RiwayatKeluhan("klh00", "Silahkan centang pilihan-pilihan dibawah yang pernah dialami Ibu", true));
 
         pilihanObjects.add(new RiwayatKeluhan(
                 "klh01",
@@ -106,7 +103,7 @@ public class FormKeluhanFragment extends Fragment {
                 PilihanObject.WARNA_MERAH, "rujuk"));
         pilihanObjects.add(new RiwayatKeluhan(
                 "klh09",
-                "Pergerakan janin berkurang (<10 kali/hari)",
+                Html.escapeHtml("Pergerakan janin berkurang (<10 kali/hari)"),
                 PilihanObject.WARNA_KUNING, "konseling, rujuk"));
         pilihanObjects.add(new RiwayatKeluhan(
                 "klh10",
@@ -142,7 +139,7 @@ public class FormKeluhanFragment extends Fragment {
                 PilihanObject.WARNA_KUNING, "konseling, rujuk"));
         pilihanObjects.add(new RiwayatKeluhan(
                 "klh18",
-                "Umur ibu hamil anak pertama terlalu muda (<16 tahun) atau terlalu tua (> 30 tahun)",
+                Html.escapeHtml("Umur ibu hamil anak pertama terlalu muda (<16 tahun) atau terlalu tua (> 30 tahun)"),
                 PilihanObject.WARNA_KUNING, "konseling"));
         pilihanObjects.add(new RiwayatKeluhan(
                 "klh19",
@@ -161,22 +158,25 @@ public class FormKeluhanFragment extends Fragment {
                 "Ibu khawatir dengan proses persalinan yang akan dihadapi",
                 PilihanObject.WARNA_KUNING, "konseling"));
 
-        adapterRecyclerFormKeluhan = new AdapterRecyclerFormKeluhan(getContext(), pilihanObjects, listener);
+        AdapterRecyclerFormKeluhan adapterRecyclerFormKeluhan = new AdapterRecyclerFormKeluhan(getContext(), pilihanObjects, listener);
 
         listKeluhanView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        listKeluhanView.setHasFixedSize(true);
         listKeluhanView.setAdapter(adapterRecyclerFormKeluhan);
+
     }
 
     private void setToolbar() {
-        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
+        AppCompatActivity appCompatActivity = (AppCompatActivity) requireActivity();
         appCompatActivity.setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(v -> pendaftaranViewModel.previousPageForm());
     }
 
     private void openReview() {
-        pendaftaranViewModel.storePendaftaran();
+//        pendaftaranViewModel.storePendaftaran();
         pendaftaranViewModel.openReview();
     }
-    AdapterRecyclerFormKeluhan.onCheckedChangeListener listener = status -> {
+    AdapterRecyclerFormKeluhan.onCheckedChangeListener listener = (status, position) -> {
         pendaftaranViewModel.setRiwayatKeluhanObjectLiveData(pilihanObjects);
     };
 }

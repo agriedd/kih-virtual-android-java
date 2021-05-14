@@ -3,6 +3,7 @@ package com.komodoindotech.kihvirtual.ui.form;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
@@ -35,6 +36,8 @@ public class FormInfoDataDiriFragment extends Fragment {
 
     private static final int MINIMUM_UMUR = 0;
     public static final String KEY = "data_diri";
+    private static final String IS_STATE_STORED = "stored";
+
     private View root;
     private MaterialToolbar toolbar;
     private AppCompatEditText nama, umur, alamat, hamil_ke, pendidikan_istri, pendidikan_suami,
@@ -68,37 +71,60 @@ public class FormInfoDataDiriFragment extends Fragment {
         initView();
         initToolbar();
         setInputEvent();
-        setDefaultValues();
         pendaftaranViewModel.getInputErrors().observe(requireActivity(), stringMapMap -> {
 
         });
         return root;
     }
 
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(IS_STATE_STORED, true);
+    }
+
     private void setDefaultValues() {
-//        nama.setText("lorem");
-//        umur.setText("1");
-//        alamat.setText("lorem");
-//        hamil_ke.setText("1");
-//        pendidikan_istri.setText("lorem");
-//        pendidikan_suami.setText("lorem");
-//        pekerjaan_istri.setText("lorem");
-//        pekerjaan_suami.setText("lorem");
-//        haid_terakhir.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
-//        usia_anak_terakhir.setText("1");
-//        lama_menikah.setText("1");
+
+        Pendaftaran pendaftaran = pendaftaranViewModel.getPendaftaranObject().getValue();
+
+        if(pendaftaran != null){
+            nama.setText(pendaftaran.nama);
+            if(pendaftaran.umur != null)
+                umur.setText(String.valueOf(pendaftaran.umur));
+            alamat.setText(pendaftaran.alamat);
+            if(pendaftaran.hamil_ke != null)
+                hamil_ke.setText(String.valueOf(pendaftaran.hamil_ke));
+            pendidikan_istri.setText(pendaftaran.pendidikan_istri);
+            pendidikan_suami.setText(pendaftaran.pendidikan_suami);
+            pekerjaan_istri.setText(pendaftaran.pekerjaan_istri);
+            pekerjaan_suami.setText(pendaftaran.pekerjaan_suami);
+
+            try {
+                haid_terakhir.setText(new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(pendaftaran.haid_terakhir));
+            } catch (Exception ignored){}
+            if(pendaftaran.usia_anak_terakhir != null)
+                usia_anak_terakhir.setText(String.valueOf(pendaftaran.usia_anak_terakhir));
+            if(pendaftaran.lama_menikah != null)
+                lama_menikah.setText(String.valueOf(pendaftaran.lama_menikah));
+
+        }
     }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_only_close, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.menu_exit_activity) {
-            requireActivity().finish();
+            requireActivity().onBackPressed();
         }
         return true;
     }
@@ -429,7 +455,7 @@ public class FormInfoDataDiriFragment extends Fragment {
             public void afterTextChanged(Editable s) {
                 try {
                     int value = Integer.parseInt(s.toString().trim());
-                    if(value < 0){
+                    if(value < 0 || s.length() <= 0){
                         String message = "Perhatikan inputan";
                         lama_menikah_layout.setError(message);
                         inputErrors.put("lama_menikah", message);

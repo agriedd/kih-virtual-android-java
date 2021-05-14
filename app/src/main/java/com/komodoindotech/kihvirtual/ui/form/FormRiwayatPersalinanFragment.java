@@ -67,6 +67,7 @@ public class FormRiwayatPersalinanFragment extends Fragment {
         AppCompatActivity appCompatActivity = (AppCompatActivity) requireActivity();
         appCompatActivity.setSupportActionBar(toolbar);
         setHasOptionsMenu(true);
+        toolbar.setNavigationOnClickListener(v -> pendaftaranViewModel.previousPageForm());
     }
 
     public void replaceFragment(Fragment fragment){

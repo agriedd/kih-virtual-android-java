@@ -41,4 +41,7 @@
     <string name="ibu_memiliki_riwayat_persalinan_sebelumnya">Ibu memiliki riwayat persalinan sebelumnya</string>
     <string name="info_skip_persalinan">Lewati bila Ibu baru pertama kali dan belum memiliki riwayat persalinan sebelumnya</string>
     <string name="remove_date">Remove date</string>
+    <string name="review_button">Review data yang sudah Ibu masukan</string>
+    <string name="lama_pernikahan">Lama Pernikahan</string>
+    <string name="proses">Proses</string>
 </resources>

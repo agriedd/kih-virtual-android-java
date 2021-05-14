@@ -26,4 +26,9 @@ public class PendaftaranDanRiwayat {
             entityColumn = "id_pendaftaran"
     )
     public List<RiwayatImunisasi> riwayatImunisasis;
+    @Relation(
+            parentColumn = "id",
+            entityColumn = "id_pendaftaran"
+    )
+    public List<RiwayatKeluhan> riwayatKeluhans;
 }

@@ -21,8 +21,12 @@ public class PendaftaranRepository {
         AppDatabase db = AppDatabase.getDatabase(application);
         this.pendaftaranDao = db.pendaftaranDao();
     }
-    public LiveData<List<Pendaftaran>> getAllPendaftarans() {
+    public LiveData<List<PendaftaranDanRiwayat>> getAllPendaftarans() {
         return pendaftaranDao.getAll();
+    }
+
+    public PendaftaranDanRiwayat find(Long id){
+        return pendaftaranDao.find(id);
     }
 
     public Long insert (Pendaftaran pendaftaran) {
@@ -42,6 +46,10 @@ public class PendaftaranRepository {
     }
 
     public PendaftaranDanRiwayat getPendaftaranCached() {
+        return pendaftaranDao.getLatest();
+    }
+
+    public PendaftaranDanRiwayat getLatest() {
         return pendaftaranDao.getLatest();
     }
 

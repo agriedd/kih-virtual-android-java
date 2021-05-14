@@ -44,7 +44,7 @@
                     android:id="@+id/pilihan_label"
                     android:text="@string/app_name" />
             </LinearLayout>
-            <CheckBox
+            <com.google.android.material.checkbox.MaterialCheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/pilihan_switch"
