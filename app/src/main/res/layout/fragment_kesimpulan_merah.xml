@@ -70,15 +70,21 @@
                 tools:layout_editor_absoluteX="20dp"
                 android:layout_marginTop="20dp"
                 android:orientation="vertical">
-                <FrameLayout
-                    android:id="@+id/daftar_kelas"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="20dp"
-                    android:text="Informasi Puskesmas Rujukan"
+                    android:text="@string/heading_kelas"
+                    style="@style/TextAppearance.AppCompat.Title"/>
+                <FrameLayout
+                    android:id="@+id/daftar_kelas"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:text="@string/heading_puskesmas"
                     style="@style/TextAppearance.AppCompat.Title"/>
                 <FrameLayout
                     android:id="@+id/daftar_puskesmas"

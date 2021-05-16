@@ -1,4 +1,4 @@
-package com.komodoindotech.kihvirtual.ui.puskesmas;
+package com.komodoindotech.kihvirtual.ui.kelas;
 
 import android.app.Application;
 import android.util.Log;
@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.komodoindotech.kihvirtual.json.KelasObject;
 import com.komodoindotech.kihvirtual.json.PuskesmasObject;
 
 import org.jetbrains.annotations.NotNull;
@@ -18,25 +19,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class PuskesmasViewModel extends AndroidViewModel {
+public class KelasViewModel extends AndroidViewModel {
 
-    private static final String TAG = "puskesmasvm";
+    private static final String TAG = "kelasvm";
 
-    private final MutableLiveData<List<PuskesmasObject>> puskesmasObjectMutableLiveData;
+    private final MutableLiveData<List<KelasObject>> kelasListMutableLiveData;
 
     FirebaseFirestore db;
 
-    public PuskesmasViewModel(@NonNull @NotNull Application application) {
+    public KelasViewModel(@NonNull @NotNull Application application) {
         super(application);
         db = FirebaseFirestore.getInstance();
 
-        puskesmasObjectMutableLiveData = new MutableLiveData<>();
+        kelasListMutableLiveData = new MutableLiveData<>();
 
         getPuskesmas();
     }
 
     public void getPuskesmas(){
-        db.collection("puskesmas")
+        db.collection("groups")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                 })
@@ -45,18 +46,18 @@ public class PuskesmasViewModel extends AndroidViewModel {
                 })
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
-                        List<PuskesmasObject> puskesmasObjectList = new ArrayList<>();
+                        List<KelasObject> kelasObjectList = new ArrayList<>();
                         for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())){
-                            PuskesmasObject puskesmasObject = document.toObject(PuskesmasObject.class);
-                            puskesmasObject.setId(document.getId());
-                            puskesmasObjectList.add(puskesmasObject);
+                            KelasObject kelasObject = document.toObject(KelasObject.class);
+                            kelasObject.setId(document.getId());
+                            kelasObjectList.add(kelasObject);
                         }
-                        puskesmasObjectMutableLiveData.setValue(puskesmasObjectList);
-                    } else Log.d(TAG, "PuskesmasViewModel: failed: "+ task.getException());
+                        kelasListMutableLiveData.setValue(kelasObjectList);
+                    } else Log.d(TAG, "KelasViewModel: failed: "+ task.getException());
                 });
     }
 
-    public LiveData<List<PuskesmasObject>> getPuskesmasObjectMutableLiveData() {
-        return puskesmasObjectMutableLiveData;
+    public LiveData<List<KelasObject>> getKelasListMutableLiveData() {
+        return kelasListMutableLiveData;
     }
 }

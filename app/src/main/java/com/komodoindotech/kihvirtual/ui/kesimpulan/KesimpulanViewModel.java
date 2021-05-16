@@ -17,6 +17,7 @@ public class KesimpulanViewModel extends AndroidViewModel {
 
     private MutableLiveData<Long> id_pendaftaran;
     private MutableLiveData<PendaftaranDanRiwayat> pendaftaran;
+    private PendaftaranDanRiwayat pendaftaranDanRiwayat;
 
     public KesimpulanViewModel(@NonNull @NotNull Application application) {
         super(application);
@@ -42,8 +43,11 @@ public class KesimpulanViewModel extends AndroidViewModel {
          * developer
          */
         PendaftaranDanRiwayat pendaftaranDanRiwayat = new PendaftaranRepository(getApplication()).getLatest();
-        pendaftaran.setValue(pendaftaranDanRiwayat);
-
+        pendaftaran.setValue(this.pendaftaranDanRiwayat = pendaftaranDanRiwayat);
         return pendaftaran;
+    }
+
+    public PendaftaranDanRiwayat getPendaftaranDanRiwayat() {
+        return pendaftaranDanRiwayat;
     }
 }

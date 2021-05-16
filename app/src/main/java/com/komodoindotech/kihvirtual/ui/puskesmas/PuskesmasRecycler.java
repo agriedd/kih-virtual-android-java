@@ -51,13 +51,13 @@ public class PuskesmasRecycler extends Fragment {
         puskesmasViewModel.getPuskesmasObjectMutableLiveData().observe(requireActivity(), puskesmasObjects -> {
             puskesmasObjectList = puskesmasObjects;
             adapterRecyclerPuskesmas.update(puskesmasObjectList);
-            Log.d("wtf", "onCreateView: "+ JSON.toJSONString(puskesmasObjects));
         });
         return root;
     }
 
     private void initRecyclerView() {
         listPuskesmasView.setNestedScrollingEnabled(false);
+        listPuskesmasView.setHasFixedSize(false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false);
         listPuskesmasView.setLayoutManager(layoutManager);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listPuskesmasView.getContext(),

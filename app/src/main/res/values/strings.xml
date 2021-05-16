@@ -50,4 +50,7 @@
     <string name="kesimpulan_kuning">Berdasarkan data yang Ibu masukan, Ibu harus konsultasi ke puskesmas terdekat</string>
     <string name="kesimpulan_hijau">Berdasarkan data yang Ibu masukan, Ibu dapat bergabung dalam edukasi melalui kelas ibu hamil dibawah</string>
     <string name="lihat_data">Lihat Data</string>
+    <string name="heading_puskesmas">Informasi Puskesmas Rujukan</string>
+    <string name="heading_kelas">Daftar Kelas Ibu Hamil</string>
+    <string name="cover_kelas">Cover kelas</string>
 </resources>
