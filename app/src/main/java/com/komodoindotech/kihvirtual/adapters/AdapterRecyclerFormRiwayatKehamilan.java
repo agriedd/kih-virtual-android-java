@@ -75,6 +75,7 @@ public class AdapterRecyclerFormRiwayatKehamilan extends RecyclerView.Adapter<Ad
         public TextView label, numbering;
         public CheckBox aSwitch;
         public CardView container;
+        public Boolean checked;
 
         public viewHolder(@NonNull View itemView) {
             super(itemView);
@@ -89,9 +90,13 @@ public class AdapterRecyclerFormRiwayatKehamilan extends RecyclerView.Adapter<Ad
             label.setText(Html.fromHtml(pilihanObject.getLabel()));
             String value = position + ". ";
             numbering.setText(value);
-            aSwitch.setChecked(pilihanObject.value == null ? false : pilihanObject.value );
+            if(checked == null){
+                checked = pilihanObject.value != null ? pilihanObject.value : false;
+            }
+            aSwitch.setChecked(checked);
             aSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 pilihanObject.value = isChecked;
+                checked = isChecked;
                 listener.change(isChecked);
             });
         }

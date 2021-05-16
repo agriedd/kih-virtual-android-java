@@ -56,17 +56,17 @@ public class FormRiwayatPersalinanRecyclerFragment extends Fragment {
         pilihanObjects = new ArrayList<>();
         pilihanObjects.add(new RiwayatPersalinan("Silahkan centang pilihan-pilihan dibawah yang pernah dialami Ibu", true));
 
-        pilihanObjects.add(new RiwayatPersalinan("rp01", "Ibu mengalami persalinan dengan tindakan: <br>- Induksi atau rangsang <br>- Valum <br>- Forseps", PilihanObject.WARNA_KUNING, "konsultasi"));
+        pilihanObjects.add(new RiwayatPersalinan("rp01", "Ibu mengalami persalinan dengan tindakan: <br>- Induksi atau rangsang <br>- Valum <br>- Forseps", PilihanObject.WARNA_MERAH, "rujuk"));
         pilihanObjects.add(new RiwayatPersalinan("rp02", "Ibu mengalami persalinan sebelum waktunya/prematur", PilihanObject.WARNA_KUNING, "konsultasi"));
         pilihanObjects.add(new RiwayatPersalinan("rp03", "Ibu mengalami persalinan lewat waktu", PilihanObject.WARNA_KUNING, "konsultasi"));
-        pilihanObjects.add(new RiwayatPersalinan("rp04", "Ibu mengalami persalinan operasi sectio caesarea", PilihanObject.WARNA_KUNING, "konsultasi"));
+        pilihanObjects.add(new RiwayatPersalinan("rp04", "Ibu mengalami persalinan operasi sectio caesarea", PilihanObject.WARNA_MERAH, "rujuk"));
         pilihanObjects.add(new RiwayatPersalinan("rp05", "Ibu mengalami pecah ketuban sebelum waktunya", PilihanObject.WARNA_KUNING, "konsultasi"));
         pilihanObjects.add(new RiwayatPersalinan("rp06", "Ibu melahirkan bayi berat lahir rendah (BB kurang dari 2500 gr)", PilihanObject.WARNA_KUNING, "konsultasi"));
         pilihanObjects.add(new RiwayatPersalinan("rp07", "Ibu melahirkan bayi besar (BB lahir lebih dari sama dengan 4000 gr)", PilihanObject.WARNA_KUNING, "konsultasi"));
         pilihanObjects.add(new RiwayatPersalinan("rp08", "Ibu mengalami penyakit infeksi (malaria, campak, cacar)", PilihanObject.WARNA_KUNING, "konsultasi"));
         pilihanObjects.add(new RiwayatPersalinan("rp09", "Ibu mengalami kehamilan kembar", PilihanObject.WARNA_KUNING, "konsultasi"));
-        pilihanObjects.add(new RiwayatPersalinan("rp10", "Ibu mengalami hamil anggur", PilihanObject.WARNA_KUNING, "konsultasi"));
-        pilihanObjects.add(new RiwayatPersalinan("rp11", "Ibu mengalami keguguran", PilihanObject.WARNA_KUNING, "konsultasi"));
+        pilihanObjects.add(new RiwayatPersalinan("rp10", "Ibu mengalami hamil anggur", PilihanObject.WARNA_MERAH, "rujuk"));
+        pilihanObjects.add(new RiwayatPersalinan("rp11", "Ibu mengalami keguguran", PilihanObject.WARNA_MERAH, "rujuk"));
         pilihanObjects.add(new RiwayatPersalinan("rp12", "Ibu melahirkan bayi meninggal", PilihanObject.WARNA_KUNING, "konsultasi"));
 
         AdapterRecyclerFormRiwayatPersalinan adapterRecyclerFormRiwayatPersalinan = new AdapterRecyclerFormRiwayatPersalinan(getContext(), pilihanObjects, listener);

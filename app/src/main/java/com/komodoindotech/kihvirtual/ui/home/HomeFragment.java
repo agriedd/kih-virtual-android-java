@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,11 +26,13 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.komodoindotech.kihvirtual.KesimpulanActivity;
 import com.komodoindotech.kihvirtual.PendaftaranActivity;
 import com.komodoindotech.kihvirtual.R;
 
@@ -47,7 +48,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
     private View root;
-    private ImageView sesi_img;
+    private ShapeableImageView sesi_img;
     private SwipeRefreshLayout swipeRefreshLayout;
     private TextView last_cached;
     private LinearLayout last_cached_container;
@@ -136,7 +137,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         root.findViewById(R.id.container_belum_login).setVisibility(View.GONE);
         ((TextView) root.findViewById(R.id.sesi_email)).setText(currentUser.getEmail());
         ((TextView) root.findViewById(R.id.sesi_name)).setText(currentUser.getDisplayName());
-        Glide.with(getContext()).load(currentUser.getPhotoUrl()).into(sesi_img);
+        Glide.with(requireContext()).load(currentUser.getPhotoUrl()).into(sesi_img);
     }
 
     @Override
@@ -146,7 +147,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         } else if(v == sesi_img){
             logOut();
         } else if(v == daftar_button){
-            startActivity(new Intent(getContext(), PendaftaranActivity.class));
+            /**
+             * developement
+             *
+             */
+
+            startActivity(new Intent(getContext(), KesimpulanActivity.class));
+//            startActivity(new Intent(getContext(), PendaftaranActivity.class));
         }
     }
 
@@ -157,7 +164,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 .requestEmail()
                 .build();
 
-        mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
+        mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
     }
 
     private void signIn() {
@@ -198,7 +205,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(getActivity(), task -> {
+                .addOnCompleteListener(requireActivity(), task -> {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithCredential:success");

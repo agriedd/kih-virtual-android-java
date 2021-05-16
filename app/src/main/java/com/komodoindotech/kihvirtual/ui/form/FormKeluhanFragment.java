@@ -173,7 +173,6 @@ public class FormKeluhanFragment extends Fragment {
     }
 
     private void openReview() {
-//        pendaftaranViewModel.storePendaftaran();
         pendaftaranViewModel.openReview();
     }
     AdapterRecyclerFormKeluhan.onCheckedChangeListener listener = (status, position) -> {

@@ -5,6 +5,11 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.google.firebase.firestore.FieldValue;
+
+import java.util.HashMap;
+import java.util.Map;
+
 @Entity(tableName = "riwayat_kehamilan")
 public class RiwayatKehamilan extends RiwayatContract {
 
@@ -54,5 +59,17 @@ public class RiwayatKehamilan extends RiwayatContract {
 
     public String getLabel() {
         return label;
+    }
+
+    public static Map<String, Object> toMap(RiwayatKehamilan riwayatKehamilan) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("uid", riwayatKehamilan.uid);
+        result.put("label", riwayatKehamilan.label);
+        result.put("warna", riwayatKehamilan.warna);
+        result.put("tindakan", riwayatKehamilan.value);
+        result.put("value", riwayatKehamilan.value);
+        result.put("tid", riwayatKehamilan.created_at);
+        result.put("created_at", FieldValue.serverTimestamp());
+        return result;
     }
 }

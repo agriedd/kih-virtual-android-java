@@ -49,8 +49,8 @@ public class FormRiwayatKehamilanRecyclerFragment extends Fragment {
 
         pilihanObjects = new ArrayList<>();
         pilihanObjects.add(new RiwayatKehamilan("Silahkan centang pilihan-pilihan dibawah yang pernah dialami Ibu", true));
-        pilihanObjects.add(new RiwayatKehamilan("rk01", "Ibu mengalami tekanan darah tinggi", PilihanObject.WARNA_KUNING, "konsultasi"));
-        pilihanObjects.add(new RiwayatKehamilan("rk02", "Ibu mengalami pendarahan", PilihanObject.WARNA_KUNING, "konsultasi"));
+        pilihanObjects.add(new RiwayatKehamilan("rk01", "Ibu mengalami tekanan darah tinggi", PilihanObject.WARNA_MERAH, "rujuk"));
+        pilihanObjects.add(new RiwayatKehamilan("rk02", "Ibu mengalami pendarahan", PilihanObject.WARNA_MERAH, "rujuk"));
         pilihanObjects.add(new RiwayatKehamilan("rk03","Ibu mengalami mual muntah berlebihan hingga perlu dirawat di RS", PilihanObject.WARNA_KUNING, "konsultasi"));
         pilihanObjects.add(new RiwayatKehamilan("rk04","Ibu mengalami bed rest selama masa kehamilan", PilihanObject.WARNA_KUNING, "konsultasi"));
         pilihanObjects.add(new RiwayatKehamilan("rk05","Ibu mengalami sesak napas", PilihanObject.WARNA_KUNING, "konsultasi"));
@@ -58,7 +58,7 @@ public class FormRiwayatKehamilanRecyclerFragment extends Fragment {
         pilihanObjects.add(new RiwayatKehamilan("rk07","Ibu mengalami gangguan perkemihan (Infeksi Saluran Kencing, Tidak dapat Miksi)", PilihanObject.WARNA_KUNING, "konsultasi"));
         pilihanObjects.add(new RiwayatKehamilan("rk08","Ibu mengalami penyakit infeksi (malaria, campak, cacar)", PilihanObject.WARNA_KUNING, "konsultasi"));
         pilihanObjects.add(new RiwayatKehamilan("rk09","Ibu mengalami kehamilan kembar", PilihanObject.WARNA_KUNING, "konsultasi"));
-        pilihanObjects.add(new RiwayatKehamilan("rk10","Ibu mengalami hamil anggur", PilihanObject.WARNA_KUNING, "konsultasi"));
+        pilihanObjects.add(new RiwayatKehamilan("rk10","Ibu mengalami hamil anggur", PilihanObject.WARNA_MERAH, "rujuk"));
 
         adapterRecyclerFormRiwayatKehamilan = new AdapterRecyclerFormRiwayatKehamilan(getContext(), pilihanObjects, listener);
         recyclerViewFormRiwayatKehamilan.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));

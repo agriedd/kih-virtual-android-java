@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.alibaba.fastjson.JSON;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.komodoindotech.kihvirtual.models.Pendaftaran;
 import com.komodoindotech.kihvirtual.models.PendaftaranDanRiwayat;
 import com.komodoindotech.kihvirtual.models.RiwayatImunisasi;
@@ -22,6 +23,7 @@ import com.komodoindotech.kihvirtual.repositories.RiwayatKehamilanRepository;
 import com.komodoindotech.kihvirtual.repositories.RiwayatPersalinanRepository;
 import com.komodoindotech.kihvirtual.services.StoreKeluhan;
 import com.komodoindotech.kihvirtual.services.StorePendaftaran;
+import com.komodoindotech.kihvirtual.services.StorePendaftaranCloud;
 import com.komodoindotech.kihvirtual.services.StoreRiwayatImunisasi;
 import com.komodoindotech.kihvirtual.services.StoreRiwayatKehamilan;
 import com.komodoindotech.kihvirtual.services.StoreRiwayatPersalinan;
@@ -60,8 +62,11 @@ public class PendaftaranViewModel extends AndroidViewModel {
     private final MutableLiveData<List<RiwayatKeluhan>> riwayatKeluhanObjectLiveData;
     private final MutableLiveData<List<RiwayatImunisasi>> riwayatImunisasiObjectLiveData;
 
-    private long id_pendaftaran;
+    public long id_pendaftaran;
     private List<RiwayatImunisasi> riwayatImunisasis;
+    private final MutableLiveData<Boolean> loading;
+    private final MutableLiveData<Boolean> gotoKesimpulan;
+    private final MutableLiveData<String> errorGlobal;
 
     public PendaftaranViewModel(@NonNull Application application) {
         super(application);
@@ -79,6 +84,11 @@ public class PendaftaranViewModel extends AndroidViewModel {
         pendaftaranLiveData.setValue(pendaftaran);
         validInputLiveData = new MutableLiveData<>();
         validInputLiveData.setValue(false);
+        loading = new MutableLiveData<>();
+        loading.setValue(false);
+        gotoKesimpulan = new MutableLiveData<>();
+        gotoKesimpulan.setValue(false);
+        errorGlobal = new MutableLiveData<>();
 
         riwayatKehamilanObjectLiveData = new MutableLiveData<>();
         riwayatKehamilans = new ArrayList<>();
@@ -189,7 +199,7 @@ public class PendaftaranViewModel extends AndroidViewModel {
         StoreRiwayatKehamilan.handler(new RiwayatKehamilanRepository(getApplication()), riwayatKehamilans);
 
         List<RiwayatPersalinan> riwayatPersalinans = new ArrayList<>(this.riwayatPersalinans);
-        riwayatKehamilans.remove(0);
+        riwayatPersalinans.remove(0);
         for(RiwayatPersalinan riwayatPersalinan : riwayatPersalinans){
             riwayatPersalinan.created_at = new Date().getTime();
             riwayatPersalinan.updated_at = new Date().getTime();
@@ -210,7 +220,27 @@ public class PendaftaranViewModel extends AndroidViewModel {
         }
         StoreKeluhan.handler(new KeluhanRepository(getApplication()), riwayatKeluhans);
         PendaftaranDanRiwayat pendaftaranDanRiwayat = new PendaftaranRepository(getApplication()).find(id_pendaftaran);
-        Log.d("wtf", "storePendaftaran: "+JSON.toJSONString(pendaftaranDanRiwayat));
+        storePendaftaranCloud(pendaftaranDanRiwayat);
+    }
+
+    public void storePendaftaranCloud(PendaftaranDanRiwayat pendaftaranDanRiwayat) {
+        loading.setValue(true);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        StorePendaftaranCloud.handler(db, pendaftaranDanRiwayat, new StorePendaftaranCloud.StoreListener() {
+            @Override
+            public void onSuccess(Boolean status) {
+                loading.setValue(false);
+                gotoKesimpulan.setValue(true);
+                gotoKesimpulan.setValue(false);
+            }
+
+            @Override
+            public void onError(String message) {
+                loading.setValue(false);
+                gotoKesimpulan.setValue(false);
+                errorGlobal.setValue("Gagal menambahkan data, pastikan perangkat Anda terhubung ke jaringan internet");
+            }
+        });
     }
 
     public void setRiwayatKehamilanObjectLiveData(List<RiwayatKehamilan> pilihanObjects) {
@@ -226,8 +256,36 @@ public class PendaftaranViewModel extends AndroidViewModel {
         this.riwayatImunisasiObjectLiveData.setValue(riwayatImunisasis = riwayatImunisasiObjectLiveData);
     }
 
+    public LiveData<List<RiwayatKehamilan>> getRiwayatKehamilanObjectLiveData() {
+        return riwayatKehamilanObjectLiveData;
+    }
+
+    public LiveData<List<RiwayatPersalinan>> getRiwayatPersalinanObjectLiveData() {
+        return riwayatPersalinanObjectLiveData;
+    }
+
+    public LiveData<List<RiwayatKeluhan>> getRiwayatKeluhanObjectLiveData() {
+        return riwayatKeluhanObjectLiveData;
+    }
+
+    public LiveData<List<RiwayatImunisasi>> getRiwayatImunisasiObjectLiveData() {
+        return riwayatImunisasiObjectLiveData;
+    }
+
     public PendaftaranDanRiwayat getLatestPendaftaran(){
         PendaftaranRepository pendaftaranRepository = new PendaftaranRepository(getApplication());
         return pendaftaranRepository.getLatest();
+    }
+
+    public LiveData<Boolean> getLoading() {
+        return loading;
+    }
+
+    public LiveData<Boolean> getGotoKesimpulan() {
+        return gotoKesimpulan;
+    }
+
+    public LiveData<String> getErrorGlobal() {
+        return errorGlobal;
     }
 }

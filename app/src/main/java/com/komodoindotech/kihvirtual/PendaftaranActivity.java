@@ -1,18 +1,27 @@
 package com.komodoindotech.kihvirtual;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 import com.komodoindotech.kihvirtual.ui.form.FormInfoDataDiriFragment;
 import com.komodoindotech.kihvirtual.ui.pendaftaran.FormKartuCommunityScreeningFragment;
 import com.komodoindotech.kihvirtual.ui.pendaftaran.KonfirmasiPendaftaranFragment;
@@ -53,7 +62,6 @@ public class PendaftaranActivity extends AppCompatActivity {
             if(openReview){
                 ReviewPendaftaranFragment bottomSheetDialogFragment = new ReviewPendaftaranFragment();
                 bottomSheetDialogFragment.show(getSupportFragmentManager(), REVIEW_TAG);
-//                startActivity(new Intent(getApplicationContext(), ReviewPendaftaran.class));
             }
         });
 
@@ -61,6 +69,36 @@ public class PendaftaranActivity extends AppCompatActivity {
             is_previous = isPrevious;
         });
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View customView = getLayoutInflater().inflate(R.layout.progress_bar_loading_bar, null);
+        TextView messageDialog = customView.findViewById(R.id.text_progress_bar);
+        messageDialog.setText("Sedang memproses...");
+        builder.setView(customView);
+        AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+
+        pendaftaranViewModel.getLoading().observe(this, loading -> {
+            if(loading){
+                dialog.show();
+            } else {
+                dialog.dismiss();
+            }
+        });
+
+        pendaftaranViewModel.getErrorGlobal().observe(this, message -> {
+            final Snackbar snackbar = Snackbar.make(findViewById(R.id.container), message, Snackbar.LENGTH_INDEFINITE);
+            snackbar.setAction("Tutup", v -> snackbar.dismiss());
+            snackbar.show();
+        });
+
+        pendaftaranViewModel.getGotoKesimpulan().observe(this, status -> {
+            if(status){
+                Intent intent = new Intent(this, KesimpulanActivity.class);
+                startActivity(intent);
+                intent.putExtra("id_pendaftaran", pendaftaranViewModel.id_pendaftaran);
+                finish();
+            }
+        });
     }
 
     public void replaceFragment(Fragment fragment, String tag){

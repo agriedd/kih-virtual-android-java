@@ -297,7 +297,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/proses"
                 android:padding="20dp"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                android:id="@+id/proses"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

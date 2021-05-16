@@ -61,12 +61,12 @@ public class AdapterRecyclerFormRiwayatPersalinan extends RecyclerView.Adapter<A
 
     @Override
     public void onViewAttachedToWindow(@NonNull viewHolder holder) {
-        super.onViewAttachedToWindow(holder);
         holder.aSwitch.setChecked(
                 pilihanObjects.get(
                         holder.getAdapterPosition()
                 ).value
         );
+        super.onViewAttachedToWindow(holder);
     }
 
     public static class viewHolder extends RecyclerView.ViewHolder{
@@ -74,6 +74,7 @@ public class AdapterRecyclerFormRiwayatPersalinan extends RecyclerView.Adapter<A
         public TextView label, numbering;
         public CheckBox aSwitch;
         public CardView container;
+        public Boolean checked;
 
         public viewHolder(@NonNull View itemView) {
             super(itemView);
@@ -87,9 +88,15 @@ public class AdapterRecyclerFormRiwayatPersalinan extends RecyclerView.Adapter<A
             label.setText(Html.fromHtml(pilihanObject.getLabel()));
             String value = position + ". ";
             numbering.setText(value);
-            aSwitch.setChecked(pilihanObject.value != null ? pilihanObject.value : false);
+
+            if(checked == null){
+                checked = pilihanObject.value != null ? pilihanObject.value : false;
+            }
+            aSwitch.setChecked(checked);
+
             aSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 pilihanObject.value = isChecked;
+                checked = isChecked;
                 listener.onChange(isChecked);
             });
         }
