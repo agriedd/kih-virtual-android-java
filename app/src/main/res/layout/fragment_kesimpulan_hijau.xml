@@ -55,7 +55,7 @@
                             <com.google.android.material.textview.MaterialTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/kesimpulan_kuning"
+                                android:text="@string/kesimpulan_hijau"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                                 android:textColor="@color/teal_700" />
                         </androidx.appcompat.widget.LinearLayoutCompat>

@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class StorePendaftaranCloud {
     public static interface StoreListener{
-        void onSuccess(Boolean status);
+        void onSuccess(Boolean status, String id_pendaftaran);
         void onError(String message);
     }
 
@@ -33,6 +33,7 @@ public class StorePendaftaranCloud {
         pendaftaran.put("pendidikan_istri", pendaftaran_value.pendidikan_istri);
         pendaftaran.put("pendidikan_suami", pendaftaran_value.pendidikan_suami);
         pendaftaran.put("pekerjaan_istri", pendaftaran_value.pekerjaan_istri);
+        pendaftaran.put("pekerjaan_suami", pendaftaran_value.pekerjaan_suami);
         pendaftaran.put("haid_terakhir", pendaftaran_value.haid_terakhir);
         pendaftaran.put("usia_anak_terakhir", pendaftaran_value.usia_anak_terakhir);
         pendaftaran.put("lama_menikah", pendaftaran_value.lama_menikah);
@@ -53,6 +54,7 @@ public class StorePendaftaranCloud {
                 .add(pendaftaran)
                 .addOnSuccessListener(documentReference -> {
                     String id = documentReference.getId();
+
                     for(RiwayatKehamilan riwayatKehamilan: pendaftaranDanRiwayat.riwayatKehamilans){
 
                         Map<String, Object> value = new HashMap<>();
@@ -115,11 +117,14 @@ public class StorePendaftaranCloud {
                                 db.collection("keluhan").document(), value
                         );
                     }
-                    batch.commit().addOnSuccessListener(command -> {
-                        listener.onSuccess(true);
-                    }).addOnFailureListener(e -> {
-                        listener.onError(e.getMessage());
-                    });
+                    batch.commit().addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            listener.onSuccess(true, id);
+                        } else {
+                            listener.onError("Tidak dapat menambahkan data");
+                        }
+                    }).addOnSuccessListener(command -> {
+                    }).addOnFailureListener(e -> listener.onError(e.getMessage()));
                 })
                 .addOnFailureListener(e -> Log.d("pendaftaran", "handler: gagal store firebase"));
     }

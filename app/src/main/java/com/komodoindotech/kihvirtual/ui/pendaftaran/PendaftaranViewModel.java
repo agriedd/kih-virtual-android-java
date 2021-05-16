@@ -1,6 +1,7 @@
 package com.komodoindotech.kihvirtual.ui.pendaftaran;
 
 import android.app.Application;
+import android.text.Html;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.alibaba.fastjson.JSON;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.komodoindotech.kihvirtual.json.PilihanObject;
 import com.komodoindotech.kihvirtual.models.Pendaftaran;
 import com.komodoindotech.kihvirtual.models.PendaftaranDanRiwayat;
 import com.komodoindotech.kihvirtual.models.RiwayatImunisasi;
@@ -63,6 +65,7 @@ public class PendaftaranViewModel extends AndroidViewModel {
     private final MutableLiveData<List<RiwayatImunisasi>> riwayatImunisasiObjectLiveData;
 
     public long id_pendaftaran;
+    public String id_pendaftaran_cloud;
     private List<RiwayatImunisasi> riwayatImunisasis;
     private final MutableLiveData<Boolean> loading;
     private final MutableLiveData<Boolean> gotoKesimpulan;
@@ -101,6 +104,138 @@ public class PendaftaranViewModel extends AndroidViewModel {
         riwayatImunisasiObjectLiveData = new MutableLiveData<>();
 
         pendaftaranRepository = new PendaftaranRepository(application);
+
+        riwayatKehamilans = new ArrayList<>();
+        riwayatKehamilans.add(new RiwayatKehamilan("Silahkan centang pilihan-pilihan dibawah yang pernah dialami Ibu", true));
+        riwayatKehamilans.add(new RiwayatKehamilan("rk01", "Ibu mengalami tekanan darah tinggi", PilihanObject.WARNA_MERAH, "rujuk"));
+        riwayatKehamilans.add(new RiwayatKehamilan("rk02", "Ibu mengalami pendarahan", PilihanObject.WARNA_MERAH, "rujuk"));
+        riwayatKehamilans.add(new RiwayatKehamilan("rk03","Ibu mengalami mual muntah berlebihan hingga perlu dirawat di RS", PilihanObject.WARNA_KUNING, "konsultasi"));
+        riwayatKehamilans.add(new RiwayatKehamilan("rk04","Ibu mengalami bed rest selama masa kehamilan", PilihanObject.WARNA_KUNING, "konsultasi"));
+        riwayatKehamilans.add(new RiwayatKehamilan("rk05","Ibu mengalami sesak napas", PilihanObject.WARNA_KUNING, "konsultasi"));
+        riwayatKehamilans.add(new RiwayatKehamilan("rk06","Ibu mengalami bengkak pada alat gerak dan mata berkunang kunang", PilihanObject.WARNA_KUNING, "konsultasi"));
+        riwayatKehamilans.add(new RiwayatKehamilan("rk07","Ibu mengalami gangguan perkemihan (Infeksi Saluran Kencing, Tidak dapat Miksi)", PilihanObject.WARNA_KUNING, "konsultasi"));
+        riwayatKehamilans.add(new RiwayatKehamilan("rk08","Ibu mengalami penyakit infeksi (malaria, campak, cacar)", PilihanObject.WARNA_KUNING, "konsultasi"));
+        riwayatKehamilans.add(new RiwayatKehamilan("rk09","Ibu mengalami kehamilan kembar", PilihanObject.WARNA_KUNING, "konsultasi"));
+        riwayatKehamilans.add(new RiwayatKehamilan("rk10","Ibu mengalami hamil anggur", PilihanObject.WARNA_MERAH, "rujuk"));
+        riwayatKehamilanObjectLiveData.setValue(riwayatKehamilans);
+
+        riwayatPersalinans = new ArrayList<>();
+        riwayatPersalinans.add(new RiwayatPersalinan("Silahkan centang pilihan-pilihan dibawah yang pernah dialami Ibu", true));
+        riwayatPersalinans.add(new RiwayatPersalinan("rp01", "Ibu mengalami persalinan dengan tindakan: <br>- Induksi atau rangsang <br>- Valum <br>- Forseps", PilihanObject.WARNA_MERAH, "rujuk"));
+        riwayatPersalinans.add(new RiwayatPersalinan("rp02", "Ibu mengalami persalinan sebelum waktunya/prematur", PilihanObject.WARNA_KUNING, "konsultasi"));
+        riwayatPersalinans.add(new RiwayatPersalinan("rp03", "Ibu mengalami persalinan lewat waktu", PilihanObject.WARNA_KUNING, "konsultasi"));
+        riwayatPersalinans.add(new RiwayatPersalinan("rp04", "Ibu mengalami persalinan operasi sectio caesarea", PilihanObject.WARNA_MERAH, "rujuk"));
+        riwayatPersalinans.add(new RiwayatPersalinan("rp05", "Ibu mengalami pecah ketuban sebelum waktunya", PilihanObject.WARNA_KUNING, "konsultasi"));
+        riwayatPersalinans.add(new RiwayatPersalinan("rp06", "Ibu melahirkan bayi berat lahir rendah (BB kurang dari 2500 gr)", PilihanObject.WARNA_KUNING, "konsultasi"));
+        riwayatPersalinans.add(new RiwayatPersalinan("rp07", "Ibu melahirkan bayi besar (BB lahir lebih dari sama dengan 4000 gr)", PilihanObject.WARNA_KUNING, "konsultasi"));
+        riwayatPersalinans.add(new RiwayatPersalinan("rp08", "Ibu mengalami penyakit infeksi (malaria, campak, cacar)", PilihanObject.WARNA_KUNING, "konsultasi"));
+        riwayatPersalinans.add(new RiwayatPersalinan("rp09", "Ibu mengalami kehamilan kembar", PilihanObject.WARNA_KUNING, "konsultasi"));
+        riwayatPersalinans.add(new RiwayatPersalinan("rp10", "Ibu mengalami hamil anggur", PilihanObject.WARNA_MERAH, "rujuk"));
+        riwayatPersalinans.add(new RiwayatPersalinan("rp11", "Ibu mengalami keguguran", PilihanObject.WARNA_MERAH, "rujuk"));
+        riwayatPersalinans.add(new RiwayatPersalinan("rp12", "Ibu melahirkan bayi meninggal", PilihanObject.WARNA_KUNING, "konsultasi"));
+        riwayatPersalinanObjectLiveData.setValue(riwayatPersalinans);
+
+
+        riwayatImunisasis = new ArrayList<>();
+        riwayatImunisasis.add(new RiwayatImunisasi("tt1", "TT1 tanggal"));
+        riwayatImunisasis.add(new RiwayatImunisasi("tt2", "TT2 tanggal"));
+        riwayatImunisasis.add(new RiwayatImunisasi("tt3", "TT3 tanggal"));
+        riwayatImunisasis.add(new RiwayatImunisasi("tt4", "TT4 tanggal"));
+        riwayatImunisasis.add(new RiwayatImunisasi("tt5", "TT5 tanggal"));
+        riwayatImunisasiObjectLiveData.setValue(riwayatImunisasis);
+
+        riwayatKeluhans = new ArrayList<>();
+        riwayatKeluhans.add(new RiwayatKeluhan("klh00", "Silahkan centang pilihan-pilihan dibawah yang pernah dialami Ibu", true));
+        riwayatKeluhans.add(new RiwayatKeluhan(
+                "klh01",
+                "Kehamilan ini tidak diingikan oleh keluarga",
+                PilihanObject.WARNA_KUNING, "konseling"));
+        riwayatKeluhans.add(new RiwayatKeluhan(
+                "klh02",
+                "Ibu hamil merokok atau Ibu hamil tinggal bersama anggota keluarga yang merokok.",
+                PilihanObject.WARNA_KUNING, "konseling"));
+        riwayatKeluhans.add(new RiwayatKeluhan(
+                "klh03",
+                "Ibu muntah terus menerus dan tidak mau makan",
+                PilihanObject.WARNA_MERAH, "rujuk"));
+        riwayatKeluhans.add(new RiwayatKeluhan(
+                "klh04",
+                "Ibu mengalami pusing /sakit kepala terus menerus",
+                PilihanObject.WARNA_MERAH, "rujuk"));
+        riwayatKeluhans.add(new RiwayatKeluhan(
+                "klh05",
+                "Ibu pusing /sakit kepala setiap baru bangun tidur",
+                PilihanObject.WARNA_KUNING, "konseling"));
+        riwayatKeluhans.add(new RiwayatKeluhan(
+                "klh06",
+                "Demam tinggi, menggigil dan berkeringat",
+                PilihanObject.WARNA_MERAH, "rujuk"));
+
+        riwayatKeluhans.add(new RiwayatKeluhan(
+                "klh07",
+                "Bengkak pada kaki, tangan dan wajah",
+                PilihanObject.WARNA_MERAH, "rujuk"));
+        riwayatKeluhans.add(new RiwayatKeluhan(
+                "klh08",
+                "Ibu mengalami mata berkunang-kunang",
+                PilihanObject.WARNA_MERAH, "rujuk"));
+        riwayatKeluhans.add(new RiwayatKeluhan(
+                "klh09",
+                Html.escapeHtml("Pergerakan janin berkurang (<10 kali/hari)"),
+                PilihanObject.WARNA_KUNING, "konseling, rujuk"));
+        riwayatKeluhans.add(new RiwayatKeluhan(
+                "klh10",
+                "Tidak merasakan pergerakan janin",
+                PilihanObject.WARNA_MERAH, "rujuk"));
+        riwayatKeluhans.add(new RiwayatKeluhan(
+                "klh11",
+                "Mengalami pendarahan bercak",
+                PilihanObject.WARNA_MERAH, "rujuk"));
+        riwayatKeluhans.add(new RiwayatKeluhan(
+                "klh12",
+                "Ibu mengalami pendarahan (darah segar)",
+                PilihanObject.WARNA_MERAH, "rujuk"));
+        riwayatKeluhans.add(new RiwayatKeluhan(
+                "klh13",
+                "Ibu mengalami diare berulang",
+                PilihanObject.WARNA_KUNING, "konseling, rujuk"));
+        riwayatKeluhans.add(new RiwayatKeluhan(
+                "klh14",
+                "Ibu mengalami nyeri saat buang air kecil",
+                PilihanObject.WARNA_KUNING, "konseling, rujuk"));
+        riwayatKeluhans.add(new RiwayatKeluhan(
+                "klh15",
+                "Ibu mengalami keputihan",
+                PilihanObject.WARNA_KUNING, "konseling"));
+        riwayatKeluhans.add(new RiwayatKeluhan(
+                "klh16",
+                "Ibu mengalami tidak bisa tidur",
+                PilihanObject.WARNA_KUNING, "konseling"));
+        riwayatKeluhans.add(new RiwayatKeluhan(
+                "klh17",
+                "Ibu mengalami jantung berdebar-debar",
+                PilihanObject.WARNA_KUNING, "konseling, rujuk"));
+        riwayatKeluhans.add(new RiwayatKeluhan(
+                "klh18",
+                Html.escapeHtml("Umur ibu hamil anak pertama terlalu muda (<16 tahun) atau terlalu tua (> 30 tahun)"),
+                PilihanObject.WARNA_KUNING, "konseling"));
+        riwayatKeluhans.add(new RiwayatKeluhan(
+                "klh19",
+                "Jarak dengan kehamilan sebelumnya kurang dari 2 tahun atau lebih dari 10 tahun",
+                PilihanObject.WARNA_KUNING, "konseling"));
+        riwayatKeluhans.add(new RiwayatKeluhan(
+                "klh20",
+                "Ibu hamil terlalu kurus atau terlalu gemuk",
+                PilihanObject.WARNA_KUNING, "konseling"));
+        riwayatKeluhans.add(new RiwayatKeluhan(
+                "klh21",
+                "Ibu khawatir akan kehamilannya",
+                PilihanObject.WARNA_KUNING, "konseling"));
+        riwayatKeluhans.add(new RiwayatKeluhan(
+                "klh22",
+                "Ibu khawatir dengan proses persalinan yang akan dihadapi",
+                PilihanObject.WARNA_KUNING, "konseling"));
+        riwayatKeluhanObjectLiveData.setValue(riwayatKeluhans);
 
     }
 
@@ -228,8 +363,9 @@ public class PendaftaranViewModel extends AndroidViewModel {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         StorePendaftaranCloud.handler(db, pendaftaranDanRiwayat, new StorePendaftaranCloud.StoreListener() {
             @Override
-            public void onSuccess(Boolean status) {
+            public void onSuccess(Boolean status, String id) {
                 loading.setValue(false);
+                id_pendaftaran_cloud = id;
                 gotoKesimpulan.setValue(true);
                 gotoKesimpulan.setValue(false);
             }

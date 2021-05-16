@@ -44,6 +44,10 @@ public class RiwayatPersalinan extends RiwayatContract {
         this.tindakan = tindakan;
     }
 
+    public RiwayatPersalinan() {
+
+    }
+
     public Boolean getDisabled() {
         return disabled;
     }

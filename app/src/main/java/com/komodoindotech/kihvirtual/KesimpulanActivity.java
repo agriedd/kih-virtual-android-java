@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.komodoindotech.kihvirtual.json.PilihanObject;
 import com.komodoindotech.kihvirtual.models.PendaftaranDanRiwayat;
 import com.komodoindotech.kihvirtual.models.RiwayatContract;
@@ -34,55 +37,73 @@ public class KesimpulanActivity extends AppCompatActivity {
         kesimpulanViewModel = new ViewModelProvider(this).get(KesimpulanViewModel.class);
 
         Long id = 0L;
-        if(getIntent().getExtras() != null)
-            id = getIntent().getLongExtra("id", 0L);
+        String id_cloud = null;
+        if(getIntent().getExtras() != null){
+            id = getIntent().getLongExtra("id_pendaftaran", 0L);
+            id_cloud = getIntent().getStringExtra("id_pendaftaran_cloud");
+        }
         kesimpulanViewModel.setId(id);
+        if(id_cloud != null){
+            kesimpulanViewModel.setIdCloud(id_cloud);
+        }
+        kesimpulanViewModel.loadDataPendaftaran();
         kesimpulanViewModel.getPendaftaran().observe(this, this::prosesKesimpulan);
     }
 
     private void prosesKesimpulan(PendaftaranDanRiwayat pendaftaranDanRiwayat) {
 
-        kesimpulan = PilihanObject.WARNA_HIJAU;
+        Log.d("wtf", "prosesKesimpulan: "+ JSON.toJSONString(pendaftaranDanRiwayat));
 
-        List<RiwayatContract> merah = new ArrayList<>();
-        List<RiwayatContract> kuning = new ArrayList<>();
-        List<RiwayatContract> hijau = new ArrayList<>();
+        if(pendaftaranDanRiwayat != null) {
 
-        for(RiwayatKehamilan riwayatKehamilan : pendaftaranDanRiwayat.riwayatKehamilans){
-            if(riwayatKehamilan.warna == PilihanObject.WARNA_MERAH && riwayatKehamilan.value){
-                merah.add(riwayatKehamilan);
-            } else if(riwayatKehamilan.warna == PilihanObject.WARNA_KUNING && riwayatKehamilan.value){
-                kuning.add(riwayatKehamilan);
-            } else {
-                hijau.add(riwayatKehamilan);
-            }
-        }
-        for(RiwayatPersalinan riwayatPersalinan : pendaftaranDanRiwayat.riwayatPersalinans){
-            if(riwayatPersalinan.warna == PilihanObject.WARNA_MERAH && riwayatPersalinan.value)
-                merah.add(riwayatPersalinan);
-            else if(riwayatPersalinan.warna == PilihanObject.WARNA_KUNING && riwayatPersalinan.value)
-                kuning.add(riwayatPersalinan);
-            else
-                hijau.add(riwayatPersalinan);
-        }
-        for(RiwayatKeluhan riwayatKeluhan : pendaftaranDanRiwayat.riwayatKeluhans){
-            if(riwayatKeluhan.warna == PilihanObject.WARNA_MERAH && riwayatKeluhan.value)
-                merah.add(riwayatKeluhan);
-            else if(riwayatKeluhan.warna == PilihanObject.WARNA_KUNING && riwayatKeluhan.value)
-                kuning.add(riwayatKeluhan);
-            else
-                hijau.add(riwayatKeluhan);
-        }
-
-        if(merah.size() > 0){
-            kesimpulan = PilihanObject.WARNA_MERAH;
-            replaceFragment(KesimpulanMerah.newInstance());
-        } else if(kuning.size() > 0){
-            kesimpulan = PilihanObject.WARNA_KUNING;
-            replaceFragment(KesimpulanKuning.newInstance());
-        } else {
             kesimpulan = PilihanObject.WARNA_HIJAU;
-            replaceFragment(KesimpulanMerah.newInstance());
+
+            List<RiwayatContract> merah = new ArrayList<>();
+            List<RiwayatContract> kuning = new ArrayList<>();
+            List<RiwayatContract> hijau = new ArrayList<>();
+
+            if (pendaftaranDanRiwayat.riwayatKehamilans != null) {
+                for (RiwayatKehamilan riwayatKehamilan : pendaftaranDanRiwayat.riwayatKehamilans) {
+                    if (riwayatKehamilan.warna == PilihanObject.WARNA_MERAH && riwayatKehamilan.value) {
+                        merah.add(riwayatKehamilan);
+                    } else if (riwayatKehamilan.warna == PilihanObject.WARNA_KUNING && riwayatKehamilan.value) {
+                        kuning.add(riwayatKehamilan);
+                    } else {
+                        hijau.add(riwayatKehamilan);
+                    }
+                }
+            }
+            if (pendaftaranDanRiwayat.riwayatPersalinans != null)
+                for (RiwayatPersalinan riwayatPersalinan : pendaftaranDanRiwayat.riwayatPersalinans) {
+                    if (riwayatPersalinan.warna == PilihanObject.WARNA_MERAH && riwayatPersalinan.value)
+                        merah.add(riwayatPersalinan);
+                    else if (riwayatPersalinan.warna == PilihanObject.WARNA_KUNING && riwayatPersalinan.value)
+                        kuning.add(riwayatPersalinan);
+                    else
+                        hijau.add(riwayatPersalinan);
+                }
+            if (pendaftaranDanRiwayat.riwayatKeluhans != null)
+                for (RiwayatKeluhan riwayatKeluhan : pendaftaranDanRiwayat.riwayatKeluhans) {
+                    if (riwayatKeluhan.warna == PilihanObject.WARNA_MERAH && riwayatKeluhan.value)
+                        merah.add(riwayatKeluhan);
+                    else if (riwayatKeluhan.warna == PilihanObject.WARNA_KUNING && riwayatKeluhan.value)
+                        kuning.add(riwayatKeluhan);
+                    else
+                        hijau.add(riwayatKeluhan);
+                }
+
+            if (merah.size() > 0) {
+                kesimpulan = PilihanObject.WARNA_MERAH;
+                replaceFragment(KesimpulanMerah.newInstance());
+            } else if (kuning.size() > 0) {
+                kesimpulan = PilihanObject.WARNA_KUNING;
+                replaceFragment(KesimpulanKuning.newInstance());
+            } else {
+                kesimpulan = PilihanObject.WARNA_HIJAU;
+                replaceFragment(KesimpulanHijau.newInstance());
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "Data tidak ditemukan", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -90,5 +111,12 @@ public class KesimpulanActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, fragment)
                 .commitNow();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(kesimpulanViewModel.id_pendaftaran.getValue() != null && kesimpulanViewModel.id_pendaftaran.getValue() != 0L && kesimpulanViewModel.id_pendaftaran_cloud.getValue() != null)
+            Toast.makeText(getApplicationContext(), "Data yang sudah diinput dapat dilihat pada menu lainnya", Toast.LENGTH_LONG).show();
     }
 }

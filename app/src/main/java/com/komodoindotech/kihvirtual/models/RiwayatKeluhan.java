@@ -50,6 +50,10 @@ public class RiwayatKeluhan extends RiwayatContract {
         this.tindakan = tindakan;
     }
 
+    public RiwayatKeluhan() {
+
+    }
+
     public Boolean getDisabled() {
         return disabled;
     }

@@ -147,13 +147,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         } else if(v == sesi_img){
             logOut();
         } else if(v == daftar_button){
-            /**
-             * developement
-             *
-             */
-
-            startActivity(new Intent(getContext(), KesimpulanActivity.class));
-//            startActivity(new Intent(getContext(), PendaftaranActivity.class));
+            startActivity(new Intent(getContext(), PendaftaranActivity.class));
         }
     }
 

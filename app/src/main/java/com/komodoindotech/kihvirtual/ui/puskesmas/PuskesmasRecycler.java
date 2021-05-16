@@ -65,5 +65,6 @@ public class PuskesmasRecycler extends Fragment {
         listPuskesmasView.addItemDecoration(dividerItemDecoration);
         adapterRecyclerPuskesmas = new AdapterRecyclerPuskesmas(requireActivity(), puskesmasObjectList);
         listPuskesmasView.setAdapter(adapterRecyclerPuskesmas);
+
     }
 }

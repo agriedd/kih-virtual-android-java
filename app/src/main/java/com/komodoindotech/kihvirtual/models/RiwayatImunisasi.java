@@ -29,6 +29,10 @@ public class RiwayatImunisasi extends RiwayatContract {
         this.label = label;
     }
 
+    public RiwayatImunisasi() {
+
+    }
+
     public String getLabel() {
         return label;
     }

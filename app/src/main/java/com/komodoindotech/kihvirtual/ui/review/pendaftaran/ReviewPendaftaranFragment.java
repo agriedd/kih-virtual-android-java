@@ -1,10 +1,12 @@
 package com.komodoindotech.kihvirtual.ui.review.pendaftaran;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.fastjson.JSON;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
 import com.komodoindotech.kihvirtual.R;
@@ -114,24 +117,32 @@ public class ReviewPendaftaranFragment extends BottomSheetDialogFragment {
             );
         }
 
-        initRiwayatData(riwayatKehamilanList, riwayatPersalinanList, riwayatImunisasiList, riwayatKeluhanList);
-
+        if(riwayatImunisasiList == null || riwayatPersalinanList == null || riwayatImunisasiList == null || riwayatKeluhanList == null){
+            Toast.makeText(requireContext(), "Terjadi kesalahan, tidak dapat me-review data", Toast.LENGTH_SHORT).show();
+            proses.setVisibility(View.GONE);
+        } else {
+            proses.setVisibility(View.VISIBLE);
+            initRiwayatData(riwayatKehamilanList, riwayatPersalinanList, riwayatImunisasiList, riwayatKeluhanList);
+        }
     }
 
     private void initRiwayatData(List<RiwayatKehamilan> riwayatKehamilans, List<RiwayatPersalinan> riwayatPersalinans, List<RiwayatImunisasi> riwayatImunisasis, List<RiwayatKeluhan> riwayatKeluhans) {
         riwayatGroupList = new ArrayList<>();
+
         List<RiwayatContract> riwayatKehamilanList = new ArrayList<>(riwayatKehamilans);
         riwayatGroupList.add(
-                new RiwayatGroup(RiwayatGroup.ID_KEHAMILAN, "Riwayat Kehamilah", "Masalah Riwayat Kehamilan", riwayatKehamilanList)
+                new RiwayatGroup(RiwayatGroup.ID_KEHAMILAN, "Riwayat Kehamilan", "Masalah Riwayat Kehamilan", riwayatKehamilanList)
         );
         List<RiwayatContract> riwayatPersalinanList = new ArrayList<>(riwayatPersalinans);
         riwayatGroupList.add(
                 new RiwayatGroup(RiwayatGroup.ID_PERSALINAN, "Riwayat Persalinan", "Masalah Riwayat Persalinan", riwayatPersalinanList)
         );
+
         List<RiwayatContract> riwayatImunisasiList = new ArrayList<>(riwayatImunisasis);
         riwayatGroupList.add(
                 new RiwayatGroup(RiwayatGroup.ID_IMUNISASI, "Riwayat Imunisasi", "Tanggal Imunisasi", riwayatImunisasiList)
         );
+
         List<RiwayatContract> riwayatKeluhanList = new ArrayList<>(riwayatKeluhans);
         riwayatGroupList.add(
                 new RiwayatGroup(RiwayatGroup.ID_KELUHAN, "Keluhan", "Keluhan yang dirasakan saat ini", riwayatKeluhanList)
@@ -153,6 +164,7 @@ public class ReviewPendaftaranFragment extends BottomSheetDialogFragment {
         listRiwayatView = root.findViewById(R.id.list_riwayat);
 
         proses = root.findViewById(R.id.proses);
+        proses.setVisibility(View.VISIBLE);
         proses.setOnClickListener(
                 storeData
         );

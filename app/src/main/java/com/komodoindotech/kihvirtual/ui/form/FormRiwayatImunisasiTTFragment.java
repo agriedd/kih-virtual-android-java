@@ -63,13 +63,7 @@ public class FormRiwayatImunisasiTTFragment extends Fragment {
 
     private void initRiwayatImunisasiRecycler() {
 
-        tanggalObjects = new ArrayList<>();
-
-        tanggalObjects.add(new RiwayatImunisasi("tt1", "TT1 tanggal"));
-        tanggalObjects.add(new RiwayatImunisasi("tt2", "TT2 tanggal"));
-        tanggalObjects.add(new RiwayatImunisasi("tt3", "TT3 tanggal"));
-        tanggalObjects.add(new RiwayatImunisasi("tt4", "TT4 tanggal"));
-        tanggalObjects.add(new RiwayatImunisasi("tt5", "TT5 tanggal"));
+        tanggalObjects = pendaftaranViewModel.getRiwayatImunisasiObjectLiveData().getValue();
 
         AdapterRecyclerRiwayatImunisasiTTR adapterRecyclerRiwayatImunisasiTTR = new AdapterRecyclerRiwayatImunisasiTTR(getContext(), tanggalObjects, listener);
 

@@ -94,8 +94,9 @@ public class PendaftaranActivity extends AppCompatActivity {
         pendaftaranViewModel.getGotoKesimpulan().observe(this, status -> {
             if(status){
                 Intent intent = new Intent(this, KesimpulanActivity.class);
-                startActivity(intent);
                 intent.putExtra("id_pendaftaran", pendaftaranViewModel.id_pendaftaran);
+                intent.putExtra("id_pendaftaran_cloud", pendaftaranViewModel.id_pendaftaran_cloud);
+                startActivity(intent);
                 finish();
             }
         });
@@ -120,12 +121,8 @@ public class PendaftaranActivity extends AppCompatActivity {
                 new MaterialAlertDialogBuilder(this)
                         .setTitle("Konfirmasi Keluar Formulir")
                         .setMessage("Apakah Anda yakin ingin keluar dari formulir, data yang sudah diinput tidak akan disimpan")
-                        .setPositiveButton("Keluar", (dialog, which) -> {
-                            super.onBackPressed();
-                        })
-                        .setNegativeButton("Batal", (dialog, which) -> {
-                            dialog.dismiss();
-                        })
+                        .setPositiveButton("Keluar", (dialog, which) -> super.onBackPressed())
+                        .setNegativeButton("Batal", (dialog, which) -> dialog.dismiss())
                         .show();
             } else {
                 pendaftaranViewModel.previousPageForm();

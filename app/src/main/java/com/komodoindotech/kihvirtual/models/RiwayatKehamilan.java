@@ -37,6 +37,10 @@ public class RiwayatKehamilan extends RiwayatContract {
     @Ignore
     public Boolean disabled = false;
 
+    public RiwayatKehamilan() {
+
+    }
+
     public Boolean getDisabled() {
         return disabled;
     }
