@@ -375,6 +375,7 @@ public class PendaftaranViewModel extends AndroidViewModel {
                 loading.setValue(false);
                 gotoKesimpulan.setValue(false);
                 errorGlobal.setValue("Gagal menambahkan data, pastikan perangkat Anda terhubung ke jaringan internet");
+                Log.d("wtf", "onError: "+message);
             }
         });
     }

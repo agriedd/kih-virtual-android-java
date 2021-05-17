@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.WriteBatch;
@@ -50,8 +51,13 @@ public class StorePendaftaranCloud {
 
         WriteBatch batch = db.batch();
 
-        db.collection("pendaftaran")
-                .add(pendaftaran)
+        CollectionReference collectionReference = db.collection("pendaftaran");
+        collectionReference.addSnapshotListener((value, error) -> {
+            if(error != null){
+                listener.onError(error.getMessage());
+            }
+        });
+        collectionReference.add(pendaftaran)
                 .addOnSuccessListener(documentReference -> {
                     String id = documentReference.getId();
 
@@ -126,6 +132,12 @@ public class StorePendaftaranCloud {
                     }).addOnSuccessListener(command -> {
                     }).addOnFailureListener(e -> listener.onError(e.getMessage()));
                 })
-                .addOnFailureListener(e -> Log.d("pendaftaran", "handler: gagal store firebase"));
+                .addOnFailureListener(e -> Log.d("pendaftaran", "handler: gagal store firebase"))
+                .addOnCanceledListener(() -> listener.onError("Proses dibatalkan"))
+                .addOnCompleteListener(task -> {
+                    if(!task.isSuccessful()){
+                        listener.onError("Terjadi sebuah kesalahan");
+                    }
+                });
     }
 }

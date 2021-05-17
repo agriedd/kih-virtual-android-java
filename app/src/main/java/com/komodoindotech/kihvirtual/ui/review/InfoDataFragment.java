@@ -93,14 +93,14 @@ public class InfoDataFragment extends BottomSheetDialogFragment {
             value_hamil_ke = "Hamil yang ke-" + pendaftaran.hamil_ke;
         }
         String value_lama_pernikahan = pendaftaran.lama_menikah + " Tahun";
-        nama.setText(pendaftaran.nama.toUpperCase());
+        nama.setText(String.valueOf(pendaftaran.nama).toUpperCase());
         umur.setText(value_umur.toUpperCase());
-        alamat.setText(pendaftaran.alamat.toUpperCase());
+        alamat.setText(String.valueOf(pendaftaran.alamat).toUpperCase());
         hamil_ke.setText(value_hamil_ke.toUpperCase());
-        pendidikan_ibu.setText(pendaftaran.pendidikan_istri.toUpperCase());
-        pendidikan_suami.setText(pendaftaran.pendidikan_suami.toUpperCase());
-        pekerjaan_ibu.setText(pendaftaran.pekerjaan_istri.toUpperCase());
-        pekerjaan_suami.setText(pendaftaran.pekerjaan_suami.toUpperCase());
+        pendidikan_ibu.setText(String.valueOf(pendaftaran.pendidikan_istri).toUpperCase());
+        pendidikan_suami.setText(String.valueOf(pendaftaran.pendidikan_suami).toUpperCase());
+        pekerjaan_ibu.setText(String.valueOf(pendaftaran.pekerjaan_istri).toUpperCase());
+        pekerjaan_suami.setText(String.valueOf(pendaftaran.pekerjaan_suami).toUpperCase());
         if(pendaftaran.usia_anak_terakhir != null){
             String value_usia_anak_terakhir = pendaftaran.usia_anak_terakhir + " Tahun";
             usia_anak_terakhir.setText(value_usia_anak_terakhir.toUpperCase());

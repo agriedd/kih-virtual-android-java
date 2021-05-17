@@ -68,6 +68,8 @@ public class AdapterRecyclerDataPendaftaran extends RecyclerView.Adapter<Adapter
 
     @Override
     public int getItemCount() {
+        if(pendaftaranDanRiwayatList == null)
+            return 0;
         return pendaftaranDanRiwayatList.size();
     }
 
