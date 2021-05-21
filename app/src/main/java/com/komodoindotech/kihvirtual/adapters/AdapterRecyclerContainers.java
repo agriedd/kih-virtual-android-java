@@ -7,9 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,7 +16,6 @@ import com.komodoindotech.kihvirtual.adapters.reviews.AdapterRecyclerReviewKeham
 import com.komodoindotech.kihvirtual.adapters.reviews.AdapterRecyclerReviewKeluhan;
 import com.komodoindotech.kihvirtual.adapters.reviews.AdapterRecyclerReviewPersalinan;
 import com.komodoindotech.kihvirtual.models.RiwayatGroup;
-import com.komodoindotech.kihvirtual.ui.review.pendaftaran.ReviewRiwayatKehamilan;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -48,14 +44,19 @@ public class AdapterRecyclerContainers extends RecyclerView.Adapter<AdapterRecyc
         RiwayatGroup riwayatGroup = riwayatGroups.get(position);
         holder.bind(context, riwayatGroup);
         if(riwayatGroup.riwayatContracts.size() > 0){
-            if(riwayatGroup.uid.equals(RiwayatGroup.ID_KEHAMILAN)){
-                holder.bindRecycler(riwayatGroup, new AdapterRecyclerReviewKehamilan(context, riwayatGroup.riwayatContracts));
-            } else if(riwayatGroup.uid.equals(RiwayatGroup.ID_PERSALINAN)){
-                holder.bindRecycler(riwayatGroup, new AdapterRecyclerReviewPersalinan(context, riwayatGroup.riwayatContracts));
-            } else if(riwayatGroup.uid.equals(RiwayatGroup.ID_IMUNISASI)){
-                holder.bindRecycler(riwayatGroup, new AdapterRecyclerReviewImunisasi(context, riwayatGroup.riwayatContracts));
-            } else if(riwayatGroup.uid.equals(RiwayatGroup.ID_KELUHAN)){
-                holder.bindRecycler(riwayatGroup, new AdapterRecyclerReviewKeluhan(context, riwayatGroup.riwayatContracts));
+            switch (riwayatGroup.uid) {
+                case RiwayatGroup.ID_KEHAMILAN:
+                    holder.bindRecycler(riwayatGroup, new AdapterRecyclerReviewKehamilan(context, riwayatGroup.riwayatContracts));
+                    break;
+                case RiwayatGroup.ID_PERSALINAN:
+                    holder.bindRecycler(riwayatGroup, new AdapterRecyclerReviewPersalinan(context, riwayatGroup.riwayatContracts));
+                    break;
+                case RiwayatGroup.ID_IMUNISASI:
+                    holder.bindRecycler(riwayatGroup, new AdapterRecyclerReviewImunisasi(context, riwayatGroup.riwayatContracts));
+                    break;
+                case RiwayatGroup.ID_KELUHAN:
+                    holder.bindRecycler(riwayatGroup, new AdapterRecyclerReviewKeluhan(context, riwayatGroup.riwayatContracts));
+                    break;
             }
         }
     }

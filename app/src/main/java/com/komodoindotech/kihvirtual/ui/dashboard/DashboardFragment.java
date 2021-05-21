@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.komodoindotech.kihvirtual.MengenaiAplikasiActivity;
 import com.komodoindotech.kihvirtual.R;
 import com.komodoindotech.kihvirtual.adapters.AdapterRecyclerMenu;
@@ -31,15 +33,23 @@ public class DashboardFragment extends Fragment {
 
     private DashboardViewModel dashboardViewModel;
     private RecyclerView daftar_menu;
+    private MaterialToolbar toolbar;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
         daftar_menu = root.findViewById(R.id.daftar_menu);
+        toolbar = root.findViewById(R.id.toolbar);
 
+        initToolbar();
         initRecycler();
 
         return root;
+    }
+
+    private void initToolbar() {
+        AppCompatActivity appCompatActivity = (AppCompatActivity) requireActivity();
+        appCompatActivity.setSupportActionBar(toolbar);
     }
 
     private void initRecycler() {

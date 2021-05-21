@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,6 +26,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.snackbar.Snackbar;
@@ -53,6 +55,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private TextView last_cached;
     private LinearLayout last_cached_container;
     private ExtendedFloatingActionButton daftar_button;
+    private MaterialButton keluar;
 
 
     @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
@@ -64,6 +67,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         swipeRefreshLayout = root.findViewById(R.id.refresh_home);
         last_cached = root.findViewById(R.id.info_last_update_home);
         last_cached_container = root.findViewById(R.id.container_info_last_update_home);
+        keluar = root.findViewById(R.id.btn_keluar);
+        keluar.setOnClickListener(this);
 
         listArticleViewModel.getLoadingMutableLiveData().observe(getViewLifecycleOwner(), aBoolean -> {
             if(aBoolean){
@@ -99,7 +104,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         btnLoginGoogle = root.findViewById(R.id.sign_in_button);
         btnLoginGoogle.setOnClickListener(this);
         sesi_img = root.findViewById(R.id.sesi_img);
-        sesi_img.setOnClickListener(this);
         daftar_button = root.findViewById(R.id.btn_daftar);
         daftar_button.setOnClickListener(this);
 
@@ -129,7 +133,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private void updateUI(FirebaseUser currentUser) {
         if(currentUser != null){
             setLoginUser(currentUser);
-        } else {}
+        } else {
+            unsetLoginUser();
+        }
+    }
+
+    private void unsetLoginUser() {
+        root.findViewById(R.id.container_sudah_login).setVisibility(View.GONE);
+        root.findViewById(R.id.container_belum_login).setVisibility(View.VISIBLE);
     }
 
     private void setLoginUser(FirebaseUser currentUser) {
@@ -144,8 +155,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if(v == btnLoginGoogle){
             signIn();
-        } else if(v == sesi_img){
+        } else if(v == keluar){
             logOut();
+            Toast.makeText(requireContext(), "Anda telah memutuskan akun google dengan aplikasi", Toast.LENGTH_SHORT).show();
+            unsetLoginUser();
         } else if(v == daftar_button){
             startActivity(new Intent(getContext(), PendaftaranActivity.class));
         }

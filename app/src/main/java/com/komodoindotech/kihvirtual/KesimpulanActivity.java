@@ -1,12 +1,15 @@
 package com.komodoindotech.kihvirtual;
 
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.komodoindotech.kihvirtual.json.PilihanObject;
@@ -15,20 +18,17 @@ import com.komodoindotech.kihvirtual.models.RiwayatContract;
 import com.komodoindotech.kihvirtual.models.RiwayatKehamilan;
 import com.komodoindotech.kihvirtual.models.RiwayatKeluhan;
 import com.komodoindotech.kihvirtual.models.RiwayatPersalinan;
-import com.komodoindotech.kihvirtual.ui.kesimpulan.KesimpulanFragment;
 import com.komodoindotech.kihvirtual.ui.kesimpulan.KesimpulanKuning;
 import com.komodoindotech.kihvirtual.ui.kesimpulan.KesimpulanMerah;
 import com.komodoindotech.kihvirtual.ui.kesimpulan.KesimpulanViewModel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class KesimpulanActivity extends AppCompatActivity {
 
     private KesimpulanViewModel kesimpulanViewModel;
-    private int kesimpulan;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class KesimpulanActivity extends AppCompatActivity {
         setContentView(R.layout.kesimpulan_activity);
         kesimpulanViewModel = new ViewModelProvider(this).get(KesimpulanViewModel.class);
 
-        Long id = 0L;
+        long id = 0L;
         String id_cloud = null;
         if(getIntent().getExtras() != null){
             id = getIntent().getLongExtra("id_pendaftaran", 0L);
@@ -48,15 +48,29 @@ public class KesimpulanActivity extends AppCompatActivity {
         }
         kesimpulanViewModel.loadDataPendaftaran();
         kesimpulanViewModel.getPendaftaran().observe(this, this::prosesKesimpulan);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View customView = getLayoutInflater().inflate(R.layout.progress_bar_loading_bar, null);
+        TextView messageDialog = customView.findViewById(R.id.text_progress_bar);
+        messageDialog.setText("Sedang memproses...");
+        builder.setView(customView);
+        dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+
+        kesimpulanViewModel.getLoading().observe(this, this::loadingView);
+    }
+
+    private void loadingView(Boolean aBoolean) {
+        if(aBoolean){
+            dialog.show();
+        } else {
+            dialog.dismiss();
+        }
     }
 
     private void prosesKesimpulan(PendaftaranDanRiwayat pendaftaranDanRiwayat) {
 
-        Log.d("wtf", "prosesKesimpulan: "+ JSON.toJSONString(pendaftaranDanRiwayat));
-
         if(pendaftaranDanRiwayat != null) {
-
-            kesimpulan = PilihanObject.WARNA_HIJAU;
 
             List<RiwayatContract> merah = new ArrayList<>();
             List<RiwayatContract> kuning = new ArrayList<>();
@@ -93,13 +107,10 @@ public class KesimpulanActivity extends AppCompatActivity {
                 }
 
             if (merah.size() > 0) {
-                kesimpulan = PilihanObject.WARNA_MERAH;
                 replaceFragment(KesimpulanMerah.newInstance());
             } else if (kuning.size() > 0) {
-                kesimpulan = PilihanObject.WARNA_KUNING;
                 replaceFragment(KesimpulanKuning.newInstance());
             } else {
-                kesimpulan = PilihanObject.WARNA_HIJAU;
                 replaceFragment(KesimpulanHijau.newInstance());
             }
         } else {

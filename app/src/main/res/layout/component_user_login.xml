@@ -5,13 +5,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:id="@+id/container_sudah_login"
-    android:visibility="gone">
+    android:visibility="visible">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingHorizontal="20dp"
         android:baselineAligned="false">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/keluar"
+                android:id="@+id/btn_keluar"
+                app:backgroundTint="@color/teal_700"
+                android:layout_margin="10dp"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"

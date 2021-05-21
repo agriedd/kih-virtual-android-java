@@ -8,12 +8,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.google.android.material.button.MaterialButton;
 import com.komodoindotech.kihvirtual.R;
 import com.komodoindotech.kihvirtual.adapters.AdapterRecyclerContainers;
 import com.komodoindotech.kihvirtual.models.Pendaftaran;
@@ -23,7 +21,6 @@ import com.komodoindotech.kihvirtual.models.RiwayatImunisasi;
 import com.komodoindotech.kihvirtual.models.RiwayatKehamilan;
 import com.komodoindotech.kihvirtual.models.RiwayatKeluhan;
 import com.komodoindotech.kihvirtual.models.RiwayatPersalinan;
-import com.komodoindotech.kihvirtual.ui.pendaftaran.PendaftaranViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,18 +31,17 @@ import java.util.Locale;
 public class InfoDataFragment extends BottomSheetDialogFragment {
 
     private static final String TAG = "reviewpendaftaran";
-    private PendaftaranViewModel pendaftaranViewModel;
     private View root;
 
     private TextView nama, umur, alamat, hamil_ke, pendidikan_ibu, pendidikan_suami,
             pekerjaan_ibu, pekerjaan_suami, haid_terakhir, usia_anak_terakhir, lama_pernikahan;
     private RecyclerView listRiwayatView;
     private List<RiwayatGroup> riwayatGroupList;
-    private Pendaftaran pendaftaran;
-    private List<RiwayatKehamilan> riwayatKehamilanList;
-    private List<RiwayatPersalinan> riwayatPersalinanList;
-    private List<RiwayatImunisasi> riwayatImunisasiList;
-    private List<RiwayatKeluhan> riwayatKeluhanList;
+    private final Pendaftaran pendaftaran;
+    private final List<RiwayatKehamilan> riwayatKehamilanList;
+    private final List<RiwayatPersalinan> riwayatPersalinanList;
+    private final List<RiwayatImunisasi> riwayatImunisasiList;
+    private final List<RiwayatKeluhan> riwayatKeluhanList;
 
     public InfoDataFragment(Pendaftaran pendaftaran, List<RiwayatKehamilan> riwayatKehamilans, List<RiwayatPersalinan> riwayatPersalinans, List<RiwayatImunisasi> riwayatImunisasis, List<RiwayatKeluhan> riwayatKeluhans) {
         this.pendaftaran = pendaftaran;
@@ -63,8 +59,6 @@ public class InfoDataFragment extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.info_data_fragment, container, false);
-
-        pendaftaranViewModel = new ViewModelProvider(requireActivity()).get(PendaftaranViewModel.class);
         initView();
         loadData();
         initRecyclerView();
@@ -123,7 +117,7 @@ public class InfoDataFragment extends BottomSheetDialogFragment {
         riwayatGroupList = new ArrayList<>();
         List<RiwayatContract> riwayatKehamilanList = new ArrayList<>(riwayatKehamilans);
         riwayatGroupList.add(
-                new RiwayatGroup(RiwayatGroup.ID_KEHAMILAN, "Riwayat Kehamilah", "Masalah Riwayat Kehamilan", riwayatKehamilanList)
+                new RiwayatGroup(RiwayatGroup.ID_KEHAMILAN, "Riwayat Kehamilan", "Masalah Riwayat Kehamilan", riwayatKehamilanList)
         );
         List<RiwayatContract> riwayatPersalinanList = new ArrayList<>(riwayatPersalinans);
         riwayatGroupList.add(
@@ -153,8 +147,6 @@ public class InfoDataFragment extends BottomSheetDialogFragment {
         lama_pernikahan = root.findViewById(R.id.lama_menikah);
         listRiwayatView = root.findViewById(R.id.list_riwayat);
     }
-
-    private final View.OnClickListener storeData = v -> pendaftaranViewModel.storePendaftaran();
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

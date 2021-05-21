@@ -31,9 +31,7 @@ import java.util.List;
 
 public class KesimpulanMerah extends Fragment {
 
-    private PuskesmasViewModel puskesmasViewModel;
     private KesimpulanViewModel kesimpulanViewModel;
-    private ExtendedFloatingActionButton extendedFloatingActionButton;
     private PendaftaranDanRiwayat pendaftaranDanRiwayat;
 
     public KesimpulanMerah() {}
@@ -45,7 +43,7 @@ public class KesimpulanMerah extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        puskesmasViewModel = new ViewModelProvider(requireActivity()).get(PuskesmasViewModel.class);
+        PuskesmasViewModel puskesmasViewModel = new ViewModelProvider(requireActivity()).get(PuskesmasViewModel.class);
         kesimpulanViewModel = new ViewModelProvider(requireActivity()).get(KesimpulanViewModel.class);
     }
 
@@ -59,7 +57,7 @@ public class KesimpulanMerah extends Fragment {
                 .replace(R.id.daftar_kelas, KelasRecycler.newInstance())
                 .commitNow();
 
-        extendedFloatingActionButton = root.findViewById(R.id.lihat_data);
+        ExtendedFloatingActionButton extendedFloatingActionButton = root.findViewById(R.id.lihat_data);
         pendaftaranDanRiwayat = kesimpulanViewModel.getPendaftaranDanRiwayat();
         if(pendaftaranDanRiwayat != null){
             extendedFloatingActionButton.setOnClickListener(v -> {

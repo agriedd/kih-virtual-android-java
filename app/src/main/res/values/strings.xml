@@ -53,4 +53,7 @@
     <string name="heading_puskesmas">Informasi Puskesmas Rujukan</string>
     <string name="heading_kelas">Daftar Kelas Ibu Hamil</string>
     <string name="cover_kelas">Cover kelas</string>
+    <string name="berikutnya">Berikutnya</string>
+    <string name="saya_setuju">Saya setuju</string>
+    <string name="keluar">Keluar</string>
 </resources>

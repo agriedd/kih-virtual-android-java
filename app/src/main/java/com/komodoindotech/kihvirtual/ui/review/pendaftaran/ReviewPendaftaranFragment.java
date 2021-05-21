@@ -1,7 +1,6 @@
 package com.komodoindotech.kihvirtual.ui.review.pendaftaran;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +13,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.alibaba.fastjson.JSON;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
 import com.komodoindotech.kihvirtual.R;
 import com.komodoindotech.kihvirtual.adapters.AdapterRecyclerContainers;
 import com.komodoindotech.kihvirtual.models.Pendaftaran;
-import com.komodoindotech.kihvirtual.models.PendaftaranDanRiwayat;
 import com.komodoindotech.kihvirtual.models.RiwayatContract;
 import com.komodoindotech.kihvirtual.models.RiwayatGroup;
 import com.komodoindotech.kihvirtual.models.RiwayatImunisasi;
@@ -32,10 +29,8 @@ import com.komodoindotech.kihvirtual.ui.pendaftaran.PendaftaranViewModel;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class ReviewPendaftaranFragment extends BottomSheetDialogFragment {
 
@@ -83,6 +78,7 @@ public class ReviewPendaftaranFragment extends BottomSheetDialogFragment {
         List<RiwayatPersalinan> riwayatPersalinanList = pendaftaranViewModel.getRiwayatPersalinanObjectLiveData().getValue();
         List<RiwayatImunisasi> riwayatImunisasiList = pendaftaranViewModel.getRiwayatImunisasiObjectLiveData().getValue();
         List<RiwayatKeluhan> riwayatKeluhanList = pendaftaranViewModel.getRiwayatKeluhanObjectLiveData().getValue();
+        assert pendaftaran != null;
         bindView(pendaftaran, riwayatKehamilanList, riwayatPersalinanList, riwayatImunisasiList, riwayatKeluhanList);
     }
 
@@ -117,7 +113,7 @@ public class ReviewPendaftaranFragment extends BottomSheetDialogFragment {
             );
         }
 
-        if(riwayatImunisasiList == null || riwayatPersalinanList == null || riwayatImunisasiList == null || riwayatKeluhanList == null){
+        if(riwayatKehamilanList == null || riwayatPersalinanList == null || riwayatImunisasiList == null || riwayatKeluhanList == null){
             Toast.makeText(requireContext(), "Terjadi kesalahan, tidak dapat me-review data", Toast.LENGTH_SHORT).show();
             proses.setVisibility(View.GONE);
         } else {

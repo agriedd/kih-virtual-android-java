@@ -1,5 +1,6 @@
 package com.komodoindotech.kihvirtual.ui.pendaftaran;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Dialog;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -33,6 +35,7 @@ public class KonfirmasiPendaftaranFragment extends Fragment {
     private Boolean status_agreement = false;
     private CheckBox checkBoxSetuju;
     private Button buttonSelanjutnya;
+    private MaterialToolbar toolbar;
 
     public static KonfirmasiPendaftaranFragment newInstance() {
         return new KonfirmasiPendaftaranFragment();
@@ -45,6 +48,9 @@ public class KonfirmasiPendaftaranFragment extends Fragment {
         persetujuan_pengguna = root.findViewById(R.id.persetujuan_data_pengguna_webview);
         buttonSelanjutnya = root.findViewById(R.id.button_berikutnya);
         checkBoxSetuju = root.findViewById(R.id.checkbox_setuju);
+        toolbar = root.findViewById(R.id.toolbar);
+
+        iniToolbar();
 
         checkBoxSetuju.setOnCheckedChangeListener((buttonView, isChecked) -> {
             status_agreement = isChecked;
@@ -60,18 +66,21 @@ public class KonfirmasiPendaftaranFragment extends Fragment {
             }
         });
 
-        konfirmasiPendaftaranViewModel = new ViewModelProvider(getActivity()).get(KonfirmasiPendaftaranViewModel.class);
-        konfirmasiPendaftaranViewModel.getAgreementStatusLiveData().observe(getActivity(), status -> {
+        konfirmasiPendaftaranViewModel = new ViewModelProvider(requireActivity()).get(KonfirmasiPendaftaranViewModel.class);
+        konfirmasiPendaftaranViewModel.getAgreementStatusLiveData().observe(requireActivity(), status -> {
             status_agreement = status;
             checkBoxSetuju.setChecked(status);
         });
-        konfirmasiPendaftaranViewModel.getUrlLiveData().observe(getActivity(), url -> {
-            Log.d("url", "onCreateView: "+url);
+        konfirmasiPendaftaranViewModel.getUrlLiveData().observe(requireActivity(), url -> {
             if(!status_agreement){
                 persetujuan_pengguna.loadUrl(url);
             }
         });
         return root;
+    }
+
+    private void iniToolbar() {
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
     }
 
     @Override
