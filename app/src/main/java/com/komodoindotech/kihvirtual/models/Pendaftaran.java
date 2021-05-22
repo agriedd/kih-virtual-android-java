@@ -48,6 +48,8 @@ public class Pendaftaran {
     public Long created_at;
     @ColumnInfo(name = "updated_at")
     public Long updated_at;
+    @ColumnInfo(name = "cid")
+    public String cid;
 
     @Ignore
     public Boolean isError() {
@@ -192,5 +194,13 @@ public class Pendaftaran {
 
     public void setUpdated_at(Long updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public String getCid() {
+        return cid;
+    }
+
+    public void setCid(String cid) {
+        this.cid = cid;
     }
 }

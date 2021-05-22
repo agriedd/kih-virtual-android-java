@@ -69,4 +69,7 @@ public class PendaftaranRepository {
             return null;
         }
     }
+    public void update(Pendaftaran pendaftaran){
+        this.pendaftaranDao.update(pendaftaran);
+    }
 }

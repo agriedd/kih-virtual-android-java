@@ -39,6 +39,7 @@ public class StorePendaftaranCloud {
         pendaftaran.put("usia_anak_terakhir", pendaftaran_value.usia_anak_terakhir);
         pendaftaran.put("lama_menikah", pendaftaran_value.lama_menikah);
         pendaftaran.put("tid", pendaftaran_value.created_at);
+        pendaftaran.put("cid", pendaftaran_value.getCid());
         pendaftaran.put("created_at", FieldValue.serverTimestamp());
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

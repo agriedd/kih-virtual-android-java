@@ -1,35 +1,21 @@
 package com.komodoindotech.kihvirtual;
 
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-
-import com.alibaba.fastjson.JSON;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.komodoindotech.kihvirtual.models.Article;
-import com.komodoindotech.kihvirtual.repositories.ArticleRepository;
+import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    Handler handler = new Handler();
+    Boolean backPressed = false;
 
     /**
      *
@@ -55,5 +41,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        if(backPressed){
+            super.onBackPressed();
+        } else {
+            Snackbar.make(findViewById(R.id.container), "Tekan sekali lagi untuk menutup aplikasi", 2000).show();
+            backPressed = true;
+            handler.postDelayed(() -> backPressed = false, 2000);
+        }
+    }
 }

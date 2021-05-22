@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -35,6 +37,8 @@ public class DaftarDataFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.daftar_data_fragment, container, false);
         DaftarDataViewModel mViewModel = new ViewModelProvider(requireActivity()).get(DaftarDataViewModel.class);
+
+
         List<PendaftaranDanRiwayat> pendaftaranDanRiwayatList;
 
         pendaftaranDanRiwayatList = mViewModel.pendaftaranDanRiwayatLiveData.getValue();
@@ -46,6 +50,7 @@ public class DaftarDataFragment extends Fragment {
 
         toolbar = root.findViewById(R.id.toolbar);
         initToolbar();
+
 
         RecyclerView recyclerView = root.findViewById(R.id.daftar_data_recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false);

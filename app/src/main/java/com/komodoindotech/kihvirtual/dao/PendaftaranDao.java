@@ -6,6 +6,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.komodoindotech.kihvirtual.models.Pendaftaran;
 import com.komodoindotech.kihvirtual.models.PendaftaranDanRiwayat;
@@ -33,4 +34,9 @@ public interface PendaftaranDao {
     @Query("DELETE FROM pendaftaran")
     void deleteAll();
 
+    @Update
+    void update(Pendaftaran pendaftaran);
+
+    @Query("SELECT * FROM pendaftaran WHERE cid IS NOT NULL")
+    List<Pendaftaran> getLocals();
 }
