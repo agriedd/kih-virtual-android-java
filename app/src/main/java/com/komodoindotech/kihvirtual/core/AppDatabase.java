@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 
 @Database(entities = {
         Article.class, Pendaftaran.class, RiwayatKehamilan.class, RiwayatPersalinan.class, RiwayatImunisasi.class, RiwayatKeluhan.class
-}, version = 8)
+}, version = 9)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract ArticleDao articleDao();
@@ -47,6 +47,13 @@ public abstract class AppDatabase extends RoomDatabase {
                         + " ADD COLUMN cid TEXT");
             }
         };
+        final Migration MIGRATION_8_9 = new Migration(8,9) {
+            @Override
+            public void migrate(@NonNull @NotNull SupportSQLiteDatabase database) {
+                database.execSQL("ALTER TABLE pendaftaran "
+                        + " ADD COLUMN kesimpulan INTEGER");
+            }
+        };
 
         if (INSTANCE == null) {
             synchronized (AppDatabase.class) {
@@ -58,6 +65,7 @@ public abstract class AppDatabase extends RoomDatabase {
                             .allowMainThreadQueries()
 //                            .fallbackToDestructiveMigration()
                             .addMigrations(MIGRATION_7_8)
+                            .addMigrations(MIGRATION_8_9)
                             .build();
                 }
             }

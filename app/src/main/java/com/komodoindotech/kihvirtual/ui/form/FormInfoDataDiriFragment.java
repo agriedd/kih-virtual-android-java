@@ -421,20 +421,26 @@ public class FormInfoDataDiriFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 try {
-                    int value = Integer.parseInt(s.toString().trim());
-                    if(value < 0){
-                        String message = "Perhatikan inputan";
-                        usia_anak_terakhir_layout.setError(message);
-                        inputErrors.put("usia_anak_terakhir", message);
-                    } else {
+                    if(s.toString().trim().length() == 0){
                         usia_anak_terakhir_layout.setError(null);
-                        inputErrors.remove("usia_anak_terakhir");
+                        pendaftaranObject.setUsia_anak_terakhir(null);
+                    } else {
+                        int value = Integer.parseInt(s.toString().trim());
+                        if(value < 0){
+                            String message = "Perhatikan inputan";
+                            usia_anak_terakhir_layout.setError(message);
+                            inputErrors.put("usia_anak_terakhir", message);
+                        } else {
+                            usia_anak_terakhir_layout.setError(null);
+                            inputErrors.remove("usia_anak_terakhir");
+                        }
+                        pendaftaranObject.setUsia_anak_terakhir(value);
                     }
-                    pendaftaranObject.setUsia_anak_terakhir(value);
                 } catch (Exception e){
                     String message = "Perhatikan inputan";
                     usia_anak_terakhir_layout.setError(message);
                     inputErrors.put("usia_anak_terakhir", message);
+                    pendaftaranObject.setUsia_anak_terakhir(null);
                 }
                 pendaftaranViewModel.setInputError(KEY, inputErrors);
                 pendaftaranViewModel.setPendaftaranObject(pendaftaranObject);

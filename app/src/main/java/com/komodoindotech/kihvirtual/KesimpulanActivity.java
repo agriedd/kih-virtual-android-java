@@ -12,7 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alibaba.fastjson.JSON;
+import com.komodoindotech.kihvirtual.json.PendaftaranObject;
 import com.komodoindotech.kihvirtual.json.PilihanObject;
+import com.komodoindotech.kihvirtual.models.Pendaftaran;
 import com.komodoindotech.kihvirtual.models.PendaftaranDanRiwayat;
 import com.komodoindotech.kihvirtual.models.RiwayatContract;
 import com.komodoindotech.kihvirtual.models.RiwayatKehamilan;
@@ -29,6 +31,7 @@ public class KesimpulanActivity extends AppCompatActivity {
 
     private KesimpulanViewModel kesimpulanViewModel;
     private AlertDialog dialog;
+    private Boolean loading = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,6 @@ public class KesimpulanActivity extends AppCompatActivity {
         if(id_cloud != null){
             kesimpulanViewModel.setIdCloud(id_cloud);
         }
-        kesimpulanViewModel.loadDataPendaftaran();
         kesimpulanViewModel.getPendaftaran().observe(this, this::prosesKesimpulan);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -58,9 +60,11 @@ public class KesimpulanActivity extends AppCompatActivity {
         dialog.setCanceledOnTouchOutside(false);
 
         kesimpulanViewModel.getLoading().observe(this, this::loadingView);
+        kesimpulanViewModel.loadDataPendaftaran();
     }
 
     private void loadingView(Boolean aBoolean) {
+        loading = aBoolean;
         if(aBoolean){
             dialog.show();
         } else {
@@ -70,8 +74,7 @@ public class KesimpulanActivity extends AppCompatActivity {
 
     private void prosesKesimpulan(PendaftaranDanRiwayat pendaftaranDanRiwayat) {
 
-        if(pendaftaranDanRiwayat != null) {
-
+        if(notEmpty(pendaftaranDanRiwayat)) {
             List<RiwayatContract> merah = new ArrayList<>();
             List<RiwayatContract> kuning = new ArrayList<>();
             List<RiwayatContract> hijau = new ArrayList<>();
@@ -106,16 +109,39 @@ public class KesimpulanActivity extends AppCompatActivity {
                         hijau.add(riwayatKeluhan);
                 }
 
+            int kesimpulan = PilihanObject.WARNA_HIJAU;
+            Fragment fragment;
+
             if (merah.size() > 0) {
-                replaceFragment(KesimpulanMerah.newInstance());
+                fragment = KesimpulanMerah.newInstance();
+                kesimpulan = PilihanObject.WARNA_MERAH;
             } else if (kuning.size() > 0) {
-                replaceFragment(KesimpulanKuning.newInstance());
+                fragment = KesimpulanKuning.newInstance();
+                kesimpulan = PilihanObject.WARNA_KUNING;
             } else {
-                replaceFragment(KesimpulanHijau.newInstance());
+                fragment = KesimpulanHijau.newInstance();
+                kesimpulan = PilihanObject.WARNA_HIJAU;
             }
-        } else {
+            replaceFragment(fragment);
+            updateKesimpulanPendaftaran(pendaftaranDanRiwayat.pendaftaran, kesimpulan);
+
+        } else if(!loading) {
             Toast.makeText(getApplicationContext(), "Data tidak ditemukan", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void updateKesimpulanPendaftaran(Pendaftaran pendaftaran, int kesimpulan) {
+        if(pendaftaran.getKesimpulan() == null && (pendaftaran.getCid() != null || pendaftaran.getUid() != null)){
+            kesimpulanViewModel.setKesimpulan(pendaftaran, kesimpulan);
+        }
+    }
+
+    private boolean notEmpty(PendaftaranDanRiwayat pendaftaranDanRiwayat) {
+        return pendaftaranDanRiwayat != null &&
+                pendaftaranDanRiwayat.pendaftaran != null &&
+                pendaftaranDanRiwayat.riwayatKehamilans != null &&
+                pendaftaranDanRiwayat.riwayatPersalinans != null &&
+                pendaftaranDanRiwayat.riwayatKeluhans != null;
     }
 
     private void replaceFragment(Fragment fragment) {

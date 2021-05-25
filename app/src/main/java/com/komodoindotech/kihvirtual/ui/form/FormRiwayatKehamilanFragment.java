@@ -1,27 +1,22 @@
 package com.komodoindotech.kihvirtual.ui.form;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.komodoindotech.kihvirtual.R;
 import com.komodoindotech.kihvirtual.ui.pendaftaran.InformasiFormRiwayatKehamilanFragment;
 import com.komodoindotech.kihvirtual.ui.pendaftaran.PendaftaranViewModel;
-import com.skydoves.balloon.ArrowOrientation;
-import com.skydoves.balloon.Balloon;
-import com.skydoves.balloon.BalloonAnimation;
 
 public class FormRiwayatKehamilanFragment extends Fragment {
 

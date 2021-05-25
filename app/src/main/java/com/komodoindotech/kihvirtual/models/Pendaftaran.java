@@ -50,6 +50,8 @@ public class Pendaftaran {
     public Long updated_at;
     @ColumnInfo(name = "cid")
     public String cid;
+    @ColumnInfo(name = "kesimpulan")
+    public Integer kesimpulan;
 
     @Ignore
     public Boolean isError() {
@@ -202,5 +204,13 @@ public class Pendaftaran {
 
     public void setCid(String cid) {
         this.cid = cid;
+    }
+
+    public Integer getKesimpulan() {
+        return kesimpulan;
+    }
+
+    public void setKesimpulan(Integer kesimpulan) {
+        this.kesimpulan = kesimpulan;
     }
 }

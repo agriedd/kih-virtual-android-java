@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.alibaba.fastjson.JSON;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,7 +24,9 @@ import com.komodoindotech.kihvirtual.repositories.PendaftaranRepository;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class KesimpulanViewModel extends AndroidViewModel {
@@ -62,12 +65,12 @@ public class KesimpulanViewModel extends AndroidViewModel {
     }
     public void loadDataPendaftaran() {
         loading.setValue(true);
-        PendaftaranDanRiwayat pendaftaranDanRiwayat = new PendaftaranRepository(getApplication()).find(id_pendaftaran.getValue());
-
-        if(pendaftaranDanRiwayat != null){
-            pendaftaran.setValue(this.pendaftaranDanRiwayat = pendaftaranDanRiwayat);
-            loading.setValue(false);
-        } else {
+//        PendaftaranDanRiwayat pendaftaranDanRiwayat = new PendaftaranRepository(getApplication()).find(id_pendaftaran.getValue());
+//
+//        if(pendaftaranDanRiwayat != null){
+//            pendaftaran.setValue(this.pendaftaranDanRiwayat = pendaftaranDanRiwayat);
+//            loading.setValue(false);
+//        } else {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("pendaftaran")
                     .document(Objects.requireNonNull(id_pendaftaran_cloud.getValue()))
@@ -89,6 +92,7 @@ public class KesimpulanViewModel extends AndroidViewModel {
                                 pendaftaran.setPendidikan_suami(document.getString("pendidikan_suami"));
                                 pendaftaran.setUmur(document.get("umur", Integer.class));
                                 pendaftaran.setUsia_anak_terakhir(document.get("usia_anak_terakhir", Integer.class));
+                                pendaftaran.setKesimpulan(document.get("kesimpulan", Integer.class));
                                 try {
                                     Timestamp timestamp = document.getTimestamp("created_at");
                                     if(timestamp != null){
@@ -112,7 +116,7 @@ public class KesimpulanViewModel extends AndroidViewModel {
                             this.pendaftaran.setValue(null);
                         }
                     }).addOnFailureListener(e -> Log.d("wtf", "loadPendaftaran: "+e.getMessage()));
-        }
+//        }
     }
 
     private void loadDataRiwayatKehamilan(FirebaseFirestore db, Pendaftaran pendaftaran) {
@@ -213,5 +217,29 @@ public class KesimpulanViewModel extends AndroidViewModel {
 
     public LiveData<Boolean> getLoading() {
         return loading;
+    }
+
+    public void setKesimpulan(Pendaftaran pendaftaran, Integer kesimpulan) {
+
+        Log.d("wtf", "setKesimpulan: "+ JSON.toJSONString(pendaftaran));
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("kesimpulan", kesimpulan);
+
+        String id = pendaftaran.getCid();
+        if(id == null) id = pendaftaran.getUid();
+
+        db.collection("pendaftaran").document(id).update(data)
+        .addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                //
+            } else if(task.isCanceled()){
+                //
+            } else if(task.isComplete()){
+                //
+            }
+        });
     }
 }
